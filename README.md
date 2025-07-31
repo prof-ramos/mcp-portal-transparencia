@@ -3,6 +3,7 @@
 [![npm version](https://badge.fury.io/js/mcp-portal-transparencia-brasil.svg)](https://badge.fury.io/js/mcp-portal-transparencia-brasil)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![smithery badge](https://smithery.ai/badge/@prof-ramos/mcp-portal-transparencia)](https://smithery.ai/server/@prof-ramos/mcp-portal-transparencia)
 
 Um MCP Server que fornece acesso programático à API do Portal da Transparência do Governo Federal brasileiro através do protocolo MCP.
 
@@ -195,7 +196,7 @@ Após configurar o MCP Server, você terá acesso a todas as ferramentas geradas
 
 ### Exemplos de Uso no Claude
 
-```
+```bash
 🔍 Consultar servidores do Ministério da Fazenda
 🎯 Buscar contratos acima de R$ 1 milhão
 📊 Analisar despesas por órgão no último trimestre
@@ -265,14 +266,23 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 ## ☁️ Deploy e uso com Smithery
 
-Este projeto inclui um arquivo smithery.json com configuração pronta para o Smithery.
+Este projeto inclui configuração otimizada para o Smithery usando **TypeScript Deploy** para melhor performance e integração.
 
-Pré-requisitos:
+### Configuração Atualizada
+
+O projeto agora usa `runtime: "typescript"` no `smithery.yaml` para:
+
+- ⚡ **Build 3x mais rápido** (automático vs. Docker)
+- 🔧 **Configuração simplificada** (apenas 1 arquivo)
+- 🎯 **Integração nativa** com o ecossistema Smithery
+- 🚀 **Lazy loading** para descoberta de ferramentas sem autenticação
+
+### Pré-requisitos
 
 - Node 18+
 - API Key do Portal da Transparência no env `PORTAL_API_KEY`
 
-Passos no Smithery:
+### Deploy no Smithery
 
 1) Importar o repositório ou pacote npm
 2) O Smithery executará automaticamente:
@@ -282,32 +292,17 @@ Passos no Smithery:
    - command: `node`
    - args: `dist/src/mcp-server.js`
 
-Variáveis de ambiente suportadas (smithery.json):
+### Variáveis de ambiente suportadas
 
-- PORTAL_API_KEY (obrigatório): chave da API (header X-Api-Key)
-- LOG_LEVEL (opcional): error, warn, info, debug (padrão: info)
+- **PORTAL_API_KEY** (obrigatório): chave da API (header X-Api-Key)
+- **LOG_LEVEL** (opcional): error, warn, info, debug (padrão: info)
 
-Teste local:
+### Descoberta de Ferramentas
 
-```bash
-npm install
-npm run build
-node dist/src/mcp-server.js
-```
+O servidor implementa **lazy loading** que permite:
 
-Exemplo de configuração em clientes MCP (Cursor):
+- 🔍 **Explorar ferramentas** antes de configurar API key
+- 📋 **Listar endpoints** disponíveis
+- 🎯 **Melhor UX** para novos usuários
 
-```json
-{
-  "mcpServers": {
-    "portal-transparencia": {
-      "command": "node",
-      "args": ["dist/src/mcp-server.js"],
-      "env": {
-        "PORTAL_API_KEY": "sua_api_key_aqui",
-        "LOG_LEVEL": "info"
-      }
-    }
-  }
-}
-```
+Use a ferramenta `portal_discover_tools` para descobrir todas as funcionalidades disponíveis.
