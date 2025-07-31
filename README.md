@@ -284,11 +284,11 @@ O projeto agora usa `runtime: "typescript"` no `smithery.yaml` para:
 
 ### Deploy no Smithery
 
-1) Importar o repositório ou pacote npm
-2) O Smithery executará automaticamente:
+1. Importar o repositório ou pacote npm
+2. O Smithery executará automaticamente:
    - npm install
    - npm run build
-3) O servidor MCP será iniciado via stdio com:
+3. O servidor MCP será iniciado via stdio com:
    - command: `node`
    - args: `dist/src/mcp-server.js`
 

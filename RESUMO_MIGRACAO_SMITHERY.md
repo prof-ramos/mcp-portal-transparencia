@@ -17,9 +17,9 @@ build:
   dockerfile: ./Dockerfile
   context: .
 run:
-  command: ["node", "dist/src/mcp-server.js"]
+  command: ['node', 'dist/src/mcp-server.js']
   env:
-    NODE_ENV: "production"
+    NODE_ENV: 'production'
 health:
   http:
     path: /health
@@ -32,19 +32,19 @@ health:
 #### Depois (TypeScript Deploy)
 
 ```yaml
-runtime: "typescript"
-name: "portal-transparencia-brasil"
-description: "MCP Server for Portal da Transparência API"
+runtime: 'typescript'
+name: 'portal-transparencia-brasil'
+description: 'MCP Server for Portal da Transparência API'
 
 # Configuração de ambiente
 env:
   PORTAL_API_KEY:
-    description: "API key for Portal da Transparência (header: X-Api-Key)"
+    description: 'API key for Portal da Transparência (header: X-Api-Key)'
     required: true
   LOG_LEVEL:
-    description: "Log level (error, warn, info, debug)"
+    description: 'Log level (error, warn, info, debug)'
     required: false
-    default: "info"
+    default: 'info'
 
 # Health check
 health:
@@ -65,11 +65,11 @@ health:
 
 ```typescript
 // Lazy loading: Return tool information without requiring authentication
-if (name === "portal_discover_tools") {
+if (name === 'portal_discover_tools') {
   return {
     content: [
       {
-        type: "text",
+        type: 'text',
         text: `Portal da Transparência MCP Server
         
 Este servidor oferece acesso a todos os endpoints da API do Portal da Transparência do Brasil.
@@ -77,13 +77,17 @@ Este servidor oferece acesso a todos os endpoints da API do Portal da Transparê
 Para usar as ferramentas, configure a variável de ambiente PORTAL_API_KEY com sua chave de API.
 
 Ferramentas disponíveis:
-${this.spec ? Array.from(this.tools.values()).map(tool => 
-  `- ${tool.name}: ${tool.description || `Consulta ${tool.path}`}`
-).join('\n') : 'Carregando ferramentas...'}
+${
+  this.spec
+    ? Array.from(this.tools.values())
+        .map(tool => `- ${tool.name}: ${tool.description || `Consulta ${tool.path}`}`)
+        .join('\n')
+    : 'Carregando ferramentas...'
+}
 
-Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-dados/cadastrar-email`
-      }
-    ]
+Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-dados/cadastrar-email`,
+      },
+    ],
   };
 }
 ```

@@ -18,9 +18,7 @@
   "mcp": {
     "type": "stdio",
     "command": "node",
-    "args": [
-      "dist/src/mcp-server.js"
-    ],
+    "args": ["dist/src/mcp-server.js"],
     "env": {
       "PORTAL_API_KEY": {
         "description": "API key for Portal da Transparência (header: X-Api-Key).",

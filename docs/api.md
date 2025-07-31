@@ -6,6 +6,7 @@ Servidores: https://api.portaldatransparencia.gov.br
 Autenticação: header `chave-api-dados` com sua chave de API. Ex.: `chave-api-dados: CHAVE_API_AQUI`
 
 Observação importante
+
 - Este arquivo foi gerado automaticamente a partir da especificação pública OpenAPI em https://api.portaldatransparencia.gov.br/v3/api-docs.
 - Os exemplos usam `CHAVE_API_AQUI` como placeholder — substitua pela sua chave real.
 - Devido ao volume de endpoints, esta documentação contém a estrutura de referência e exemplos práticos. Para a lista exata e completa de endpoints, consulte a especificação online ou integre este processo de geração no seu pipeline.
@@ -28,6 +29,7 @@ Abaixo está um modelo de referência, seguido de exemplos práticos para endpoi
 ## Modelo de Endpoint (Padrão)
 
 ### GET /recurso/exemplo
+
 - Método: `GET`
 - Caminho: `/recurso/exemplo`
 - Resumo: Resumo sucinto do que o endpoint retorna
@@ -35,20 +37,26 @@ Abaixo está um modelo de referência, seguido de exemplos práticos para endpoi
 
 Parâmetros:
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| pagina | query | Não | integer | Página de resultados (paginação) |
-| tamanhoPagina | query | Não | integer | Itens por página |
-| ordenacao | query | Não | string | Campo(s) de ordenação |
-| filtroXYZ | query | Não | string | Filtro específico do recurso |
+| Nome          | Local | Obrigatório | Tipo    | Descrição                        |
+| ------------- | ----- | :---------: | ------- | -------------------------------- |
+| pagina        | query |     Não     | integer | Página de resultados (paginação) |
+| tamanhoPagina | query |     Não     | integer | Itens por página                 |
+| ordenacao     | query |     Não     | string  | Campo(s) de ordenação            |
+| filtroXYZ     | query |     Não     | string  | Filtro específico do recurso     |
 
 Respostas:
+
 - 200: Sucesso
   - Content-Type: `application/json`
   ```json
   {
     "conteudo": [],
-    "paginacao": { "pagina": 1, "tamanhoPagina": 20, "quantidadePaginas": 100, "totalRegistros": 2000 }
+    "paginacao": {
+      "pagina": 1,
+      "tamanhoPagina": 20,
+      "quantidadePaginas": 100,
+      "totalRegistros": 2000
+    }
   }
   ```
 - 400: Requisição inválida
@@ -57,12 +65,14 @@ Respostas:
 - 5xx: Erros do servidor
 
 Exemplo de uso (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/recurso/exemplo?pagina=1&tamanhoPagina=20' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
 ```
 
 Exemplo de uso (JavaScript - fetch):
+
 ```js
 const url = 'https://api.portaldatransparencia.gov.br/recurso/exemplo?pagina=1&tamanhoPagina=20';
 const res = await fetch(url, {
@@ -81,6 +91,7 @@ Atenção: Os caminhos abaixo ilustram padrões comuns do Portal da Transparênc
 ### 1) Servidores e Vínculos
 
 #### GET /servidores
+
 - Método: `GET`
 - Caminho: `/servidores`
 - Resumo: Consulta de servidores públicos
@@ -88,14 +99,15 @@ Atenção: Os caminhos abaixo ilustram padrões comuns do Portal da Transparênc
 
 Parâmetros (exemplos):
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| cpf | query | Não | string | CPF (formato aceito pelo Portal; geralmente mascarado) |
-| idOrgao | query | Não | integer | Identificador do órgão |
-| pagina | query | Não | integer | Página de resultados |
-| tamanhoPagina | query | Não | integer | Itens por página |
+| Nome          | Local | Obrigatório | Tipo    | Descrição                                              |
+| ------------- | ----- | :---------: | ------- | ------------------------------------------------------ |
+| cpf           | query |     Não     | string  | CPF (formato aceito pelo Portal; geralmente mascarado) |
+| idOrgao       | query |     Não     | integer | Identificador do órgão                                 |
+| pagina        | query |     Não     | integer | Página de resultados                                   |
+| tamanhoPagina | query |     Não     | integer | Itens por página                                       |
 
 Respostas:
+
 - 200: Lista de servidores
   ```json
   [
@@ -109,6 +121,7 @@ Respostas:
   ```
 
 Exemplo (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/servidores?pagina=1&tamanhoPagina=50' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
@@ -117,6 +130,7 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/servidores?pagina=1&tamanh
 ### 2) Empenhos / Despesas / Orçamento
 
 #### GET /despesas
+
 - Método: `GET`
 - Caminho: `/despesas`
 - Resumo: Consulta despesas
@@ -124,14 +138,15 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/servidores?pagina=1&tamanh
 
 Parâmetros (exemplos):
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| codigoFuncao | query | Não | string | Código da função orçamentária |
-| ano | query | Não | integer | Ano de referência |
-| pagina | query | Não | integer | Página |
-| tamanhoPagina | query | Não | integer | Itens/página |
+| Nome          | Local | Obrigatório | Tipo    | Descrição                     |
+| ------------- | ----- | :---------: | ------- | ----------------------------- |
+| codigoFuncao  | query |     Não     | string  | Código da função orçamentária |
+| ano           | query |     Não     | integer | Ano de referência             |
+| pagina        | query |     Não     | integer | Página                        |
+| tamanhoPagina | query |     Não     | integer | Itens/página                  |
 
 Respostas:
+
 - 200: Lista de despesas
   ```json
   [
@@ -145,6 +160,7 @@ Respostas:
   ```
 
 Exemplo (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/despesas?ano=2024&pagina=1&tamanhoPagina=20' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
@@ -153,6 +169,7 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/despesas?ano=2024&pagina=1
 ### 3) Contratos
 
 #### GET /contratos
+
 - Método: `GET`
 - Caminho: `/contratos`
 - Resumo: Consulta contratos
@@ -160,15 +177,16 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/despesas?ano=2024&pagina=1
 
 Parâmetros (exemplos):
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| ano | query | Não | integer | Ano |
-| cpfCnpj | query | Não | string | Fornecedor (CPF/CNPJ) |
-| idOrgao | query | Não | integer | Órgão |
-| pagina | query | Não | integer | Página |
-| tamanhoPagina | query | Não | integer | Itens por página |
+| Nome          | Local | Obrigatório | Tipo    | Descrição             |
+| ------------- | ----- | :---------: | ------- | --------------------- |
+| ano           | query |     Não     | integer | Ano                   |
+| cpfCnpj       | query |     Não     | string  | Fornecedor (CPF/CNPJ) |
+| idOrgao       | query |     Não     | integer | Órgão                 |
+| pagina        | query |     Não     | integer | Página                |
+| tamanhoPagina | query |     Não     | integer | Itens por página      |
 
 Respostas:
+
 - 200:
   ```json
   [
@@ -183,6 +201,7 @@ Respostas:
   ```
 
 Exemplo (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/contratos?ano=2024&pagina=1&tamanhoPagina=20' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
@@ -191,6 +210,7 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/contratos?ano=2024&pagina=
 ### 4) Transferências e Convênios
 
 #### GET /convenios
+
 - Método: `GET`
 - Caminho: `/convenios`
 - Resumo: Consulta convênios
@@ -198,14 +218,15 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/contratos?ano=2024&pagina=
 
 Parâmetros (exemplos):
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| ano | query | Não | integer | Ano |
-| situacao | query | Não | string | Situação |
-| pagina | query | Não | integer | Página |
-| tamanhoPagina | query | Não | integer | Itens por página |
+| Nome          | Local | Obrigatório | Tipo    | Descrição        |
+| ------------- | ----- | :---------: | ------- | ---------------- |
+| ano           | query |     Não     | integer | Ano              |
+| situacao      | query |     Não     | string  | Situação         |
+| pagina        | query |     Não     | integer | Página           |
+| tamanhoPagina | query |     Não     | integer | Itens por página |
 
 Respostas:
+
 - 200:
   ```json
   [
@@ -219,6 +240,7 @@ Respostas:
   ```
 
 Exemplo (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/convenios?ano=2024&pagina=1&tamanhoPagina=50' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
@@ -227,6 +249,7 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/convenios?ano=2024&pagina=
 ### 5) Empresas e Fornecedores
 
 #### GET /empresas
+
 - Método: `GET`
 - Caminho: `/empresas`
 - Resumo: Consulta empresas/fornecedores
@@ -234,22 +257,22 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/convenios?ano=2024&pagina=
 
 Parâmetros (exemplos):
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| cnpj | query | Não | string | CNPJ |
-| razaoSocial | query | Não | string | Razão social |
-| pagina | query | Não | integer | Página |
-| tamanhoPagina | query | Não | integer | Itens por página |
+| Nome          | Local | Obrigatório | Tipo    | Descrição        |
+| ------------- | ----- | :---------: | ------- | ---------------- |
+| cnpj          | query |     Não     | string  | CNPJ             |
+| razaoSocial   | query |     Não     | string  | Razão social     |
+| pagina        | query |     Não     | integer | Página           |
+| tamanhoPagina | query |     Não     | integer | Itens por página |
 
 Respostas:
+
 - 200:
   ```json
-  [
-    { "cnpj": "00.000.000/0001-00", "razaoSocial": "EMPRESA SA", "uf": "SP" }
-  ]
+  [{ "cnpj": "00.000.000/0001-00", "razaoSocial": "EMPRESA SA", "uf": "SP" }]
   ```
 
 Exemplo (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/empresas?cnpj=00000000000100' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
@@ -283,17 +306,19 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/empresas?cnpj=000000000001
 
 - Este repositório já possui utilitários para carregar a especificação via `SwaggerLoader` (src/core/SwaggerLoader.ts).
 - Opcionalmente, crie um script Node/TS que:
-  1) Busca a especificação em `https://api.portaldatransparencia.gov.br/v3/api-docs`;
-  2) Itera `paths` e `components/schemas`;
-  3) Emite Markdown com parâmetros, body e respostas de cada operação;
-  4) Salva em `docs/api.md`.
+  1. Busca a especificação em `https://api.portaldatransparencia.gov.br/v3/api-docs`;
+  2. Itera `paths` e `components/schemas`;
+  3. Emite Markdown com parâmetros, body e respostas de cada operação;
+  4. Salva em `docs/api.md`.
 
 Exemplo de cabeçalho de autenticação (cURL):
+
 ```bash
 -H 'chave-api-dados: CHAVE_API_AQUI'
 ```
 
 Exemplo genérico de requisição POST (cURL):
+
 ```bash
 curl -X POST 'https://api.portaldatransparencia.gov.br/recurso/alvo' \
   -H 'chave-api-dados: CHAVE_API_AQUI' \

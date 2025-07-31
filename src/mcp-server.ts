@@ -10,7 +10,7 @@ import { OpenAPI } from 'openapi-types';
 import { Authentication } from './core/Authentication.js';
 import { SwaggerLoader } from './core/SwaggerLoader.js';
 import { Logger } from './logging/Logger.js';
-import { startHealthServer } from "./health";
+import { startHealthServer } from './health';
 
 export class MCPPortalServer {
   private server: Server;
@@ -78,15 +78,15 @@ export class MCPPortalServer {
         return {
           tools: [
             {
-              name: "portal_discover_tools",
-              description: "Descobrir ferramentas disponíveis no Portal da Transparência",
+              name: 'portal_discover_tools',
+              description: 'Descobrir ferramentas disponíveis no Portal da Transparência',
               inputSchema: {
-                type: "object",
+                type: 'object',
                 properties: {},
-                required: []
-              }
-            }
-          ]
+                required: [],
+              },
+            },
+          ],
         };
       }
 
@@ -94,7 +94,7 @@ export class MCPPortalServer {
       const tools = Array.from(this.tools.values()).map(tool => ({
         name: tool.name,
         description: tool.description || `Consulta ${tool.path}`,
-        inputSchema: tool.inputSchema
+        inputSchema: tool.inputSchema,
       }));
 
       return { tools };
@@ -104,11 +104,11 @@ export class MCPPortalServer {
       const { name, arguments: args } = request.params;
 
       // Handle tool discovery without authentication
-      if (name === "portal_discover_tools") {
+      if (name === 'portal_discover_tools') {
         return {
           content: [
             {
-              type: "text",
+              type: 'text',
               text: `Portal da Transparência MCP Server
 
 Este servidor oferece acesso a todos os endpoints da API do Portal da Transparência do Brasil.
@@ -116,13 +116,17 @@ Este servidor oferece acesso a todos os endpoints da API do Portal da Transparê
 Para usar as ferramentas, configure a variável de ambiente PORTAL_API_KEY com sua chave de API.
 
 Ferramentas disponíveis:
-${this.spec ? Array.from(this.tools.values()).map(tool =>
-                `- ${tool.name}: ${tool.description || `Consulta ${tool.path}`}`
-              ).join('\n') : 'Carregando ferramentas...'}
+${
+  this.spec
+    ? Array.from(this.tools.values())
+        .map(tool => `- ${tool.name}: ${tool.description || `Consulta ${tool.path}`}`)
+        .join('\n')
+    : 'Carregando ferramentas...'
+}
 
-Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-dados/cadastrar-email`
-            }
-          ]
+Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-dados/cadastrar-email`,
+            },
+          ],
         };
       }
 
@@ -334,7 +338,11 @@ Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-
         requestOptions.body = JSON.stringify(args);
       }
 
-      this.logger.debug('Request details', { url, method: httpMethod, headers: requestOptions.headers });
+      this.logger.debug('Request details', {
+        url,
+        method: httpMethod,
+        headers: requestOptions.headers,
+      });
 
       const response = await fetch(url, requestOptions);
 

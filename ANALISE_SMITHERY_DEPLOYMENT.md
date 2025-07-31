@@ -17,9 +17,9 @@ build:
   dockerfile: ./Dockerfile
   context: .
 run:
-  command: ["node", "dist/src/mcp-server.js"]
+  command: ['node', 'dist/src/mcp-server.js']
   env:
-    NODE_ENV: "production"
+    NODE_ENV: 'production'
 health:
   http:
     path: /health
@@ -68,13 +68,13 @@ health:
 
 ### 2. **Análise Comparativa**
 
-| Aspecto | Configuração Atual | Recomendação Smithery | Status |
-|---------|-------------------|----------------------|--------|
-| **Método de Deploy** | Custom Deploy (Docker) | TypeScript Deploy | ⚠️ Subótimo |
-| **Runtime** | `language: node` | `runtime: "typescript"` | ❌ Incompatível |
-| **Configuração** | `smithery.json` + `smithery.yaml` | `smithery.yaml` único | ⚠️ Duplicado |
-| **Health Check** | HTTP endpoint `/health` | MCP healthcheck | ✅ Compatível |
-| **Build Process** | Dockerfile | Automático (TypeScript) | ⚠️ Manual |
+| Aspecto              | Configuração Atual                | Recomendação Smithery   | Status          |
+| -------------------- | --------------------------------- | ----------------------- | --------------- |
+| **Método de Deploy** | Custom Deploy (Docker)            | TypeScript Deploy       | ⚠️ Subótimo     |
+| **Runtime**          | `language: node`                  | `runtime: "typescript"` | ❌ Incompatível |
+| **Configuração**     | `smithery.json` + `smithery.yaml` | `smithery.yaml` único   | ⚠️ Duplicado    |
+| **Health Check**     | HTTP endpoint `/health`           | MCP healthcheck         | ✅ Compatível   |
+| **Build Process**    | Dockerfile                        | Automático (TypeScript) | ⚠️ Manual       |
 
 ## 🚀 Recomendações de Melhoria
 
@@ -83,7 +83,7 @@ health:
 #### Configuração Recomendada (`smithery.yaml`)
 
 ```yaml
-runtime: "typescript"
+runtime: 'typescript'
 ```
 
 **Benefícios:**
@@ -98,19 +98,19 @@ runtime: "typescript"
 #### Remover `smithery.json` e usar apenas `smithery.yaml`
 
 ```yaml
-runtime: "typescript"
-name: "portal-transparencia-brasil"
-description: "MCP Server for Portal da Transparência API"
+runtime: 'typescript'
+name: 'portal-transparencia-brasil'
+description: 'MCP Server for Portal da Transparência API'
 
 # Configuração de ambiente
 env:
   PORTAL_API_KEY:
-    description: "API key for Portal da Transparência (header: X-Api-Key)"
+    description: 'API key for Portal da Transparência (header: X-Api-Key)'
     required: true
   LOG_LEVEL:
-    description: "Log level (error, warn, info, debug)"
+    description: 'Log level (error, warn, info, debug)'
     required: false
-    default: "info"
+    default: 'info'
 
 # Health check
 health:
@@ -127,28 +127,28 @@ Segundo a [documentação do Smithery](https://smithery.ai/docs/build/deployment
 export const tools = {
   // Listar ferramentas sem autenticação
   listTools: {
-    description: "List available Portal da Transparência tools",
+    description: 'List available Portal da Transparência tools',
     inputSchema: {
-      type: "object",
+      type: 'object',
       properties: {},
-      required: []
+      required: [],
     },
     handler: async () => {
       return {
         tools: [
           {
-            name: "consultar_servidores",
-            description: "Consultar servidores do Poder Executivo Federal"
+            name: 'consultar_servidores',
+            description: 'Consultar servidores do Poder Executivo Federal',
           },
           {
-            name: "consultar_viagens", 
-            description: "Consultar viagens oficiais"
-          }
+            name: 'consultar_viagens',
+            description: 'Consultar viagens oficiais',
+          },
           // ... outras ferramentas
-        ]
+        ],
       };
-    }
-  }
+    },
+  },
 };
 ```
 
@@ -166,19 +166,19 @@ export const tools = {
 1. **Atualizar `smithery.yaml`**
 
    ```yaml
-   runtime: "typescript"
-   name: "portal-transparencia-brasil"
-   description: "MCP Server for Portal da Transparência API"
-   
+   runtime: 'typescript'
+   name: 'portal-transparencia-brasil'
+   description: 'MCP Server for Portal da Transparência API'
+
    env:
      PORTAL_API_KEY:
-       description: "API key for Portal da Transparência"
+       description: 'API key for Portal da Transparência'
        required: true
      LOG_LEVEL:
-       description: "Log level"
+       description: 'Log level'
        required: false
-       default: "info"
-   
+       default: 'info'
+
    health:
      mcp:
        timeoutMs: 15000

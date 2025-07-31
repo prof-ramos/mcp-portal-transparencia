@@ -3,21 +3,25 @@ This file is a merged representation of the entire codebase, combined into a sin
 # File Summary
 
 ## Purpose
+
 This file contains a packed representation of the entire repository's contents.
 It is designed to be easily consumable by AI systems for analysis, code review,
 or other automated processes.
 
 ## File Format
+
 The content is organized as follows:
+
 1. This summary section
 2. Repository information
 3. Directory structure
 4. Repository files (if enabled)
 5. Multiple file entries, each consisting of:
-  a. A header with the file path (## File: path/to/file)
-  b. The full contents of the file in a code block
+   a. A header with the file path (## File: path/to/file)
+   b. The full contents of the file in a code block
 
 ## Usage Guidelines
+
 - This file should be treated as read-only. Any changes should be made to the
   original repository files, not this packed version.
 - When processing this file, use the file path to distinguish
@@ -26,6 +30,7 @@ The content is organized as follows:
   the same level of security as you would the original repository.
 
 ## Notes
+
 - Some files may have been excluded based on .gitignore rules and Repomix's configuration
 - Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
 - Files matching patterns in .gitignore are excluded
@@ -33,6 +38,7 @@ The content is organized as follows:
 - Files are sorted by Git change count (files with more changes are at the bottom)
 
 # Directory Structure
+
 ```
 .cursor/
   rules/
@@ -129,6 +135,7 @@ typedoc.json
 # Files
 
 ## File: .cursor/rules/taskmaster/dev_workflow.mdc
+
 ````
 ---
 description: Guide for using Taskmaster to manage task-driven development workflows
@@ -165,7 +172,7 @@ All your standard command executions should operate on the user's current task c
 For new projects or when users are getting started, operate within the `master` tag context:
 
 -   Start new projects by running `initialize_project` tool / `task-master init` or `parse_prd` / `task-master parse-prd --input='<prd-file.txt>'` (see @`taskmaster.mdc`) to generate initial tasks.json with tagged structure
--   Configure rule sets during initialization with `--rules` flag (e.g., `task-master init --rules cursor,windsurf`) or manage them later with `task-master rules add/remove` commands  
+-   Configure rule sets during initialization with `--rules` flag (e.g., `task-master init --rules cursor,windsurf`) or manage them later with `task-master rules add/remove` commands
 -   Begin coding sessions with `get_tasks` / `task-master list` (see @`taskmaster.mdc`) to see current tasks, status, and IDs
 -   Determine the next task to work on using `next_task` / `task-master next` (see @`taskmaster.mdc`)
 -   Analyze task complexity with `analyze_project_complexity` / `task-master analyze-complexity --research` (see @`taskmaster.mdc`) before breaking down tasks
@@ -268,7 +275,7 @@ Once you transition to tag-based workflows, the `master` tag should ideally cont
 1. **Identify the Initiative**: When user describes a significant feature
 2. **Create Dedicated Tag**: `add_tag feature-[name] --description="[Feature description]"`
 3. **Collaborative PRD Creation**: Work with user to create comprehensive PRD in `.taskmaster/docs/feature-[name]-prd.txt`
-4. **Parse & Prepare**: 
+4. **Parse & Prepare**:
    - `parse_prd .taskmaster/docs/feature-[name]-prd.txt --tag=feature-[name]`
    - `analyze_project_complexity --tag=feature-[name] --research`
    - `expand_all --tag=feature-[name] --research`
@@ -300,7 +307,7 @@ Action: add_tag my-api-work --copy-from-current --description="My API tasks whil
 ```
 User: "I want to add a complete user dashboard with analytics, user management, and reporting"
 Your Response: "This sounds like a major feature that would benefit from detailed planning. Let me create a dedicated context for this work and we can draft a PRD together to ensure we capture all requirements."
-Actions: 
+Actions:
 1. add_tag feature-dashboard --description="User dashboard with analytics and management"
 2. Collaborate on PRD creation
 3. parse_prd dashboard-prd.txt --tag=feature-dashboard
@@ -395,9 +402,9 @@ Taskmaster offers two primary ways to interact:
     - Dependencies are displayed with status indicators (✅ for completed, ⏱️ for pending)
     - This helps quickly identify which prerequisite tasks are blocking work
 - **priority**: Importance level (Example: `"high"`, `"medium"`, `"low"`)
-- **details**: In-depth implementation instructions (Example: `"Use GitHub client ID/secret, handle callback, set session token."`) 
-- **testStrategy**: Verification approach (Example: `"Deploy and call endpoint to confirm 'Hello World' response."`) 
-- **subtasks**: List of smaller, more specific tasks (Example: `[{"id": 1, "title": "Configure OAuth", ...}]`) 
+- **details**: In-depth implementation instructions (Example: `"Use GitHub client ID/secret, handle callback, set session token."`)
+- **testStrategy**: Verification approach (Example: `"Deploy and call endpoint to confirm 'Hello World' response."`)
+- **subtasks**: List of smaller, more specific tasks (Example: `[{"id": 1, "title": "Configure OAuth", ...}]`)
 - Refer to task structure details (previously linked to `tasks.mdc`).
 
 ## Configuration Management (Updated)
@@ -477,7 +484,7 @@ Taskmaster supports multiple AI coding assistant rule sets that can be configure
 - Use `move_task` / `task-master move --from=<id> --to=<id>` to move tasks or subtasks within the hierarchy
 - This command supports several use cases:
   - Moving a standalone task to become a subtask (e.g., `--from=5 --to=7`)
-  - Moving a subtask to become a standalone task (e.g., `--from=5.2 --to=7`) 
+  - Moving a subtask to become a standalone task (e.g., `--from=5.2 --to=7`)
   - Moving a subtask to a different parent (e.g., `--from=5.2 --to=7.3`)
   - Reordering subtasks within the same parent (e.g., `--from=5.2 --to=5.4`)
   - Moving a task to a new, non-existent ID position (e.g., `--from=5 --to=25`)
@@ -557,7 +564,8 @@ Once a task has been broken down into subtasks using `expand_task` or similar me
 ````
 
 ## File: .cursor/rules/taskmaster/taskmaster.mdc
-````
+
+```
 ---
 description: Comprehensive reference for Taskmaster MCP tools and CLI commands.
 globs: **/*
@@ -568,7 +576,7 @@ alwaysApply: true
 
 This document provides a detailed reference for interacting with Taskmaster, covering both the recommended MCP tools, suitable for integrations like Cursor, and the corresponding `task-master` CLI commands, designed for direct user interaction or fallback.
 
-**Note:** For interacting with Taskmaster programmatically or via integrated tools, using the **MCP tools is strongly recommended** due to better performance, structured data, and error handling. The CLI commands serve as a user-friendly alternative and fallback. 
+**Note:** For interacting with Taskmaster programmatically or via integrated tools, using the **MCP tools is strongly recommended** due to better performance, structured data, and error handling. The CLI commands serve as a user-friendly alternative and fallback.
 
 **Important:** Several MCP tools involve AI processing... The AI-powered tools include `parse_prd`, `analyze_project_complexity`, `update_subtask`, `update_task`, `update`, `expand_all`, `expand_task`, and `add_task`.
 
@@ -598,8 +606,8 @@ This document provides a detailed reference for interacting with Taskmaster, cov
     *   `skipInstall`: `Skip installing dependencies. Default is false.` (CLI: `--skip-install`)
     *   `addAliases`: `Add shell aliases tm and taskmaster. Default is false.` (CLI: `--aliases`)
     *   `yes`: `Skip prompts and use defaults/provided arguments. Default is false.` (CLI: `-y, --yes`)
-*   **Usage:** Run this once at the beginning of a new project, typically via an integrated tool like Cursor. Operates on the current working directory of the MCP server. 
-*   **Important:** Once complete, you *MUST* parse a prd in order to generate tasks. There will be no tasks files until then. The next step after initializing should be to create a PRD using the example PRD in .taskmaster/templates/example_prd.txt. 
+*   **Usage:** Run this once at the beginning of a new project, typically via an integrated tool like Cursor. Operates on the current working directory of the MCP server.
+*   **Important:** Once complete, you *MUST* parse a prd in order to generate tasks. There will be no tasks files until then. The next step after initializing should be to create a PRD using the example PRD in .taskmaster/templates/example_prd.txt.
 *   **Tagging:** Use the `--tag` option to parse the PRD into a specific, non-default tag context. If the tag doesn't exist, it will be created automatically. Example: `task-master parse-prd spec.txt --tag=new-feature`.
 
 ### 2. Parse PRD (`parse_prd`)
@@ -644,7 +652,7 @@ This document provides a detailed reference for interacting with Taskmaster, cov
 *   **Usage (CLI):** Run without flags to view current configuration and available models. Use set flags to update specific roles. Use `--setup` for guided configuration, including custom models. To set a custom model via flags, use `--set-<role>=<model_id>` along with either `--ollama` or `--openrouter`.
 *   **Notes:** Configuration is stored in `.taskmaster/config.json` in the project root. This command/tool modifies that file. Use `listAvailableModels` or `task-master models` to see internally supported models. OpenRouter custom models are validated against their live API. Ollama custom models are not validated live.
 *   **API note:** API keys for selected AI providers (based on their model) need to exist in the mcp.json file to be accessible in MCP context. The API keys must be present in the local .env file for the CLI to be able to read them.
-*   **Model costs:** The costs in supported models are expressed in dollars. An input/output value of 3 is $3.00. A value of 0.8 is $0.80. 
+*   **Model costs:** The costs in supported models are expressed in dollars. An input/output value of 3 is $3.00. A value of 0.8 is $0.80.
 *   **Warning:** DO NOT MANUALLY EDIT THE .taskmaster/config.json FILE. Use the included commands either in the MCP or CLI format as needed. Always prioritize MCP tools when available and use the CLI as a fallback.
 
 ---
@@ -1116,9 +1124,10 @@ Environment variables are used **only** for sensitive API keys related to AI pro
 ---
 
 For details on how these commands fit into the development process, see the [dev_workflow.mdc](mdc:.cursor/rules/taskmaster/dev_workflow.mdc).
-````
+```
 
 ## File: .cursor/rules/cursor_rules.mdc
+
 ````
 ---
 description: Guidelines for creating and maintaining Cursor rules to ensure consistency and effectiveness.
@@ -1149,7 +1158,7 @@ alwaysApply: true
   ```typescript
   // ✅ DO: Show good examples
   const goodExample = true;
-  
+
   // ❌ DON'T: Show anti-patterns
   const badExample = false;
   ```
@@ -1176,6 +1185,7 @@ alwaysApply: true
 ````
 
 ## File: .cursor/rules/self_improve.mdc
+
 ````
 ---
 description: Guidelines for continuously improving Cursor rules based on emerging code patterns and best practices.
@@ -1217,7 +1227,7 @@ alwaysApply: true
     select: { id: true, email: true },
     where: { status: 'ACTIVE' }
   });
-  
+
   // Consider adding to [prisma.mdc](mdc:.cursor/rules/prisma.mdc):
   // - Standard select fields
   // - Common where conditions
@@ -1252,10 +1262,11 @@ Follow [cursor_rules.mdc](mdc:.cursor/rules/cursor_rules.mdc) for proper rule fo
 ````
 
 ## File: .github/instructions/dev_workflow.md
+
 ````markdown
 ---
 description: Guide for using Taskmaster to manage task-driven development workflows
-applyTo: "**/*"
+applyTo: '**/*'
 alwaysApply: true
 ---
 
@@ -1267,7 +1278,9 @@ This guide outlines the standard process for using Taskmaster to manage software
 - **Your Goal**: Your role is to elevate the user's workflow by intelligently introducing advanced features like **Tagged Task Lists** when you detect the appropriate context. Do not force tags on the user; suggest them as a helpful solution to a specific need.
 
 ## The Basic Loop
+
 The fundamental development cycle you will facilitate is:
+
 1.  **`list`**: Show the user what needs to be done.
 2.  **`next`**: Help the user decide what to work on.
 3.  **`show <id>`**: Provide details for a specific task.
@@ -1287,18 +1300,18 @@ All your standard command executions should operate on the user's current task c
 
 For new projects or when users are getting started, operate within the `master` tag context:
 
--   Start new projects by running `initialize_project` tool / `task-master init` or `parse_prd` / `task-master parse-prd --input='<prd-file.txt>'` (see @`taskmaster.md`) to generate initial tasks.json with tagged structure
--   Configure rule sets during initialization with `--rules` flag (e.g., `task-master init --rules vscode,windsurf`) or manage them later with `task-master rules add/remove` commands  
--   Begin coding sessions with `get_tasks` / `task-master list` (see @`taskmaster.md`) to see current tasks, status, and IDs
--   Determine the next task to work on using `next_task` / `task-master next` (see @`taskmaster.md`)
--   Analyze task complexity with `analyze_project_complexity` / `task-master analyze-complexity --research` (see @`taskmaster.md`) before breaking down tasks
--   Review complexity report using `complexity_report` / `task-master complexity-report` (see @`taskmaster.md`)
--   Select tasks based on dependencies (all marked 'done'), priority level, and ID order
--   View specific task details using `get_task` / `task-master show <id>` (see @`taskmaster.md`) to understand implementation requirements
--   Break down complex tasks using `expand_task` / `task-master expand --id=<id> --force --research` (see @`taskmaster.md`) with appropriate flags like `--force` (to replace existing subtasks) and `--research`
--   Implement code following task details, dependencies, and project standards
--   Mark completed tasks with `set_task_status` / `task-master set-status --id=<id> --status=done` (see @`taskmaster.md`)
--   Update dependent tasks when implementation differs from original plan using `update` / `task-master update --from=<id> --prompt="..."` or `update_task` / `task-master update-task --id=<id> --prompt="..."` (see @`taskmaster.md`)
+- Start new projects by running `initialize_project` tool / `task-master init` or `parse_prd` / `task-master parse-prd --input='<prd-file.txt>'` (see @`taskmaster.md`) to generate initial tasks.json with tagged structure
+- Configure rule sets during initialization with `--rules` flag (e.g., `task-master init --rules vscode,windsurf`) or manage them later with `task-master rules add/remove` commands
+- Begin coding sessions with `get_tasks` / `task-master list` (see @`taskmaster.md`) to see current tasks, status, and IDs
+- Determine the next task to work on using `next_task` / `task-master next` (see @`taskmaster.md`)
+- Analyze task complexity with `analyze_project_complexity` / `task-master analyze-complexity --research` (see @`taskmaster.md`) before breaking down tasks
+- Review complexity report using `complexity_report` / `task-master complexity-report` (see @`taskmaster.md`)
+- Select tasks based on dependencies (all marked 'done'), priority level, and ID order
+- View specific task details using `get_task` / `task-master show <id>` (see @`taskmaster.md`) to understand implementation requirements
+- Break down complex tasks using `expand_task` / `task-master expand --id=<id> --force --research` (see @`taskmaster.md`) with appropriate flags like `--force` (to replace existing subtasks) and `--research`
+- Implement code following task details, dependencies, and project standards
+- Mark completed tasks with `set_task_status` / `task-master set-status --id=<id> --status=done` (see @`taskmaster.md`)
+- Update dependent tasks when implementation differs from original plan using `update` / `task-master update --from=<id> --prompt="..."` or `update_task` / `task-master update-task --id=<id> --prompt="..."` (see @`taskmaster.md`)
 
 ---
 
@@ -1313,38 +1326,43 @@ While the basic workflow is powerful, your primary opportunity to add value is b
 Here are the patterns to look for. When you detect one, you should propose the corresponding workflow to the user.
 
 #### Pattern 1: Simple Git Feature Branching
+
 This is the most common and direct use case for tags.
 
 - **Trigger**: The user creates a new git branch (e.g., `git checkout -b feature/user-auth`).
 - **Your Action**: Propose creating a new tag that mirrors the branch name to isolate the feature's tasks from `master`.
-- **Your Suggested Prompt**: *"I see you've created a new branch named 'feature/user-auth'. To keep all related tasks neatly organized and separate from your main list, I can create a corresponding task tag for you. This helps prevent merge conflicts in your `tasks.json` file later. Shall I create the 'feature-user-auth' tag?"*
+- **Your Suggested Prompt**: _"I see you've created a new branch named 'feature/user-auth'. To keep all related tasks neatly organized and separate from your main list, I can create a corresponding task tag for you. This helps prevent merge conflicts in your `tasks.json` file later. Shall I create the 'feature-user-auth' tag?"_
 - **Tool to Use**: `task-master add-tag --from-branch`
 
 #### Pattern 2: Team Collaboration
+
 - **Trigger**: The user mentions working with teammates (e.g., "My teammate Alice is handling the database schema," or "I need to review Bob's work on the API.").
 - **Your Action**: Suggest creating a separate tag for the user's work to prevent conflicts with shared master context.
-- **Your Suggested Prompt**: *"Since you're working with Alice, I can create a separate task context for your work to avoid conflicts. This way, Alice can continue working with the master list while you have your own isolated context. When you're ready to merge your work, we can coordinate the tasks back to master. Shall I create a tag for your current work?"*
+- **Your Suggested Prompt**: _"Since you're working with Alice, I can create a separate task context for your work to avoid conflicts. This way, Alice can continue working with the master list while you have your own isolated context. When you're ready to merge your work, we can coordinate the tasks back to master. Shall I create a tag for your current work?"_
 - **Tool to Use**: `task-master add-tag my-work --copy-from-current --description="My tasks while collaborating with Alice"`
 
 #### Pattern 3: Experiments or Risky Refactors
+
 - **Trigger**: The user wants to try something that might not be kept (e.g., "I want to experiment with switching our state management library," or "Let's refactor the old API module, but I want to keep the current tasks as a reference.").
 - **Your Action**: Propose creating a sandboxed tag for the experimental work.
-- **Your Suggested Prompt**: *"This sounds like a great experiment. To keep these new tasks separate from our main plan, I can create a temporary 'experiment-zustand' tag for this work. If we decide not to proceed, we can simply delete the tag without affecting the main task list. Sound good?"*
+- **Your Suggested Prompt**: _"This sounds like a great experiment. To keep these new tasks separate from our main plan, I can create a temporary 'experiment-zustand' tag for this work. If we decide not to proceed, we can simply delete the tag without affecting the main task list. Sound good?"_
 - **Tool to Use**: `task-master add-tag experiment-zustand --description="Exploring Zustand migration"`
 
 #### Pattern 4: Large Feature Initiatives (PRD-Driven)
+
 This is a more structured approach for significant new features or epics.
 
 - **Trigger**: The user describes a large, multi-step feature that would benefit from a formal plan.
 - **Your Action**: Propose a comprehensive, PRD-driven workflow.
-- **Your Suggested Prompt**: *"This sounds like a significant new feature. To manage this effectively, I suggest we create a dedicated task context for it. Here's the plan: I'll create a new tag called 'feature-xyz', then we can draft a Product Requirements Document (PRD) together to scope the work. Once the PRD is ready, I'll automatically generate all the necessary tasks within that new tag. How does that sound?"*
+- **Your Suggested Prompt**: _"This sounds like a significant new feature. To manage this effectively, I suggest we create a dedicated task context for it. Here's the plan: I'll create a new tag called 'feature-xyz', then we can draft a Product Requirements Document (PRD) together to scope the work. Once the PRD is ready, I'll automatically generate all the necessary tasks within that new tag. How does that sound?"_
 - **Your Implementation Flow**:
-    1.  **Create an empty tag**: `task-master add-tag feature-xyz --description "Tasks for the new XYZ feature"`. You can also start by creating a git branch if applicable, and then create the tag from that branch.
-    2.  **Collaborate & Create PRD**: Work with the user to create a detailed PRD file (e.g., `.taskmaster/docs/feature-xyz-prd.txt`).
-    3.  **Parse PRD into the new tag**: `task-master parse-prd .taskmaster/docs/feature-xyz-prd.txt --tag feature-xyz`
-    4.  **Prepare the new task list**: Follow up by suggesting `analyze-complexity` and `expand-all` for the newly created tasks within the `feature-xyz` tag.
+  1.  **Create an empty tag**: `task-master add-tag feature-xyz --description "Tasks for the new XYZ feature"`. You can also start by creating a git branch if applicable, and then create the tag from that branch.
+  2.  **Collaborate & Create PRD**: Work with the user to create a detailed PRD file (e.g., `.taskmaster/docs/feature-xyz-prd.txt`).
+  3.  **Parse PRD into the new tag**: `task-master parse-prd .taskmaster/docs/feature-xyz-prd.txt --tag feature-xyz`
+  4.  **Prepare the new task list**: Follow up by suggesting `analyze-complexity` and `expand-all` for the newly created tasks within the `feature-xyz` tag.
 
 #### Pattern 5: Version-Based Development
+
 Tailor your approach based on the project maturity indicated by tag names.
 
 - **Prototype/MVP Tags** (`prototype`, `mvp`, `poc`, `v0.x`):
@@ -1352,18 +1370,19 @@ Tailor your approach based on the project maturity indicated by tag names.
   - **Task Generation**: Create tasks that emphasize "get it working" over "get it perfect"
   - **Complexity Level**: Lower complexity, fewer subtasks, more direct implementation paths
   - **Research Prompts**: Include context like "This is a prototype - prioritize speed and basic functionality over optimization"
-  - **Example Prompt Addition**: *"Since this is for the MVP, I'll focus on tasks that get core functionality working quickly rather than over-engineering."*
+  - **Example Prompt Addition**: _"Since this is for the MVP, I'll focus on tasks that get core functionality working quickly rather than over-engineering."_
 
 - **Production/Mature Tags** (`v1.0+`, `production`, `stable`):
   - **Your Approach**: Emphasize robustness, testing, and maintainability
   - **Task Generation**: Include comprehensive error handling, testing, documentation, and optimization
   - **Complexity Level**: Higher complexity, more detailed subtasks, thorough implementation paths
   - **Research Prompts**: Include context like "This is for production - prioritize reliability, performance, and maintainability"
-  - **Example Prompt Addition**: *"Since this is for production, I'll ensure tasks include proper error handling, testing, and documentation."*
+  - **Example Prompt Addition**: _"Since this is for production, I'll ensure tasks include proper error handling, testing, and documentation."_
 
 ### Advanced Workflow (Tag-Based & PRD-Driven)
 
 **When to Transition**: Recognize when the project has evolved (or has initiated a project which existing code) beyond simple task management. Look for these indicators:
+
 - User mentions teammates or collaboration needs
 - Project has grown to 15+ tasks with mixed priorities
 - User creates feature branches or mentions major initiatives
@@ -1373,13 +1392,16 @@ Tailor your approach based on the project maturity indicated by tag names.
 **Your Role in Transition**: Guide the user to a more sophisticated workflow that leverages tags for organization and PRDs for comprehensive planning.
 
 #### Master List Strategy (High-Value Focus)
+
 Once you transition to tag-based workflows, the `master` tag should ideally contain only:
+
 - **High-level deliverables** that provide significant business value
 - **Major milestones** and epic-level features
 - **Critical infrastructure** work that affects the entire project
 - **Release-blocking** items
 
 **What NOT to put in master**:
+
 - Detailed implementation subtasks (these go in feature-specific tags' parent tasks)
 - Refactoring work (create dedicated tags like `refactor-auth`)
 - Experimental features (use `experiment-*` tags)
@@ -1388,10 +1410,11 @@ Once you transition to tag-based workflows, the `master` tag should ideally cont
 #### PRD-Driven Feature Development
 
 **For New Major Features**:
+
 1. **Identify the Initiative**: When user describes a significant feature
 2. **Create Dedicated Tag**: `add_tag feature-[name] --description="[Feature description]"`
 3. **Collaborative PRD Creation**: Work with user to create comprehensive PRD in `.taskmaster/docs/feature-[name]-prd.txt`
-4. **Parse & Prepare**: 
+4. **Parse & Prepare**:
    - `parse_prd .taskmaster/docs/feature-[name]-prd.txt --tag=feature-[name]`
    - `analyze_project_complexity --tag=feature-[name] --research`
    - `expand_all --tag=feature-[name] --research`
@@ -1399,6 +1422,7 @@ Once you transition to tag-based workflows, the `master` tag should ideally cont
 
 **For Existing Codebase Analysis**:
 When users initialize Taskmaster on existing projects:
+
 1. **Codebase Discovery**: Use your native tools for producing deep context about the code base. You may use `research` tool with `--tree` and `--files` to collect up to date information using the existing architecture as context.
 2. **Collaborative Assessment**: Work with user to identify improvement areas, technical debt, or new features
 3. **Strategic PRD Creation**: Co-author PRDs that include:
@@ -1413,6 +1437,7 @@ The parse-prd's `--append` flag enables the user to parse multiple PRDs within t
 ### Workflow Transition Examples
 
 **Example 1: Simple → Team-Based**
+
 ```
 User: "Alice is going to help with the API work"
 Your Response: "Great! To avoid conflicts, I'll create a separate task context for your work. Alice can continue with the master list while you work in your own context. When you're ready to merge, we can coordinate the tasks back together."
@@ -1420,10 +1445,11 @@ Action: add_tag my-api-work --copy-from-current --description="My API tasks whil
 ```
 
 **Example 2: Simple → PRD-Driven**
+
 ```
 User: "I want to add a complete user dashboard with analytics, user management, and reporting"
 Your Response: "This sounds like a major feature that would benefit from detailed planning. Let me create a dedicated context for this work and we can draft a PRD together to ensure we capture all requirements."
-Actions: 
+Actions:
 1. add_tag feature-dashboard --description="User dashboard with analytics and management"
 2. Collaborate on PRD creation
 3. parse_prd dashboard-prd.txt --tag=feature-dashboard
@@ -1431,6 +1457,7 @@ Actions:
 ```
 
 **Example 3: Existing Project → Strategic Planning**
+
 ```
 User: "I just initialized Taskmaster on my existing React app. It's getting messy and I want to improve it."
 Your Response: "Let me research your codebase to understand the current architecture, then we can create a strategic plan for improvements."
@@ -1476,37 +1503,37 @@ Taskmaster offers two primary ways to interact:
 
 ## Task Complexity Analysis
 
--   Run `analyze_project_complexity` / `task-master analyze-complexity --research` (see @`taskmaster.md`) for comprehensive analysis
--   Review complexity report via `complexity_report` / `task-master complexity-report` (see @`taskmaster.md`) for a formatted, readable version.
--   Focus on tasks with highest complexity scores (8-10) for detailed breakdown
--   Use analysis results to determine appropriate subtask allocation
--   Note that reports are automatically used by the `expand_task` tool/command
+- Run `analyze_project_complexity` / `task-master analyze-complexity --research` (see @`taskmaster.md`) for comprehensive analysis
+- Review complexity report via `complexity_report` / `task-master complexity-report` (see @`taskmaster.md`) for a formatted, readable version.
+- Focus on tasks with highest complexity scores (8-10) for detailed breakdown
+- Use analysis results to determine appropriate subtask allocation
+- Note that reports are automatically used by the `expand_task` tool/command
 
 ## Task Breakdown Process
 
--   Use `expand_task` / `task-master expand --id=<id>`. It automatically uses the complexity report if found, otherwise generates default number of subtasks.
--   Use `--num=<number>` to specify an explicit number of subtasks, overriding defaults or complexity report recommendations.
--   Add `--research` flag to leverage Perplexity AI for research-backed expansion.
--   Add `--force` flag to clear existing subtasks before generating new ones (default is to append).
--   Use `--prompt="<context>"` to provide additional context when needed.
--   Review and adjust generated subtasks as necessary.
--   Use `expand_all` tool or `task-master expand --all` to expand multiple pending tasks at once, respecting flags like `--force` and `--research`.
--   If subtasks need complete replacement (regardless of the `--force` flag on `expand`), clear them first with `clear_subtasks` / `task-master clear-subtasks --id=<id>`.
+- Use `expand_task` / `task-master expand --id=<id>`. It automatically uses the complexity report if found, otherwise generates default number of subtasks.
+- Use `--num=<number>` to specify an explicit number of subtasks, overriding defaults or complexity report recommendations.
+- Add `--research` flag to leverage Perplexity AI for research-backed expansion.
+- Add `--force` flag to clear existing subtasks before generating new ones (default is to append).
+- Use `--prompt="<context>"` to provide additional context when needed.
+- Review and adjust generated subtasks as necessary.
+- Use `expand_all` tool or `task-master expand --all` to expand multiple pending tasks at once, respecting flags like `--force` and `--research`.
+- If subtasks need complete replacement (regardless of the `--force` flag on `expand`), clear them first with `clear_subtasks` / `task-master clear-subtasks --id=<id>`.
 
 ## Implementation Drift Handling
 
--   When implementation differs significantly from planned approach
--   When future tasks need modification due to current implementation choices
--   When new dependencies or requirements emerge
--   Use `update` / `task-master update --from=<futureTaskId> --prompt='<explanation>\nUpdate context...' --research` to update multiple future tasks.
--   Use `update_task` / `task-master update-task --id=<taskId> --prompt='<explanation>\nUpdate context...' --research` to update a single specific task.
+- When implementation differs significantly from planned approach
+- When future tasks need modification due to current implementation choices
+- When new dependencies or requirements emerge
+- Use `update` / `task-master update --from=<futureTaskId> --prompt='<explanation>\nUpdate context...' --research` to update multiple future tasks.
+- Use `update_task` / `task-master update-task --id=<taskId> --prompt='<explanation>\nUpdate context...' --research` to update a single specific task.
 
 ## Task Status Management
 
--   Use 'pending' for tasks ready to be worked on
--   Use 'done' for completed and verified tasks
--   Use 'deferred' for postponed tasks
--   Add custom status values as needed for project-specific workflows
+- Use 'pending' for tasks ready to be worked on
+- Use 'done' for completed and verified tasks
+- Use 'deferred' for postponed tasks
+- Add custom status values as needed for project-specific workflows
 
 ## Task Structure Fields
 
@@ -1515,12 +1542,12 @@ Taskmaster offers two primary ways to interact:
 - **description**: Concise summary of what the task involves (Example: `"Create a new repository, set up initial structure."`)
 - **status**: Current state of the task (Example: `"pending"`, `"done"`, `"deferred"`)
 - **dependencies**: IDs of prerequisite tasks (Example: `[1, 2.1]`)
-    - Dependencies are displayed with status indicators (✅ for completed, ⏱️ for pending)
-    - This helps quickly identify which prerequisite tasks are blocking work
+  - Dependencies are displayed with status indicators (✅ for completed, ⏱️ for pending)
+  - This helps quickly identify which prerequisite tasks are blocking work
 - **priority**: Importance level (Example: `"high"`, `"medium"`, `"low"`)
-- **details**: In-depth implementation instructions (Example: `"Use GitHub client ID/secret, handle callback, set session token."`) 
-- **testStrategy**: Verification approach (Example: `"Deploy and call endpoint to confirm 'Hello World' response."`) 
-- **subtasks**: List of smaller, more specific tasks (Example: `[{"id": 1, "title": "Configure OAuth", ...}]`) 
+- **details**: In-depth implementation instructions (Example: `"Use GitHub client ID/secret, handle callback, set session token."`)
+- **testStrategy**: Verification approach (Example: `"Deploy and call endpoint to confirm 'Hello World' response."`)
+- **subtasks**: List of smaller, more specific tasks (Example: `[{"id": 1, "title": "Configure OAuth", ...}]`)
 - Refer to task structure details (previously linked to `tasks.md`).
 
 ## Configuration Management (Updated)
@@ -1528,23 +1555,23 @@ Taskmaster offers two primary ways to interact:
 Taskmaster configuration is managed through two main mechanisms:
 
 1.  **`.taskmaster/config.json` File (Primary):**
-    *   Located in the project root directory.
-    *   Stores most configuration settings: AI model selections (main, research, fallback), parameters (max tokens, temperature), logging level, default subtasks/priority, project name, etc.
-    *   **Tagged System Settings**: Includes `global.defaultTag` (defaults to "master") and `tags` section for tag management configuration.
-    *   **Managed via `task-master models --setup` command.** Do not edit manually unless you know what you are doing.
-    *   **View/Set specific models via `task-master models` command or `models` MCP tool.**
-    *   Created automatically when you run `task-master models --setup` for the first time or during tagged system migration.
+    - Located in the project root directory.
+    - Stores most configuration settings: AI model selections (main, research, fallback), parameters (max tokens, temperature), logging level, default subtasks/priority, project name, etc.
+    - **Tagged System Settings**: Includes `global.defaultTag` (defaults to "master") and `tags` section for tag management configuration.
+    - **Managed via `task-master models --setup` command.** Do not edit manually unless you know what you are doing.
+    - **View/Set specific models via `task-master models` command or `models` MCP tool.**
+    - Created automatically when you run `task-master models --setup` for the first time or during tagged system migration.
 
 2.  **Environment Variables (`.env` / `mcp.json`):**
-    *   Used **only** for sensitive API keys and specific endpoint URLs.
-    *   Place API keys (one per provider) in a `.env` file in the project root for CLI usage.
-    *   For MCP/VS Code integration, configure these keys in the `env` section of `.vscode/mcp.json`.
-    *   Available keys/variables: See `assets/env.example` or the Configuration section in the command reference (previously linked to `taskmaster.md`).
+    - Used **only** for sensitive API keys and specific endpoint URLs.
+    - Place API keys (one per provider) in a `.env` file in the project root for CLI usage.
+    - For MCP/VS Code integration, configure these keys in the `env` section of `.vscode/mcp.json`.
+    - Available keys/variables: See `assets/env.example` or the Configuration section in the command reference (previously linked to `taskmaster.md`).
 
 3.  **`.taskmaster/state.json` File (Tagged System State):**
-    *   Tracks current tag context and migration status.
-    *   Automatically created during tagged system migration.
-    *   Contains: `currentTag`, `lastSwitched`, `migrationNoticeShown`.
+    - Tracks current tag context and migration status.
+    - Automatically created during tagged system migration.
+    - Contains: `currentTag`, `lastSwitched`, `migrationNoticeShown`.
 
 **Important:** Non-API key settings (like model selections, `MAX_TOKENS`, `TASKMASTER_LOG_LEVEL`) are **no longer configured via environment variables**. Use the `task-master models` command (or `--setup` for interactive configuration) or the `models` MCP tool.
 **If AI commands FAIL in MCP** verify that the API key for the selected provider is present in the `env` section of `.vscode/mcp.json`.
@@ -1567,10 +1594,10 @@ Taskmaster supports multiple AI coding assistant rule sets that can be configure
 - The command identifies tasks with all dependencies satisfied
 - Tasks are prioritized by priority level, dependency count, and ID
 - The command shows comprehensive task information including:
-    - Basic task details and description
-    - Implementation details
-    - Subtasks (if they exist)
-    - Contextual suggested actions
+  - Basic task details and description
+  - Implementation details
+  - Subtasks (if they exist)
+  - Contextual suggested actions
 - Recommended before starting any new development work
 - Respects your project's dependency structure
 - Ensures tasks are completed in the appropriate sequence
@@ -1600,7 +1627,7 @@ Taskmaster supports multiple AI coding assistant rule sets that can be configure
 - Use `move_task` / `task-master move --from=<id> --to=<id>` to move tasks or subtasks within the hierarchy
 - This command supports several use cases:
   - Moving a standalone task to become a subtask (e.g., `--from=5 --to=7`)
-  - Moving a subtask to become a standalone task (e.g., `--from=5.2 --to=7`) 
+  - Moving a subtask to become a standalone task (e.g., `--from=5.2 --to=7`)
   - Moving a subtask to a different parent (e.g., `--from=5.2 --to=7.3`)
   - Reordering subtasks within the same parent (e.g., `--from=5.2 --to=5.4`)
   - Moving a task to a new, non-existent ID position (e.g., `--from=5 --to=25`)
@@ -1619,71 +1646,73 @@ Taskmaster supports multiple AI coding assistant rule sets that can be configure
 Once a task has been broken down into subtasks using `expand_task` or similar methods, follow this iterative process for implementation:
 
 1.  **Understand the Goal (Preparation):**
-    *   Use `get_task` / `task-master show <subtaskId>` (see @`taskmaster.md`) to thoroughly understand the specific goals and requirements of the subtask.
+    - Use `get_task` / `task-master show <subtaskId>` (see @`taskmaster.md`) to thoroughly understand the specific goals and requirements of the subtask.
 
 2.  **Initial Exploration & Planning (Iteration 1):**
-    *   This is the first attempt at creating a concrete implementation plan.
-    *   Explore the codebase to identify the precise files, functions, and even specific lines of code that will need modification.
-    *   Determine the intended code changes (diffs) and their locations.
-    *   Gather *all* relevant details from this exploration phase.
+    - This is the first attempt at creating a concrete implementation plan.
+    - Explore the codebase to identify the precise files, functions, and even specific lines of code that will need modification.
+    - Determine the intended code changes (diffs) and their locations.
+    - Gather _all_ relevant details from this exploration phase.
 
 3.  **Log the Plan:**
-    *   Run `update_subtask` / `task-master update-subtask --id=<subtaskId> --prompt='<detailed plan>'`.
-    *   Provide the *complete and detailed* findings from the exploration phase in the prompt. Include file paths, line numbers, proposed diffs, reasoning, and any potential challenges identified. Do not omit details. The goal is to create a rich, timestamped log within the subtask's `details`.
+    - Run `update_subtask` / `task-master update-subtask --id=<subtaskId> --prompt='<detailed plan>'`.
+    - Provide the _complete and detailed_ findings from the exploration phase in the prompt. Include file paths, line numbers, proposed diffs, reasoning, and any potential challenges identified. Do not omit details. The goal is to create a rich, timestamped log within the subtask's `details`.
 
 4.  **Verify the Plan:**
-    *   Run `get_task` / `task-master show <subtaskId>` again to confirm that the detailed implementation plan has been successfully appended to the subtask's details.
+    - Run `get_task` / `task-master show <subtaskId>` again to confirm that the detailed implementation plan has been successfully appended to the subtask's details.
 
 5.  **Begin Implementation:**
-    *   Set the subtask status using `set_task_status` / `task-master set-status --id=<subtaskId> --status=in-progress`.
-    *   Start coding based on the logged plan.
+    - Set the subtask status using `set_task_status` / `task-master set-status --id=<subtaskId> --status=in-progress`.
+    - Start coding based on the logged plan.
 
 6.  **Refine and Log Progress (Iteration 2+):**
-    *   As implementation progresses, you will encounter challenges, discover nuances, or confirm successful approaches.
-    *   **Before appending new information**: Briefly review the *existing* details logged in the subtask (using `get_task` or recalling from context) to ensure the update adds fresh insights and avoids redundancy.
-    *   **Regularly** use `update_subtask` / `task-master update-subtask --id=<subtaskId> --prompt='<update details>\n- What worked...\n- What didn't work...'` to append new findings.
-    *   **Crucially, log:**
-        *   What worked ("fundamental truths" discovered).
-        *   What didn't work and why (to avoid repeating mistakes).
-        *   Specific code snippets or configurations that were successful.
-        *   Decisions made, especially if confirmed with user input.
-        *   Any deviations from the initial plan and the reasoning.
-    *   The objective is to continuously enrich the subtask's details, creating a log of the implementation journey that helps the AI (and human developers) learn, adapt, and avoid repeating errors.
+    - As implementation progresses, you will encounter challenges, discover nuances, or confirm successful approaches.
+    - **Before appending new information**: Briefly review the _existing_ details logged in the subtask (using `get_task` or recalling from context) to ensure the update adds fresh insights and avoids redundancy.
+    - **Regularly** use `update_subtask` / `task-master update-subtask --id=<subtaskId> --prompt='<update details>\n- What worked...\n- What didn't work...'` to append new findings.
+    - **Crucially, log:**
+      - What worked ("fundamental truths" discovered).
+      - What didn't work and why (to avoid repeating mistakes).
+      - Specific code snippets or configurations that were successful.
+      - Decisions made, especially if confirmed with user input.
+      - Any deviations from the initial plan and the reasoning.
+    - The objective is to continuously enrich the subtask's details, creating a log of the implementation journey that helps the AI (and human developers) learn, adapt, and avoid repeating errors.
 
 7.  **Review & Update Rules (Post-Implementation):**
-    *   Once the implementation for the subtask is functionally complete, review all code changes and the relevant chat history.
-    *   Identify any new or modified code patterns, conventions, or best practices established during the implementation.
-    *   Create new or update existing rules following internal guidelines (previously linked to `cursor_rules.md` and `self_improve.md`).
+    - Once the implementation for the subtask is functionally complete, review all code changes and the relevant chat history.
+    - Identify any new or modified code patterns, conventions, or best practices established during the implementation.
+    - Create new or update existing rules following internal guidelines (previously linked to `cursor_rules.md` and `self_improve.md`).
 
 8.  **Mark Task Complete:**
-    *   After verifying the implementation and updating any necessary rules, mark the subtask as completed: `set_task_status` / `task-master set-status --id=<subtaskId> --status=done`.
+    - After verifying the implementation and updating any necessary rules, mark the subtask as completed: `set_task_status` / `task-master set-status --id=<subtaskId> --status=done`.
 
 9.  **Commit Changes (If using Git):**
-    *   Stage the relevant code changes and any updated/new rule files (`git add .`).
-    *   Craft a comprehensive Git commit message summarizing the work done for the subtask, including both code implementation and any rule adjustments.
-    *   Execute the commit command directly in the terminal (e.g., `git commit -m 'feat(module): Implement feature X for subtask <subtaskId>\n\n- Details about changes...\n- Updated rule Y for pattern Z'`).
-    *   Consider if a Changeset is needed according to internal versioning guidelines (previously linked to `changeset.md`). If so, run `npm run changeset`, stage the generated file, and amend the commit or create a new one.
+    - Stage the relevant code changes and any updated/new rule files (`git add .`).
+    - Craft a comprehensive Git commit message summarizing the work done for the subtask, including both code implementation and any rule adjustments.
+    - Execute the commit command directly in the terminal (e.g., `git commit -m 'feat(module): Implement feature X for subtask <subtaskId>\n\n- Details about changes...\n- Updated rule Y for pattern Z'`).
+    - Consider if a Changeset is needed according to internal versioning guidelines (previously linked to `changeset.md`). If so, run `npm run changeset`, stage the generated file, and amend the commit or create a new one.
 
 10. **Proceed to Next Subtask:**
-    *   Identify the next subtask (e.g., using `next_task` / `task-master next`).
+    - Identify the next subtask (e.g., using `next_task` / `task-master next`).
 
 ## Code Analysis & Refactoring Techniques
 
 - **Top-Level Function Search**:
-    - Useful for understanding module structure or planning refactors.
-    - Use grep/ripgrep to find exported functions/constants:
-      `rg "export (async function|function|const) \w+"` or similar patterns.
-    - Can help compare functions between files during migrations or identify potential naming conflicts.
+  - Useful for understanding module structure or planning refactors.
+  - Use grep/ripgrep to find exported functions/constants:
+    `rg "export (async function|function|const) \w+"` or similar patterns.
+  - Can help compare functions between files during migrations or identify potential naming conflicts.
 
 ---
-*This workflow provides a general guideline. Adapt it based on your specific project needs and team practices.*
+
+_This workflow provides a general guideline. Adapt it based on your specific project needs and team practices._
 ````
 
 ## File: .github/instructions/self_improve.md
+
 ````markdown
 ---
 description: Guidelines for continuously improving VS Code rules based on emerging code patterns and best practices.
-applyTo: "**/*"
+applyTo: '**/*'
 alwaysApply: true
 ---
 
@@ -1715,13 +1744,14 @@ alwaysApply: true
     - Implementation details have changed
 
 - **Example Pattern Recognition:**
+
   ```typescript
   // If you see repeated patterns like:
   const data = await prisma.user.findMany({
     select: { id: true, email: true },
-    where: { status: 'ACTIVE' }
+    where: { status: 'ACTIVE' },
   });
-  
+
   // Consider adding to [prisma.md](.github/instructions/prisma.md):
   // - Standard select fields
   // - Common where conditions
@@ -1752,14 +1782,15 @@ alwaysApply: true
   - Update references to external docs
   - Maintain links between related rules
   - Document breaking changes
-Follow [vscode_rules.md](.github/instructions/vscode_rules.md) for proper rule formatting and structure.
+    Follow [vscode_rules.md](.github/instructions/vscode_rules.md) for proper rule formatting and structure.
 ````
 
 ## File: .github/instructions/taskmaster.md
-````markdown
+
+```markdown
 ---
 description: Comprehensive reference for Taskmaster MCP tools and CLI commands.
-applyTo: "**/*"
+applyTo: '**/*'
 alwaysApply: true
 ---
 
@@ -1767,7 +1798,7 @@ alwaysApply: true
 
 This document provides a detailed reference for interacting with Taskmaster, covering both the recommended MCP tools, suitable for integrations like VS Code, and the corresponding `task-master` CLI commands, designed for direct user interaction or fallback.
 
-**Note:** For interacting with Taskmaster programmatically or via integrated tools, using the **MCP tools is strongly recommended** due to better performance, structured data, and error handling. The CLI commands serve as a user-friendly alternative and fallback. 
+**Note:** For interacting with Taskmaster programmatically or via integrated tools, using the **MCP tools is strongly recommended** due to better performance, structured data, and error handling. The CLI commands serve as a user-friendly alternative and fallback.
 
 **Important:** Several MCP tools involve AI processing... The AI-powered tools include `parse_prd`, `analyze_project_complexity`, `update_subtask`, `update_task`, `update`, `expand_all`, `expand_task`, and `add_task`.
 
@@ -1779,72 +1810,73 @@ This document provides a detailed reference for interacting with Taskmaster, cov
 
 ### 1. Initialize Project (`init`)
 
-*   **MCP Tool:** `initialize_project`
-*   **CLI Command:** `task-master init [options]`
-*   **Description:** `Set up the basic Taskmaster file structure and configuration in the current directory for a new project.`
-*   **Key CLI Options:**
-    *   `--name <name>`: `Set the name for your project in Taskmaster's configuration.`
-    *   `--description <text>`: `Provide a brief description for your project.`
-    *   `--version <version>`: `Set the initial version for your project, e.g., '0.1.0'.`
-    *   `-y, --yes`: `Initialize Taskmaster quickly using default settings without interactive prompts.`
-*   **Usage:** Run this once at the beginning of a new project.
-*   **MCP Variant Description:** `Set up the basic Taskmaster file structure and configuration in the current directory for a new project by running the 'task-master init' command.`
-*   **Key MCP Parameters/Options:**
-    *   `projectName`: `Set the name for your project.` (CLI: `--name <name>`)
-    *   `projectDescription`: `Provide a brief description for your project.` (CLI: `--description <text>`)
-    *   `projectVersion`: `Set the initial version for your project, e.g., '0.1.0'.` (CLI: `--version <version>`)
-    *   `authorName`: `Author name.` (CLI: `--author <author>`)
-    *   `skipInstall`: `Skip installing dependencies. Default is false.` (CLI: `--skip-install`)
-    *   `addAliases`: `Add shell aliases tm and taskmaster. Default is false.` (CLI: `--aliases`)
-    *   `yes`: `Skip prompts and use defaults/provided arguments. Default is false.` (CLI: `-y, --yes`)
-*   **Usage:** Run this once at the beginning of a new project, typically via an integrated tool like VS Code. Operates on the current working directory of the MCP server. 
-*   **Important:** Once complete, you *MUST* parse a prd in order to generate tasks. There will be no tasks files until then. The next step after initializing should be to create a PRD using the example PRD in .taskmaster/templates/example_prd.txt. 
-*   **Tagging:** Use the `--tag` option to parse the PRD into a specific, non-default tag context. If the tag doesn't exist, it will be created automatically. Example: `task-master parse-prd spec.txt --tag=new-feature`.
+- **MCP Tool:** `initialize_project`
+- **CLI Command:** `task-master init [options]`
+- **Description:** `Set up the basic Taskmaster file structure and configuration in the current directory for a new project.`
+- **Key CLI Options:**
+  - `--name <name>`: `Set the name for your project in Taskmaster's configuration.`
+  - `--description <text>`: `Provide a brief description for your project.`
+  - `--version <version>`: `Set the initial version for your project, e.g., '0.1.0'.`
+  - `-y, --yes`: `Initialize Taskmaster quickly using default settings without interactive prompts.`
+- **Usage:** Run this once at the beginning of a new project.
+- **MCP Variant Description:** `Set up the basic Taskmaster file structure and configuration in the current directory for a new project by running the 'task-master init' command.`
+- **Key MCP Parameters/Options:**
+  - `projectName`: `Set the name for your project.` (CLI: `--name <name>`)
+  - `projectDescription`: `Provide a brief description for your project.` (CLI: `--description <text>`)
+  - `projectVersion`: `Set the initial version for your project, e.g., '0.1.0'.` (CLI: `--version <version>`)
+  - `authorName`: `Author name.` (CLI: `--author <author>`)
+  - `skipInstall`: `Skip installing dependencies. Default is false.` (CLI: `--skip-install`)
+  - `addAliases`: `Add shell aliases tm and taskmaster. Default is false.` (CLI: `--aliases`)
+  - `yes`: `Skip prompts and use defaults/provided arguments. Default is false.` (CLI: `-y, --yes`)
+- **Usage:** Run this once at the beginning of a new project, typically via an integrated tool like VS Code. Operates on the current working directory of the MCP server.
+- **Important:** Once complete, you _MUST_ parse a prd in order to generate tasks. There will be no tasks files until then. The next step after initializing should be to create a PRD using the example PRD in .taskmaster/templates/example_prd.txt.
+- **Tagging:** Use the `--tag` option to parse the PRD into a specific, non-default tag context. If the tag doesn't exist, it will be created automatically. Example: `task-master parse-prd spec.txt --tag=new-feature`.
 
 ### 2. Parse PRD (`parse_prd`)
 
-*   **MCP Tool:** `parse_prd`
-*   **CLI Command:** `task-master parse-prd [file] [options]`
-*   **Description:** `Parse a Product Requirements Document, PRD, or text file with Taskmaster to automatically generate an initial set of tasks in tasks.json.`
-*   **Key Parameters/Options:**
-    *   `input`: `Path to your PRD or requirements text file that Taskmaster should parse for tasks.` (CLI: `[file]` positional or `-i, --input <file>`)
-    *   `output`: `Specify where Taskmaster should save the generated 'tasks.json' file. Defaults to '.taskmaster/tasks/tasks.json'.` (CLI: `-o, --output <file>`)
-    *   `numTasks`: `Approximate number of top-level tasks Taskmaster should aim to generate from the document.` (CLI: `-n, --num-tasks <number>`)
-    *   `force`: `Use this to allow Taskmaster to overwrite an existing 'tasks.json' without asking for confirmation.` (CLI: `-f, --force`)
-*   **Usage:** Useful for bootstrapping a project from an existing requirements document.
-*   **Notes:** Task Master will strictly adhere to any specific requirements mentioned in the PRD, such as libraries, database schemas, frameworks, tech stacks, etc., while filling in any gaps where the PRD isn't fully specified. Tasks are designed to provide the most direct implementation path while avoiding over-engineering.
-*   **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress. If the user does not have a PRD, suggest discussing their idea and then use the example PRD in `.taskmaster/templates/example_prd.txt` as a template for creating the PRD based on their idea, for use with `parse-prd`.
+- **MCP Tool:** `parse_prd`
+- **CLI Command:** `task-master parse-prd [file] [options]`
+- **Description:** `Parse a Product Requirements Document, PRD, or text file with Taskmaster to automatically generate an initial set of tasks in tasks.json.`
+- **Key Parameters/Options:**
+  - `input`: `Path to your PRD or requirements text file that Taskmaster should parse for tasks.` (CLI: `[file]` positional or `-i, --input <file>`)
+  - `output`: `Specify where Taskmaster should save the generated 'tasks.json' file. Defaults to '.taskmaster/tasks/tasks.json'.` (CLI: `-o, --output <file>`)
+  - `numTasks`: `Approximate number of top-level tasks Taskmaster should aim to generate from the document.` (CLI: `-n, --num-tasks <number>`)
+  - `force`: `Use this to allow Taskmaster to overwrite an existing 'tasks.json' without asking for confirmation.` (CLI: `-f, --force`)
+- **Usage:** Useful for bootstrapping a project from an existing requirements document.
+- **Notes:** Task Master will strictly adhere to any specific requirements mentioned in the PRD, such as libraries, database schemas, frameworks, tech stacks, etc., while filling in any gaps where the PRD isn't fully specified. Tasks are designed to provide the most direct implementation path while avoiding over-engineering.
+- **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress. If the user does not have a PRD, suggest discussing their idea and then use the example PRD in `.taskmaster/templates/example_prd.txt` as a template for creating the PRD based on their idea, for use with `parse-prd`.
 
 ---
 
 ## AI Model Configuration
 
 ### 2. Manage Models (`models`)
-*   **MCP Tool:** `models`
-*   **CLI Command:** `task-master models [options]`
-*   **Description:** `View the current AI model configuration or set specific models for different roles (main, research, fallback). Allows setting custom model IDs for Ollama and OpenRouter.`
-*   **Key MCP Parameters/Options:**
-    *   `setMain <model_id>`: `Set the primary model ID for task generation/updates.` (CLI: `--set-main <model_id>`)
-    *   `setResearch <model_id>`: `Set the model ID for research-backed operations.` (CLI: `--set-research <model_id>`)
-    *   `setFallback <model_id>`: `Set the model ID to use if the primary fails.` (CLI: `--set-fallback <model_id>`)
-    *   `ollama <boolean>`: `Indicates the set model ID is a custom Ollama model.` (CLI: `--ollama`)
-    *   `openrouter <boolean>`: `Indicates the set model ID is a custom OpenRouter model.` (CLI: `--openrouter`)
-    *   `listAvailableModels <boolean>`: `If true, lists available models not currently assigned to a role.` (CLI: No direct equivalent; CLI lists available automatically)
-    *   `projectRoot <string>`: `Optional. Absolute path to the project root directory.` (CLI: Determined automatically)
-*   **Key CLI Options:**
-    *   `--set-main <model_id>`: `Set the primary model.`
-    *   `--set-research <model_id>`: `Set the research model.`
-    *   `--set-fallback <model_id>`: `Set the fallback model.`
-    *   `--ollama`: `Specify that the provided model ID is for Ollama (use with --set-*).`
-    *   `--openrouter`: `Specify that the provided model ID is for OpenRouter (use with --set-*). Validates against OpenRouter API.`
-    *   `--bedrock`: `Specify that the provided model ID is for AWS Bedrock (use with --set-*).`
-    *   `--setup`: `Run interactive setup to configure models, including custom Ollama/OpenRouter IDs.`
-*   **Usage (MCP):** Call without set flags to get current config. Use `setMain`, `setResearch`, or `setFallback` with a valid model ID to update the configuration. Use `listAvailableModels: true` to get a list of unassigned models. To set a custom model, provide the model ID and set `ollama: true` or `openrouter: true`.
-*   **Usage (CLI):** Run without flags to view current configuration and available models. Use set flags to update specific roles. Use `--setup` for guided configuration, including custom models. To set a custom model via flags, use `--set-<role>=<model_id>` along with either `--ollama` or `--openrouter`.
-*   **Notes:** Configuration is stored in `.taskmaster/config.json` in the project root. This command/tool modifies that file. Use `listAvailableModels` or `task-master models` to see internally supported models. OpenRouter custom models are validated against their live API. Ollama custom models are not validated live.
-*   **API note:** API keys for selected AI providers (based on their model) need to exist in the mcp.json file to be accessible in MCP context. The API keys must be present in the local .env file for the CLI to be able to read them.
-*   **Model costs:** The costs in supported models are expressed in dollars. An input/output value of 3 is $3.00. A value of 0.8 is $0.80. 
-*   **Warning:** DO NOT MANUALLY EDIT THE .taskmaster/config.json FILE. Use the included commands either in the MCP or CLI format as needed. Always prioritize MCP tools when available and use the CLI as a fallback.
+
+- **MCP Tool:** `models`
+- **CLI Command:** `task-master models [options]`
+- **Description:** `View the current AI model configuration or set specific models for different roles (main, research, fallback). Allows setting custom model IDs for Ollama and OpenRouter.`
+- **Key MCP Parameters/Options:**
+  - `setMain <model_id>`: `Set the primary model ID for task generation/updates.` (CLI: `--set-main <model_id>`)
+  - `setResearch <model_id>`: `Set the model ID for research-backed operations.` (CLI: `--set-research <model_id>`)
+  - `setFallback <model_id>`: `Set the model ID to use if the primary fails.` (CLI: `--set-fallback <model_id>`)
+  - `ollama <boolean>`: `Indicates the set model ID is a custom Ollama model.` (CLI: `--ollama`)
+  - `openrouter <boolean>`: `Indicates the set model ID is a custom OpenRouter model.` (CLI: `--openrouter`)
+  - `listAvailableModels <boolean>`: `If true, lists available models not currently assigned to a role.` (CLI: No direct equivalent; CLI lists available automatically)
+  - `projectRoot <string>`: `Optional. Absolute path to the project root directory.` (CLI: Determined automatically)
+- **Key CLI Options:**
+  - `--set-main <model_id>`: `Set the primary model.`
+  - `--set-research <model_id>`: `Set the research model.`
+  - `--set-fallback <model_id>`: `Set the fallback model.`
+  - `--ollama`: `Specify that the provided model ID is for Ollama (use with --set-*).`
+  - `--openrouter`: `Specify that the provided model ID is for OpenRouter (use with --set-*). Validates against OpenRouter API.`
+  - `--bedrock`: `Specify that the provided model ID is for AWS Bedrock (use with --set-*).`
+  - `--setup`: `Run interactive setup to configure models, including custom Ollama/OpenRouter IDs.`
+- **Usage (MCP):** Call without set flags to get current config. Use `setMain`, `setResearch`, or `setFallback` with a valid model ID to update the configuration. Use `listAvailableModels: true` to get a list of unassigned models. To set a custom model, provide the model ID and set `ollama: true` or `openrouter: true`.
+- **Usage (CLI):** Run without flags to view current configuration and available models. Use set flags to update specific roles. Use `--setup` for guided configuration, including custom models. To set a custom model via flags, use `--set-<role>=<model_id>` along with either `--ollama` or `--openrouter`.
+- **Notes:** Configuration is stored in `.taskmaster/config.json` in the project root. This command/tool modifies that file. Use `listAvailableModels` or `task-master models` to see internally supported models. OpenRouter custom models are validated against their live API. Ollama custom models are not validated live.
+- **API note:** API keys for selected AI providers (based on their model) need to exist in the mcp.json file to be accessible in MCP context. The API keys must be present in the local .env file for the CLI to be able to read them.
+- **Model costs:** The costs in supported models are expressed in dollars. An input/output value of 3 is $3.00. A value of 0.8 is $0.80.
+- **Warning:** DO NOT MANUALLY EDIT THE .taskmaster/config.json FILE. Use the included commands either in the MCP or CLI format as needed. Always prioritize MCP tools when available and use the CLI as a fallback.
 
 ---
 
@@ -1852,37 +1884,37 @@ This document provides a detailed reference for interacting with Taskmaster, cov
 
 ### 3. Get Tasks (`get_tasks`)
 
-*   **MCP Tool:** `get_tasks`
-*   **CLI Command:** `task-master list [options]`
-*   **Description:** `List your Taskmaster tasks, optionally filtering by status and showing subtasks.`
-*   **Key Parameters/Options:**
-    *   `status`: `Show only Taskmaster tasks matching this status (or multiple statuses, comma-separated), e.g., 'pending' or 'done,in-progress'.` (CLI: `-s, --status <status>`)
-    *   `withSubtasks`: `Include subtasks indented under their parent tasks in the list.` (CLI: `--with-subtasks`)
-    *   `tag`: `Specify which tag context to list tasks from. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Get an overview of the project status, often used at the start of a work session.
+- **MCP Tool:** `get_tasks`
+- **CLI Command:** `task-master list [options]`
+- **Description:** `List your Taskmaster tasks, optionally filtering by status and showing subtasks.`
+- **Key Parameters/Options:**
+  - `status`: `Show only Taskmaster tasks matching this status (or multiple statuses, comma-separated), e.g., 'pending' or 'done,in-progress'.` (CLI: `-s, --status <status>`)
+  - `withSubtasks`: `Include subtasks indented under their parent tasks in the list.` (CLI: `--with-subtasks`)
+  - `tag`: `Specify which tag context to list tasks from. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Get an overview of the project status, often used at the start of a work session.
 
 ### 4. Get Next Task (`next_task`)
 
-*   **MCP Tool:** `next_task`
-*   **CLI Command:** `task-master next [options]`
-*   **Description:** `Ask Taskmaster to show the next available task you can work on, based on status and completed dependencies.`
-*   **Key Parameters/Options:**
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-    *   `tag`: `Specify which tag context to use. Defaults to the current active tag.` (CLI: `--tag <name>`)
-*   **Usage:** Identify what to work on next according to the plan.
+- **MCP Tool:** `next_task`
+- **CLI Command:** `task-master next [options]`
+- **Description:** `Ask Taskmaster to show the next available task you can work on, based on status and completed dependencies.`
+- **Key Parameters/Options:**
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+  - `tag`: `Specify which tag context to use. Defaults to the current active tag.` (CLI: `--tag <name>`)
+- **Usage:** Identify what to work on next according to the plan.
 
 ### 5. Get Task Details (`get_task`)
 
-*   **MCP Tool:** `get_task`
-*   **CLI Command:** `task-master show [id] [options]`
-*   **Description:** `Display detailed information for one or more specific Taskmaster tasks or subtasks by ID.`
-*   **Key Parameters/Options:**
-    *   `id`: `Required. The ID of the Taskmaster task (e.g., '15'), subtask (e.g., '15.2'), or a comma-separated list of IDs ('1,5,10.2') you want to view.` (CLI: `[id]` positional or `-i, --id <id>`)
-    *   `tag`: `Specify which tag context to get the task(s) from. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Understand the full details for a specific task. When multiple IDs are provided, a summary table is shown.
-*   **CRITICAL INFORMATION** If you need to collect information from multiple tasks, use comma-separated IDs (i.e. 1,2,3) to receive an array of tasks. Do not needlessly get tasks one at a time if you need to get many as that is wasteful.
+- **MCP Tool:** `get_task`
+- **CLI Command:** `task-master show [id] [options]`
+- **Description:** `Display detailed information for one or more specific Taskmaster tasks or subtasks by ID.`
+- **Key Parameters/Options:**
+  - `id`: `Required. The ID of the Taskmaster task (e.g., '15'), subtask (e.g., '15.2'), or a comma-separated list of IDs ('1,5,10.2') you want to view.` (CLI: `[id]` positional or `-i, --id <id>`)
+  - `tag`: `Specify which tag context to get the task(s) from. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Understand the full details for a specific task. When multiple IDs are provided, a summary table is shown.
+- **CRITICAL INFORMATION** If you need to collect information from multiple tasks, use comma-separated IDs (i.e. 1,2,3) to receive an array of tasks. Do not needlessly get tasks one at a time if you need to get many as that is wasteful.
 
 ---
 
@@ -1890,104 +1922,104 @@ This document provides a detailed reference for interacting with Taskmaster, cov
 
 ### 6. Add Task (`add_task`)
 
-*   **MCP Tool:** `add_task`
-*   **CLI Command:** `task-master add-task [options]`
-*   **Description:** `Add a new task to Taskmaster by describing it; AI will structure it.`
-*   **Key Parameters/Options:**
-    *   `prompt`: `Required. Describe the new task you want Taskmaster to create, e.g., "Implement user authentication using JWT".` (CLI: `-p, --prompt <text>`)
-    *   `dependencies`: `Specify the IDs of any Taskmaster tasks that must be completed before this new one can start, e.g., '12,14'.` (CLI: `-d, --dependencies <ids>`)
-    *   `priority`: `Set the priority for the new task: 'high', 'medium', or 'low'. Default is 'medium'.` (CLI: `--priority <priority>`)
-    *   `research`: `Enable Taskmaster to use the research role for potentially more informed task creation.` (CLI: `-r, --research`)
-    *   `tag`: `Specify which tag context to add the task to. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Quickly add newly identified tasks during development.
-*   **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
+- **MCP Tool:** `add_task`
+- **CLI Command:** `task-master add-task [options]`
+- **Description:** `Add a new task to Taskmaster by describing it; AI will structure it.`
+- **Key Parameters/Options:**
+  - `prompt`: `Required. Describe the new task you want Taskmaster to create, e.g., "Implement user authentication using JWT".` (CLI: `-p, --prompt <text>`)
+  - `dependencies`: `Specify the IDs of any Taskmaster tasks that must be completed before this new one can start, e.g., '12,14'.` (CLI: `-d, --dependencies <ids>`)
+  - `priority`: `Set the priority for the new task: 'high', 'medium', or 'low'. Default is 'medium'.` (CLI: `--priority <priority>`)
+  - `research`: `Enable Taskmaster to use the research role for potentially more informed task creation.` (CLI: `-r, --research`)
+  - `tag`: `Specify which tag context to add the task to. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Quickly add newly identified tasks during development.
+- **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
 
 ### 7. Add Subtask (`add_subtask`)
 
-*   **MCP Tool:** `add_subtask`
-*   **CLI Command:** `task-master add-subtask [options]`
-*   **Description:** `Add a new subtask to a Taskmaster parent task, or convert an existing task into a subtask.`
-*   **Key Parameters/Options:**
-    *   `id` / `parent`: `Required. The ID of the Taskmaster task that will be the parent.` (MCP: `id`, CLI: `-p, --parent <id>`)
-    *   `taskId`: `Use this if you want to convert an existing top-level Taskmaster task into a subtask of the specified parent.` (CLI: `-i, --task-id <id>`)
-    *   `title`: `Required if not using taskId. The title for the new subtask Taskmaster should create.` (CLI: `-t, --title <title>`)
-    *   `description`: `A brief description for the new subtask.` (CLI: `-d, --description <text>`)
-    *   `details`: `Provide implementation notes or details for the new subtask.` (CLI: `--details <text>`)
-    *   `dependencies`: `Specify IDs of other tasks or subtasks, e.g., '15' or '16.1', that must be done before this new subtask.` (CLI: `--dependencies <ids>`)
-    *   `status`: `Set the initial status for the new subtask. Default is 'pending'.` (CLI: `-s, --status <status>`)
-    *   `skipGenerate`: `Prevent Taskmaster from automatically regenerating markdown task files after adding the subtask.` (CLI: `--skip-generate`)
-    *   `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Break down tasks manually or reorganize existing tasks.
+- **MCP Tool:** `add_subtask`
+- **CLI Command:** `task-master add-subtask [options]`
+- **Description:** `Add a new subtask to a Taskmaster parent task, or convert an existing task into a subtask.`
+- **Key Parameters/Options:**
+  - `id` / `parent`: `Required. The ID of the Taskmaster task that will be the parent.` (MCP: `id`, CLI: `-p, --parent <id>`)
+  - `taskId`: `Use this if you want to convert an existing top-level Taskmaster task into a subtask of the specified parent.` (CLI: `-i, --task-id <id>`)
+  - `title`: `Required if not using taskId. The title for the new subtask Taskmaster should create.` (CLI: `-t, --title <title>`)
+  - `description`: `A brief description for the new subtask.` (CLI: `-d, --description <text>`)
+  - `details`: `Provide implementation notes or details for the new subtask.` (CLI: `--details <text>`)
+  - `dependencies`: `Specify IDs of other tasks or subtasks, e.g., '15' or '16.1', that must be done before this new subtask.` (CLI: `--dependencies <ids>`)
+  - `status`: `Set the initial status for the new subtask. Default is 'pending'.` (CLI: `-s, --status <status>`)
+  - `skipGenerate`: `Prevent Taskmaster from automatically regenerating markdown task files after adding the subtask.` (CLI: `--skip-generate`)
+  - `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Break down tasks manually or reorganize existing tasks.
 
 ### 8. Update Tasks (`update`)
 
-*   **MCP Tool:** `update`
-*   **CLI Command:** `task-master update [options]`
-*   **Description:** `Update multiple upcoming tasks in Taskmaster based on new context or changes, starting from a specific task ID.`
-*   **Key Parameters/Options:**
-    *   `from`: `Required. The ID of the first task Taskmaster should update. All tasks with this ID or higher that are not 'done' will be considered.` (CLI: `--from <id>`)
-    *   `prompt`: `Required. Explain the change or new context for Taskmaster to apply to the tasks, e.g., "We are now using React Query instead of Redux Toolkit for data fetching".` (CLI: `-p, --prompt <text>`)
-    *   `research`: `Enable Taskmaster to use the research role for more informed updates. Requires appropriate API key.` (CLI: `-r, --research`)
-    *   `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Handle significant implementation changes or pivots that affect multiple future tasks. Example CLI: `task-master update --from='18' --prompt='Switching to React Query.\nNeed to refactor data fetching...'`
-*   **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
+- **MCP Tool:** `update`
+- **CLI Command:** `task-master update [options]`
+- **Description:** `Update multiple upcoming tasks in Taskmaster based on new context or changes, starting from a specific task ID.`
+- **Key Parameters/Options:**
+  - `from`: `Required. The ID of the first task Taskmaster should update. All tasks with this ID or higher that are not 'done' will be considered.` (CLI: `--from <id>`)
+  - `prompt`: `Required. Explain the change or new context for Taskmaster to apply to the tasks, e.g., "We are now using React Query instead of Redux Toolkit for data fetching".` (CLI: `-p, --prompt <text>`)
+  - `research`: `Enable Taskmaster to use the research role for more informed updates. Requires appropriate API key.` (CLI: `-r, --research`)
+  - `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Handle significant implementation changes or pivots that affect multiple future tasks. Example CLI: `task-master update --from='18' --prompt='Switching to React Query.\nNeed to refactor data fetching...'`
+- **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
 
 ### 9. Update Task (`update_task`)
 
-*   **MCP Tool:** `update_task`
-*   **CLI Command:** `task-master update-task [options]`
-*   **Description:** `Modify a specific Taskmaster task by ID, incorporating new information or changes. By default, this replaces the existing task details.`
-*   **Key Parameters/Options:**
-    *   `id`: `Required. The specific ID of the Taskmaster task, e.g., '15', you want to update.` (CLI: `-i, --id <id>`)
-    *   `prompt`: `Required. Explain the specific changes or provide the new information Taskmaster should incorporate into this task.` (CLI: `-p, --prompt <text>`)
-    *   `append`: `If true, appends the prompt content to the task's details with a timestamp, rather than replacing them. Behaves like update-subtask.` (CLI: `--append`)
-    *   `research`: `Enable Taskmaster to use the research role for more informed updates. Requires appropriate API key.` (CLI: `-r, --research`)
-    *   `tag`: `Specify which tag context the task belongs to. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Refine a specific task based on new understanding. Use `--append` to log progress without creating subtasks.
-*   **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
+- **MCP Tool:** `update_task`
+- **CLI Command:** `task-master update-task [options]`
+- **Description:** `Modify a specific Taskmaster task by ID, incorporating new information or changes. By default, this replaces the existing task details.`
+- **Key Parameters/Options:**
+  - `id`: `Required. The specific ID of the Taskmaster task, e.g., '15', you want to update.` (CLI: `-i, --id <id>`)
+  - `prompt`: `Required. Explain the specific changes or provide the new information Taskmaster should incorporate into this task.` (CLI: `-p, --prompt <text>`)
+  - `append`: `If true, appends the prompt content to the task's details with a timestamp, rather than replacing them. Behaves like update-subtask.` (CLI: `--append`)
+  - `research`: `Enable Taskmaster to use the research role for more informed updates. Requires appropriate API key.` (CLI: `-r, --research`)
+  - `tag`: `Specify which tag context the task belongs to. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Refine a specific task based on new understanding. Use `--append` to log progress without creating subtasks.
+- **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
 
 ### 10. Update Subtask (`update_subtask`)
 
-*   **MCP Tool:** `update_subtask`
-*   **CLI Command:** `task-master update-subtask [options]`
-*   **Description:** `Append timestamped notes or details to a specific Taskmaster subtask without overwriting existing content. Intended for iterative implementation logging.`
-*   **Key Parameters/Options:**
-    *   `id`: `Required. The ID of the Taskmaster subtask, e.g., '5.2', to update with new information.` (CLI: `-i, --id <id>`)
-    *   `prompt`: `Required. The information, findings, or progress notes to append to the subtask's details with a timestamp.` (CLI: `-p, --prompt <text>`)
-    *   `research`: `Enable Taskmaster to use the research role for more informed updates. Requires appropriate API key.` (CLI: `-r, --research`)
-    *   `tag`: `Specify which tag context the subtask belongs to. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Log implementation progress, findings, and discoveries during subtask development. Each update is timestamped and appended to preserve the implementation journey.
-*   **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
+- **MCP Tool:** `update_subtask`
+- **CLI Command:** `task-master update-subtask [options]`
+- **Description:** `Append timestamped notes or details to a specific Taskmaster subtask without overwriting existing content. Intended for iterative implementation logging.`
+- **Key Parameters/Options:**
+  - `id`: `Required. The ID of the Taskmaster subtask, e.g., '5.2', to update with new information.` (CLI: `-i, --id <id>`)
+  - `prompt`: `Required. The information, findings, or progress notes to append to the subtask's details with a timestamp.` (CLI: `-p, --prompt <text>`)
+  - `research`: `Enable Taskmaster to use the research role for more informed updates. Requires appropriate API key.` (CLI: `-r, --research`)
+  - `tag`: `Specify which tag context the subtask belongs to. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Log implementation progress, findings, and discoveries during subtask development. Each update is timestamped and appended to preserve the implementation journey.
+- **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
 
 ### 11. Set Task Status (`set_task_status`)
 
-*   **MCP Tool:** `set_task_status`
-*   **CLI Command:** `task-master set-status [options]`
-*   **Description:** `Update the status of one or more Taskmaster tasks or subtasks, e.g., 'pending', 'in-progress', 'done'.`
-*   **Key Parameters/Options:**
-    *   `id`: `Required. The ID(s) of the Taskmaster task(s) or subtask(s), e.g., '15', '15.2', or '16,17.1', to update.` (CLI: `-i, --id <id>`)
-    *   `status`: `Required. The new status to set, e.g., 'done', 'pending', 'in-progress', 'review', 'cancelled'.` (CLI: `-s, --status <status>`)
-    *   `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Mark progress as tasks move through the development cycle.
+- **MCP Tool:** `set_task_status`
+- **CLI Command:** `task-master set-status [options]`
+- **Description:** `Update the status of one or more Taskmaster tasks or subtasks, e.g., 'pending', 'in-progress', 'done'.`
+- **Key Parameters/Options:**
+  - `id`: `Required. The ID(s) of the Taskmaster task(s) or subtask(s), e.g., '15', '15.2', or '16,17.1', to update.` (CLI: `-i, --id <id>`)
+  - `status`: `Required. The new status to set, e.g., 'done', 'pending', 'in-progress', 'review', 'cancelled'.` (CLI: `-s, --status <status>`)
+  - `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Mark progress as tasks move through the development cycle.
 
 ### 12. Remove Task (`remove_task`)
 
-*   **MCP Tool:** `remove_task`
-*   **CLI Command:** `task-master remove-task [options]`
-*   **Description:** `Permanently remove a task or subtask from the Taskmaster tasks list.`
-*   **Key Parameters/Options:**
-    *   `id`: `Required. The ID of the Taskmaster task, e.g., '5', or subtask, e.g., '5.2', to permanently remove.` (CLI: `-i, --id <id>`)
-    *   `yes`: `Skip the confirmation prompt and immediately delete the task.` (CLI: `-y, --yes`)
-    *   `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Permanently delete tasks or subtasks that are no longer needed in the project.
-*   **Notes:** Use with caution as this operation cannot be undone. Consider using 'blocked', 'cancelled', or 'deferred' status instead if you just want to exclude a task from active planning but keep it for reference. The command automatically cleans up dependency references in other tasks.
+- **MCP Tool:** `remove_task`
+- **CLI Command:** `task-master remove-task [options]`
+- **Description:** `Permanently remove a task or subtask from the Taskmaster tasks list.`
+- **Key Parameters/Options:**
+  - `id`: `Required. The ID of the Taskmaster task, e.g., '5', or subtask, e.g., '5.2', to permanently remove.` (CLI: `-i, --id <id>`)
+  - `yes`: `Skip the confirmation prompt and immediately delete the task.` (CLI: `-y, --yes`)
+  - `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Permanently delete tasks or subtasks that are no longer needed in the project.
+- **Notes:** Use with caution as this operation cannot be undone. Consider using 'blocked', 'cancelled', or 'deferred' status instead if you just want to exclude a task from active planning but keep it for reference. The command automatically cleans up dependency references in other tasks.
 
 ---
 
@@ -1995,85 +2027,85 @@ This document provides a detailed reference for interacting with Taskmaster, cov
 
 ### 13. Expand Task (`expand_task`)
 
-*   **MCP Tool:** `expand_task`
-*   **CLI Command:** `task-master expand [options]`
-*   **Description:** `Use Taskmaster's AI to break down a complex task into smaller, manageable subtasks. Appends subtasks by default.`
-*   **Key Parameters/Options:**
-    *   `id`: `The ID of the specific Taskmaster task you want to break down into subtasks.` (CLI: `-i, --id <id>`)
-    *   `num`: `Optional: Suggests how many subtasks Taskmaster should aim to create. Uses complexity analysis/defaults otherwise.` (CLI: `-n, --num <number>`)
-    *   `research`: `Enable Taskmaster to use the research role for more informed subtask generation. Requires appropriate API key.` (CLI: `-r, --research`)
-    *   `prompt`: `Optional: Provide extra context or specific instructions to Taskmaster for generating the subtasks.` (CLI: `-p, --prompt <text>`)
-    *   `force`: `Optional: If true, clear existing subtasks before generating new ones. Default is false (append).` (CLI: `--force`)
-    *   `tag`: `Specify which tag context the task belongs to. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Generate a detailed implementation plan for a complex task before starting coding. Automatically uses complexity report recommendations if available and `num` is not specified.
-*   **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
+- **MCP Tool:** `expand_task`
+- **CLI Command:** `task-master expand [options]`
+- **Description:** `Use Taskmaster's AI to break down a complex task into smaller, manageable subtasks. Appends subtasks by default.`
+- **Key Parameters/Options:**
+  - `id`: `The ID of the specific Taskmaster task you want to break down into subtasks.` (CLI: `-i, --id <id>`)
+  - `num`: `Optional: Suggests how many subtasks Taskmaster should aim to create. Uses complexity analysis/defaults otherwise.` (CLI: `-n, --num <number>`)
+  - `research`: `Enable Taskmaster to use the research role for more informed subtask generation. Requires appropriate API key.` (CLI: `-r, --research`)
+  - `prompt`: `Optional: Provide extra context or specific instructions to Taskmaster for generating the subtasks.` (CLI: `-p, --prompt <text>`)
+  - `force`: `Optional: If true, clear existing subtasks before generating new ones. Default is false (append).` (CLI: `--force`)
+  - `tag`: `Specify which tag context the task belongs to. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Generate a detailed implementation plan for a complex task before starting coding. Automatically uses complexity report recommendations if available and `num` is not specified.
+- **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
 
 ### 14. Expand All Tasks (`expand_all`)
 
-*   **MCP Tool:** `expand_all`
-*   **CLI Command:** `task-master expand --all [options]` (Note: CLI uses the `expand` command with the `--all` flag)
-*   **Description:** `Tell Taskmaster to automatically expand all eligible pending/in-progress tasks based on complexity analysis or defaults. Appends subtasks by default.`
-*   **Key Parameters/Options:**
-    *   `num`: `Optional: Suggests how many subtasks Taskmaster should aim to create per task.` (CLI: `-n, --num <number>`)
-    *   `research`: `Enable research role for more informed subtask generation. Requires appropriate API key.` (CLI: `-r, --research`)
-    *   `prompt`: `Optional: Provide extra context for Taskmaster to apply generally during expansion.` (CLI: `-p, --prompt <text>`)
-    *   `force`: `Optional: If true, clear existing subtasks before generating new ones for each eligible task. Default is false (append).` (CLI: `--force`)
-    *   `tag`: `Specify which tag context to expand. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Useful after initial task generation or complexity analysis to break down multiple tasks at once.
-*   **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
+- **MCP Tool:** `expand_all`
+- **CLI Command:** `task-master expand --all [options]` (Note: CLI uses the `expand` command with the `--all` flag)
+- **Description:** `Tell Taskmaster to automatically expand all eligible pending/in-progress tasks based on complexity analysis or defaults. Appends subtasks by default.`
+- **Key Parameters/Options:**
+  - `num`: `Optional: Suggests how many subtasks Taskmaster should aim to create per task.` (CLI: `-n, --num <number>`)
+  - `research`: `Enable research role for more informed subtask generation. Requires appropriate API key.` (CLI: `-r, --research`)
+  - `prompt`: `Optional: Provide extra context for Taskmaster to apply generally during expansion.` (CLI: `-p, --prompt <text>`)
+  - `force`: `Optional: If true, clear existing subtasks before generating new ones for each eligible task. Default is false (append).` (CLI: `--force`)
+  - `tag`: `Specify which tag context to expand. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Useful after initial task generation or complexity analysis to break down multiple tasks at once.
+- **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
 
 ### 15. Clear Subtasks (`clear_subtasks`)
 
-*   **MCP Tool:** `clear_subtasks`
-*   **CLI Command:** `task-master clear-subtasks [options]`
-*   **Description:** `Remove all subtasks from one or more specified Taskmaster parent tasks.`
-*   **Key Parameters/Options:**
-    *   `id`: `The ID(s) of the Taskmaster parent task(s) whose subtasks you want to remove, e.g., '15' or '16,18'. Required unless using 'all'.` (CLI: `-i, --id <ids>`)
-    *   `all`: `Tell Taskmaster to remove subtasks from all parent tasks.` (CLI: `--all`)
-    *   `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Used before regenerating subtasks with `expand_task` if the previous breakdown needs replacement.
+- **MCP Tool:** `clear_subtasks`
+- **CLI Command:** `task-master clear-subtasks [options]`
+- **Description:** `Remove all subtasks from one or more specified Taskmaster parent tasks.`
+- **Key Parameters/Options:**
+  - `id`: `The ID(s) of the Taskmaster parent task(s) whose subtasks you want to remove, e.g., '15' or '16,18'. Required unless using 'all'.` (CLI: `-i, --id <ids>`)
+  - `all`: `Tell Taskmaster to remove subtasks from all parent tasks.` (CLI: `--all`)
+  - `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Used before regenerating subtasks with `expand_task` if the previous breakdown needs replacement.
 
 ### 16. Remove Subtask (`remove_subtask`)
 
-*   **MCP Tool:** `remove_subtask`
-*   **CLI Command:** `task-master remove-subtask [options]`
-*   **Description:** `Remove a subtask from its Taskmaster parent, optionally converting it into a standalone task.`
-*   **Key Parameters/Options:**
-    *   `id`: `Required. The ID(s) of the Taskmaster subtask(s) to remove, e.g., '15.2' or '16.1,16.3'.` (CLI: `-i, --id <id>`)
-    *   `convert`: `If used, Taskmaster will turn the subtask into a regular top-level task instead of deleting it.` (CLI: `-c, --convert`)
-    *   `skipGenerate`: `Prevent Taskmaster from automatically regenerating markdown task files after removing the subtask.` (CLI: `--skip-generate`)
-    *   `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Delete unnecessary subtasks or promote a subtask to a top-level task.
+- **MCP Tool:** `remove_subtask`
+- **CLI Command:** `task-master remove-subtask [options]`
+- **Description:** `Remove a subtask from its Taskmaster parent, optionally converting it into a standalone task.`
+- **Key Parameters/Options:**
+  - `id`: `Required. The ID(s) of the Taskmaster subtask(s) to remove, e.g., '15.2' or '16.1,16.3'.` (CLI: `-i, --id <id>`)
+  - `convert`: `If used, Taskmaster will turn the subtask into a regular top-level task instead of deleting it.` (CLI: `-c, --convert`)
+  - `skipGenerate`: `Prevent Taskmaster from automatically regenerating markdown task files after removing the subtask.` (CLI: `--skip-generate`)
+  - `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Delete unnecessary subtasks or promote a subtask to a top-level task.
 
 ### 17. Move Task (`move_task`)
 
-*   **MCP Tool:** `move_task`
-*   **CLI Command:** `task-master move [options]`
-*   **Description:** `Move a task or subtask to a new position within the task hierarchy.`
-*   **Key Parameters/Options:**
-    *   `from`: `Required. ID of the task/subtask to move (e.g., "5" or "5.2"). Can be comma-separated for multiple tasks.` (CLI: `--from <id>`)
-    *   `to`: `Required. ID of the destination (e.g., "7" or "7.3"). Must match the number of source IDs if comma-separated.` (CLI: `--to <id>`)
-    *   `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Reorganize tasks by moving them within the hierarchy. Supports various scenarios like:
-    *   Moving a task to become a subtask
-    *   Moving a subtask to become a standalone task
-    *   Moving a subtask to a different parent
-    *   Reordering subtasks within the same parent
-    *   Moving a task to a new, non-existent ID (automatically creates placeholders)
-    *   Moving multiple tasks at once with comma-separated IDs
-*   **Validation Features:**
-    *   Allows moving tasks to non-existent destination IDs (creates placeholder tasks)
-    *   Prevents moving to existing task IDs that already have content (to avoid overwriting)
-    *   Validates that source tasks exist before attempting to move them
-    *   Maintains proper parent-child relationships
-*   **Example CLI:** `task-master move --from=5.2 --to=7.3` to move subtask 5.2 to become subtask 7.3.
-*   **Example Multi-Move:** `task-master move --from=10,11,12 --to=16,17,18` to move multiple tasks to new positions.
-*   **Common Use:** Resolving merge conflicts in tasks.json when multiple team members create tasks on different branches.
+- **MCP Tool:** `move_task`
+- **CLI Command:** `task-master move [options]`
+- **Description:** `Move a task or subtask to a new position within the task hierarchy.`
+- **Key Parameters/Options:**
+  - `from`: `Required. ID of the task/subtask to move (e.g., "5" or "5.2"). Can be comma-separated for multiple tasks.` (CLI: `--from <id>`)
+  - `to`: `Required. ID of the destination (e.g., "7" or "7.3"). Must match the number of source IDs if comma-separated.` (CLI: `--to <id>`)
+  - `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Reorganize tasks by moving them within the hierarchy. Supports various scenarios like:
+  - Moving a task to become a subtask
+  - Moving a subtask to become a standalone task
+  - Moving a subtask to a different parent
+  - Reordering subtasks within the same parent
+  - Moving a task to a new, non-existent ID (automatically creates placeholders)
+  - Moving multiple tasks at once with comma-separated IDs
+- **Validation Features:**
+  - Allows moving tasks to non-existent destination IDs (creates placeholder tasks)
+  - Prevents moving to existing task IDs that already have content (to avoid overwriting)
+  - Validates that source tasks exist before attempting to move them
+  - Maintains proper parent-child relationships
+- **Example CLI:** `task-master move --from=5.2 --to=7.3` to move subtask 5.2 to become subtask 7.3.
+- **Example Multi-Move:** `task-master move --from=10,11,12 --to=16,17,18` to move multiple tasks to new positions.
+- **Common Use:** Resolving merge conflicts in tasks.json when multiple team members create tasks on different branches.
 
 ---
 
@@ -2081,47 +2113,47 @@ This document provides a detailed reference for interacting with Taskmaster, cov
 
 ### 18. Add Dependency (`add_dependency`)
 
-*   **MCP Tool:** `add_dependency`
-*   **CLI Command:** `task-master add-dependency [options]`
-*   **Description:** `Define a dependency in Taskmaster, making one task a prerequisite for another.`
-*   **Key Parameters/Options:**
-    *   `id`: `Required. The ID of the Taskmaster task that will depend on another.` (CLI: `-i, --id <id>`)
-    *   `dependsOn`: `Required. The ID of the Taskmaster task that must be completed first, the prerequisite.` (CLI: `-d, --depends-on <id>`)
-    *   `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <path>`)
-*   **Usage:** Establish the correct order of execution between tasks.
+- **MCP Tool:** `add_dependency`
+- **CLI Command:** `task-master add-dependency [options]`
+- **Description:** `Define a dependency in Taskmaster, making one task a prerequisite for another.`
+- **Key Parameters/Options:**
+  - `id`: `Required. The ID of the Taskmaster task that will depend on another.` (CLI: `-i, --id <id>`)
+  - `dependsOn`: `Required. The ID of the Taskmaster task that must be completed first, the prerequisite.` (CLI: `-d, --depends-on <id>`)
+  - `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <path>`)
+- **Usage:** Establish the correct order of execution between tasks.
 
 ### 19. Remove Dependency (`remove_dependency`)
 
-*   **MCP Tool:** `remove_dependency`
-*   **CLI Command:** `task-master remove-dependency [options]`
-*   **Description:** `Remove a dependency relationship between two Taskmaster tasks.`
-*   **Key Parameters/Options:**
-    *   `id`: `Required. The ID of the Taskmaster task you want to remove a prerequisite from.` (CLI: `-i, --id <id>`)
-    *   `dependsOn`: `Required. The ID of the Taskmaster task that should no longer be a prerequisite.` (CLI: `-d, --depends-on <id>`)
-    *   `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Update task relationships when the order of execution changes.
+- **MCP Tool:** `remove_dependency`
+- **CLI Command:** `task-master remove-dependency [options]`
+- **Description:** `Remove a dependency relationship between two Taskmaster tasks.`
+- **Key Parameters/Options:**
+  - `id`: `Required. The ID of the Taskmaster task you want to remove a prerequisite from.` (CLI: `-i, --id <id>`)
+  - `dependsOn`: `Required. The ID of the Taskmaster task that should no longer be a prerequisite.` (CLI: `-d, --depends-on <id>`)
+  - `tag`: `Specify which tag context to operate on. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Update task relationships when the order of execution changes.
 
 ### 20. Validate Dependencies (`validate_dependencies`)
 
-*   **MCP Tool:** `validate_dependencies`
-*   **CLI Command:** `task-master validate-dependencies [options]`
-*   **Description:** `Check your Taskmaster tasks for dependency issues (like circular references or links to non-existent tasks) without making changes.`
-*   **Key Parameters/Options:**
-    *   `tag`: `Specify which tag context to validate. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Audit the integrity of your task dependencies.
+- **MCP Tool:** `validate_dependencies`
+- **CLI Command:** `task-master validate-dependencies [options]`
+- **Description:** `Check your Taskmaster tasks for dependency issues (like circular references or links to non-existent tasks) without making changes.`
+- **Key Parameters/Options:**
+  - `tag`: `Specify which tag context to validate. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Audit the integrity of your task dependencies.
 
 ### 21. Fix Dependencies (`fix_dependencies`)
 
-*   **MCP Tool:** `fix_dependencies`
-*   **CLI Command:** `task-master fix-dependencies [options]`
-*   **Description:** `Automatically fix dependency issues (like circular references or links to non-existent tasks) in your Taskmaster tasks.`
-*   **Key Parameters/Options:**
-    *   `tag`: `Specify which tag context to fix dependencies in. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Clean up dependency errors automatically.
+- **MCP Tool:** `fix_dependencies`
+- **CLI Command:** `task-master fix-dependencies [options]`
+- **Description:** `Automatically fix dependency issues (like circular references or links to non-existent tasks) in your Taskmaster tasks.`
+- **Key Parameters/Options:**
+  - `tag`: `Specify which tag context to fix dependencies in. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Clean up dependency errors automatically.
 
 ---
 
@@ -2129,27 +2161,27 @@ This document provides a detailed reference for interacting with Taskmaster, cov
 
 ### 22. Analyze Project Complexity (`analyze_project_complexity`)
 
-*   **MCP Tool:** `analyze_project_complexity`
-*   **CLI Command:** `task-master analyze-complexity [options]`
-*   **Description:** `Have Taskmaster analyze your tasks to determine their complexity and suggest which ones need to be broken down further.`
-*   **Key Parameters/Options:**
-    *   `output`: `Where to save the complexity analysis report. Default is '.taskmaster/reports/task-complexity-report.json' (or '..._tagname.json' if a tag is used).` (CLI: `-o, --output <file>`)
-    *   `threshold`: `The minimum complexity score (1-10) that should trigger a recommendation to expand a task.` (CLI: `-t, --threshold <number>`)
-    *   `research`: `Enable research role for more accurate complexity analysis. Requires appropriate API key.` (CLI: `-r, --research`)
-    *   `tag`: `Specify which tag context to analyze. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Used before breaking down tasks to identify which ones need the most attention.
-*   **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
+- **MCP Tool:** `analyze_project_complexity`
+- **CLI Command:** `task-master analyze-complexity [options]`
+- **Description:** `Have Taskmaster analyze your tasks to determine their complexity and suggest which ones need to be broken down further.`
+- **Key Parameters/Options:**
+  - `output`: `Where to save the complexity analysis report. Default is '.taskmaster/reports/task-complexity-report.json' (or '..._tagname.json' if a tag is used).` (CLI: `-o, --output <file>`)
+  - `threshold`: `The minimum complexity score (1-10) that should trigger a recommendation to expand a task.` (CLI: `-t, --threshold <number>`)
+  - `research`: `Enable research role for more accurate complexity analysis. Requires appropriate API key.` (CLI: `-r, --research`)
+  - `tag`: `Specify which tag context to analyze. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Used before breaking down tasks to identify which ones need the most attention.
+- **Important:** This MCP tool makes AI calls and can take up to a minute to complete. Please inform users to hang tight while the operation is in progress.
 
 ### 23. View Complexity Report (`complexity_report`)
 
-*   **MCP Tool:** `complexity_report`
-*   **CLI Command:** `task-master complexity-report [options]`
-*   **Description:** `Display the task complexity analysis report in a readable format.`
-*   **Key Parameters/Options:**
-    *   `tag`: `Specify which tag context to show the report for. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to the complexity report (default: '.taskmaster/reports/task-complexity-report.json').` (CLI: `-f, --file <file>`)
-*   **Usage:** Review and understand the complexity analysis results after running analyze-complexity.
+- **MCP Tool:** `complexity_report`
+- **CLI Command:** `task-master complexity-report [options]`
+- **Description:** `Display the task complexity analysis report in a readable format.`
+- **Key Parameters/Options:**
+  - `tag`: `Specify which tag context to show the report for. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to the complexity report (default: '.taskmaster/reports/task-complexity-report.json').` (CLI: `-f, --file <file>`)
+- **Usage:** Review and understand the complexity analysis results after running analyze-complexity.
 
 ---
 
@@ -2157,14 +2189,14 @@ This document provides a detailed reference for interacting with Taskmaster, cov
 
 ### 24. Generate Task Files (`generate`)
 
-*   **MCP Tool:** `generate`
-*   **CLI Command:** `task-master generate [options]`
-*   **Description:** `Create or update individual Markdown files for each task based on your tasks.json.`
-*   **Key Parameters/Options:**
-    *   `output`: `The directory where Taskmaster should save the task files (default: in a 'tasks' directory).` (CLI: `-o, --output <directory>`)
-    *   `tag`: `Specify which tag context to generate files for. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-*   **Usage:** Run this after making changes to tasks.json to keep individual task files up to date. This command is now manual and no longer runs automatically.
+- **MCP Tool:** `generate`
+- **CLI Command:** `task-master generate [options]`
+- **Description:** `Create or update individual Markdown files for each task based on your tasks.json.`
+- **Key Parameters/Options:**
+  - `output`: `The directory where Taskmaster should save the task files (default: in a 'tasks' directory).` (CLI: `-o, --output <directory>`)
+  - `tag`: `Specify which tag context to generate files for. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **Usage:** Run this after making changes to tasks.json to keep individual task files up to date. This command is now manual and no longer runs automatically.
 
 ---
 
@@ -2172,40 +2204,40 @@ This document provides a detailed reference for interacting with Taskmaster, cov
 
 ### 25. Research (`research`)
 
-*   **MCP Tool:** `research`
-*   **CLI Command:** `task-master research [options]`
-*   **Description:** `Perform AI-powered research queries with project context to get fresh, up-to-date information beyond the AI's knowledge cutoff.`
-*   **Key Parameters/Options:**
-    *   `query`: `Required. Research query/prompt (e.g., "What are the latest best practices for React Query v5?").` (CLI: `[query]` positional or `-q, --query <text>`)
-    *   `taskIds`: `Comma-separated list of task/subtask IDs from the current tag context (e.g., "15,16.2,17").` (CLI: `-i, --id <ids>`)
-    *   `filePaths`: `Comma-separated list of file paths for context (e.g., "src/api.js,docs/readme.md").` (CLI: `-f, --files <paths>`)
-    *   `customContext`: `Additional custom context text to include in the research.` (CLI: `-c, --context <text>`)
-    *   `includeProjectTree`: `Include project file tree structure in context (default: false).` (CLI: `--tree`)
-    *   `detailLevel`: `Detail level for the research response: 'low', 'medium', 'high' (default: medium).` (CLI: `--detail <level>`)
-    *   `saveTo`: `Task or subtask ID (e.g., "15", "15.2") to automatically save the research conversation to.` (CLI: `--save-to <id>`)
-    *   `saveFile`: `If true, saves the research conversation to a markdown file in '.taskmaster/docs/research/'.` (CLI: `--save-file`)
-    *   `noFollowup`: `Disables the interactive follow-up question menu in the CLI.` (CLI: `--no-followup`)
-    *   `tag`: `Specify which tag context to use for task-based context gathering. Defaults to the current active tag.` (CLI: `--tag <name>`)
-    *   `projectRoot`: `The directory of the project. Must be an absolute path.` (CLI: Determined automatically)
-*   **Usage:** **This is a POWERFUL tool that agents should use FREQUENTLY** to:
-    *   Get fresh information beyond knowledge cutoff dates
-    *   Research latest best practices, library updates, security patches
-    *   Find implementation examples for specific technologies
-    *   Validate approaches against current industry standards
-    *   Get contextual advice based on project files and tasks
-*   **When to Consider Using Research:**
-    *   **Before implementing any task** - Research current best practices
-    *   **When encountering new technologies** - Get up-to-date implementation guidance (libraries, apis, etc)
-    *   **For security-related tasks** - Find latest security recommendations
-    *   **When updating dependencies** - Research breaking changes and migration guides
-    *   **For performance optimization** - Get current performance best practices
-    *   **When debugging complex issues** - Research known solutions and workarounds
-*   **Research + Action Pattern:**
-    *   Use `research` to gather fresh information
-    *   Use `update_subtask` to commit findings with timestamps
-    *   Use `update_task` to incorporate research into task details
-    *   Use `add_task` with research flag for informed task creation
-*   **Important:** This MCP tool makes AI calls and can take up to a minute to complete. The research provides FRESH data beyond the AI's training cutoff, making it invaluable for current best practices and recent developments.
+- **MCP Tool:** `research`
+- **CLI Command:** `task-master research [options]`
+- **Description:** `Perform AI-powered research queries with project context to get fresh, up-to-date information beyond the AI's knowledge cutoff.`
+- **Key Parameters/Options:**
+  - `query`: `Required. Research query/prompt (e.g., "What are the latest best practices for React Query v5?").` (CLI: `[query]` positional or `-q, --query <text>`)
+  - `taskIds`: `Comma-separated list of task/subtask IDs from the current tag context (e.g., "15,16.2,17").` (CLI: `-i, --id <ids>`)
+  - `filePaths`: `Comma-separated list of file paths for context (e.g., "src/api.js,docs/readme.md").` (CLI: `-f, --files <paths>`)
+  - `customContext`: `Additional custom context text to include in the research.` (CLI: `-c, --context <text>`)
+  - `includeProjectTree`: `Include project file tree structure in context (default: false).` (CLI: `--tree`)
+  - `detailLevel`: `Detail level for the research response: 'low', 'medium', 'high' (default: medium).` (CLI: `--detail <level>`)
+  - `saveTo`: `Task or subtask ID (e.g., "15", "15.2") to automatically save the research conversation to.` (CLI: `--save-to <id>`)
+  - `saveFile`: `If true, saves the research conversation to a markdown file in '.taskmaster/docs/research/'.` (CLI: `--save-file`)
+  - `noFollowup`: `Disables the interactive follow-up question menu in the CLI.` (CLI: `--no-followup`)
+  - `tag`: `Specify which tag context to use for task-based context gathering. Defaults to the current active tag.` (CLI: `--tag <name>`)
+  - `projectRoot`: `The directory of the project. Must be an absolute path.` (CLI: Determined automatically)
+- **Usage:** **This is a POWERFUL tool that agents should use FREQUENTLY** to:
+  - Get fresh information beyond knowledge cutoff dates
+  - Research latest best practices, library updates, security patches
+  - Find implementation examples for specific technologies
+  - Validate approaches against current industry standards
+  - Get contextual advice based on project files and tasks
+- **When to Consider Using Research:**
+  - **Before implementing any task** - Research current best practices
+  - **When encountering new technologies** - Get up-to-date implementation guidance (libraries, apis, etc)
+  - **For security-related tasks** - Find latest security recommendations
+  - **When updating dependencies** - Research breaking changes and migration guides
+  - **For performance optimization** - Get current performance best practices
+  - **When debugging complex issues** - Research known solutions and workarounds
+- **Research + Action Pattern:**
+  - Use `research` to gather fresh information
+  - Use `update_subtask` to commit findings with timestamps
+  - Use `update_task` to incorporate research into task details
+  - Use `add_task` with research flag for informed task creation
+- **Important:** This MCP tool makes AI calls and can take up to a minute to complete. The research provides FRESH data beyond the AI's training cutoff, making it invaluable for current best practices and recent developments.
 
 ---
 
@@ -2215,64 +2247,64 @@ This new suite of commands allows you to manage different task contexts (tags).
 
 ### 26. List Tags (`tags`)
 
-*   **MCP Tool:** `list_tags`
-*   **CLI Command:** `task-master tags [options]`
-*   **Description:** `List all available tags with task counts, completion status, and other metadata.`
-*   **Key Parameters/Options:**
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
-    *   `--show-metadata`: `Include detailed metadata in the output (e.g., creation date, description).` (CLI: `--show-metadata`)
+- **MCP Tool:** `list_tags`
+- **CLI Command:** `task-master tags [options]`
+- **Description:** `List all available tags with task counts, completion status, and other metadata.`
+- **Key Parameters/Options:**
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+  - `--show-metadata`: `Include detailed metadata in the output (e.g., creation date, description).` (CLI: `--show-metadata`)
 
 ### 27. Add Tag (`add_tag`)
 
-*   **MCP Tool:** `add_tag`
-*   **CLI Command:** `task-master add-tag <tagName> [options]`
-*   **Description:** `Create a new, empty tag context, or copy tasks from another tag.`
-*   **Key Parameters/Options:**
-    *   `tagName`: `Name of the new tag to create (alphanumeric, hyphens, underscores).` (CLI: `<tagName>` positional)
-    *   `--from-branch`: `Creates a tag with a name derived from the current git branch, ignoring the <tagName> argument.` (CLI: `--from-branch`)
-    *   `--copy-from-current`: `Copy tasks from the currently active tag to the new tag.` (CLI: `--copy-from-current`)
-    *   `--copy-from <tag>`: `Copy tasks from a specific source tag to the new tag.` (CLI: `--copy-from <tag>`)
-    *   `--description <text>`: `Provide an optional description for the new tag.` (CLI: `-d, --description <text>`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **MCP Tool:** `add_tag`
+- **CLI Command:** `task-master add-tag <tagName> [options]`
+- **Description:** `Create a new, empty tag context, or copy tasks from another tag.`
+- **Key Parameters/Options:**
+  - `tagName`: `Name of the new tag to create (alphanumeric, hyphens, underscores).` (CLI: `<tagName>` positional)
+  - `--from-branch`: `Creates a tag with a name derived from the current git branch, ignoring the <tagName> argument.` (CLI: `--from-branch`)
+  - `--copy-from-current`: `Copy tasks from the currently active tag to the new tag.` (CLI: `--copy-from-current`)
+  - `--copy-from <tag>`: `Copy tasks from a specific source tag to the new tag.` (CLI: `--copy-from <tag>`)
+  - `--description <text>`: `Provide an optional description for the new tag.` (CLI: `-d, --description <text>`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
 
 ### 28. Delete Tag (`delete_tag`)
 
-*   **MCP Tool:** `delete_tag`
-*   **CLI Command:** `task-master delete-tag <tagName> [options]`
-*   **Description:** `Permanently delete a tag and all of its associated tasks.`
-*   **Key Parameters/Options:**
-    *   `tagName`: `Name of the tag to delete.` (CLI: `<tagName>` positional)
-    *   `--yes`: `Skip the confirmation prompt.` (CLI: `-y, --yes`)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **MCP Tool:** `delete_tag`
+- **CLI Command:** `task-master delete-tag <tagName> [options]`
+- **Description:** `Permanently delete a tag and all of its associated tasks.`
+- **Key Parameters/Options:**
+  - `tagName`: `Name of the tag to delete.` (CLI: `<tagName>` positional)
+  - `--yes`: `Skip the confirmation prompt.` (CLI: `-y, --yes`)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
 
 ### 29. Use Tag (`use_tag`)
 
-*   **MCP Tool:** `use_tag`
-*   **CLI Command:** `task-master use-tag <tagName>`
-*   **Description:** `Switch your active task context to a different tag.`
-*   **Key Parameters/Options:**
-    *   `tagName`: `Name of the tag to switch to.` (CLI: `<tagName>` positional)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **MCP Tool:** `use_tag`
+- **CLI Command:** `task-master use-tag <tagName>`
+- **Description:** `Switch your active task context to a different tag.`
+- **Key Parameters/Options:**
+  - `tagName`: `Name of the tag to switch to.` (CLI: `<tagName>` positional)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
 
 ### 30. Rename Tag (`rename_tag`)
 
-*   **MCP Tool:** `rename_tag`
-*   **CLI Command:** `task-master rename-tag <oldName> <newName>`
-*   **Description:** `Rename an existing tag.`
-*   **Key Parameters/Options:**
-    *   `oldName`: `The current name of the tag.` (CLI: `<oldName>` positional)
-    *   `newName`: `The new name for the tag.` (CLI: `<newName>` positional)
-    *   `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
+- **MCP Tool:** `rename_tag`
+- **CLI Command:** `task-master rename-tag <oldName> <newName>`
+- **Description:** `Rename an existing tag.`
+- **Key Parameters/Options:**
+  - `oldName`: `The current name of the tag.` (CLI: `<oldName>` positional)
+  - `newName`: `The new name for the tag.` (CLI: `<newName>` positional)
+  - `file`: `Path to your Taskmaster 'tasks.json' file. Default relies on auto-detection.` (CLI: `-f, --file <file>`)
 
 ### 31. Copy Tag (`copy_tag`)
 
-*   **MCP Tool:** `copy_tag`
-*   **CLI Command:** `task-master copy-tag <sourceName> <targetName> [options]`
-*   **Description:** `Copy an entire tag context, including all its tasks and metadata, to a new tag.`
-*   **Key Parameters/Options:**
-    *   `sourceName`: `Name of the tag to copy from.` (CLI: `<sourceName>` positional)
-    *   `targetName`: `Name of the new tag to create.` (CLI: `<targetName>` positional)
-    *   `--description <text>`: `Optional description for the new tag.` (CLI: `-d, --description <text>`)
+- **MCP Tool:** `copy_tag`
+- **CLI Command:** `task-master copy-tag <sourceName> <targetName> [options]`
+- **Description:** `Copy an entire tag context, including all its tasks and metadata, to a new tag.`
+- **Key Parameters/Options:**
+  - `sourceName`: `Name of the tag to copy from.` (CLI: `<sourceName>` positional)
+  - `targetName`: `Name of the new tag to create.` (CLI: `<targetName>` positional)
+  - `--description <text>`: `Optional description for the new tag.` (CLI: `-d, --description <text>`)
 
 ---
 
@@ -2280,13 +2312,13 @@ This new suite of commands allows you to manage different task contexts (tags).
 
 ### 32. Sync Readme (`sync-readme`) -- experimental
 
-*   **MCP Tool:** N/A
-*   **CLI Command:** `task-master sync-readme [options]`
-*   **Description:** `Exports your task list to your project's README.md file, useful for showcasing progress.`
-*   **Key Parameters/Options:**
-    *   `status`: `Filter tasks by status (e.g., 'pending', 'done').` (CLI: `-s, --status <status>`)
-    *   `withSubtasks`: `Include subtasks in the export.` (CLI: `--with-subtasks`)
-    *   `tag`: `Specify which tag context to export from. Defaults to the current active tag.` (CLI: `--tag <name>`)
+- **MCP Tool:** N/A
+- **CLI Command:** `task-master sync-readme [options]`
+- **Description:** `Exports your task list to your project's README.md file, useful for showcasing progress.`
+- **Key Parameters/Options:**
+  - `status`: `Filter tasks by status (e.g., 'pending', 'done').` (CLI: `-s, --status <status>`)
+  - `withSubtasks`: `Include subtasks in the export.` (CLI: `--with-subtasks`)
+  - `tag`: `Specify which tag context to export from. Defaults to the current active tag.` (CLI: `--tag <name>`)
 
 ---
 
@@ -2296,36 +2328,38 @@ Taskmaster primarily uses the **`.taskmaster/config.json`** file (in project roo
 
 Environment variables are used **only** for sensitive API keys related to AI providers and specific overrides like the Ollama base URL:
 
-*   **API Keys (Required for corresponding provider):**
-    *   `ANTHROPIC_API_KEY`
-    *   `PERPLEXITY_API_KEY`
-    *   `OPENAI_API_KEY`
-    *   `GOOGLE_API_KEY`
-    *   `MISTRAL_API_KEY`
-    *   `AZURE_OPENAI_API_KEY` (Requires `AZURE_OPENAI_ENDPOINT` too)
-    *   `OPENROUTER_API_KEY`
-    *   `XAI_API_KEY`
-    *   `OLLAMA_API_KEY` (Requires `OLLAMA_BASE_URL` too)
-*   **Endpoints (Optional/Provider Specific inside .taskmaster/config.json):**
-    *   `AZURE_OPENAI_ENDPOINT`
-    *   `OLLAMA_BASE_URL` (Default: `http://localhost:11434/api`)
+- **API Keys (Required for corresponding provider):**
+  - `ANTHROPIC_API_KEY`
+  - `PERPLEXITY_API_KEY`
+  - `OPENAI_API_KEY`
+  - `GOOGLE_API_KEY`
+  - `MISTRAL_API_KEY`
+  - `AZURE_OPENAI_API_KEY` (Requires `AZURE_OPENAI_ENDPOINT` too)
+  - `OPENROUTER_API_KEY`
+  - `XAI_API_KEY`
+  - `OLLAMA_API_KEY` (Requires `OLLAMA_BASE_URL` too)
+- **Endpoints (Optional/Provider Specific inside .taskmaster/config.json):**
+  - `AZURE_OPENAI_ENDPOINT`
+  - `OLLAMA_BASE_URL` (Default: `http://localhost:11434/api`)
 
 **Set API keys** in your **`.env`** file in the project root (for CLI use) or within the `env` section of your **`.vscode/mcp.json`** file (for MCP/VS Code integration). All other settings (model choice, max tokens, temperature, log level, custom endpoints) are managed in `.taskmaster/config.json` via `task-master models` command or `models` MCP tool.
 
 ---
 
 For details on how these commands fit into the development process, see the [dev_workflow.md](.github/instructions/dev_workflow.md).
-````
+```
 
 ## File: .github/instructions/vscode_rules.md
+
 ````markdown
 ---
 description: Guidelines for creating and maintaining VS Code rules to ensure consistency and effectiveness.
-applyTo: ".github/instructions/*.md"
+applyTo: '.github/instructions/*.md'
 alwaysApply: true
 ---
 
 - **Required Rule Structure:**
+
   ```markdown
   ---
   description: Clear, one-line description of what the rule enforces
@@ -2345,10 +2379,11 @@ alwaysApply: true
 
 - **Code Examples:**
   - Use language-specific code blocks
+
   ```typescript
   // ✅ DO: Show good examples
   const goodExample = true;
-  
+
   // ❌ DON'T: Show anti-patterns
   const badExample = false;
   ```
@@ -2375,7 +2410,8 @@ alwaysApply: true
 ````
 
 ## File: .github/workflows/ci.yml
-````yaml
+
+```yaml
 name: CI/CD Pipeline
 
 on:
@@ -2505,10 +2541,11 @@ jobs:
           release_name: Release v${{ steps.version-check.outputs.package-version }}
           draft: false
           prerelease: false
-````
+```
 
 ## File: .github/workflows/release.yml
-````yaml
+
+```yaml
 name: Release
 
 on:
@@ -2531,10 +2568,11 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-````
+```
 
 ## File: .taskmaster/docs/prd.txt
-````
+
+```
 Product Requirements Document (PRD): MCP para Portal da Transparência API
 
 1. Objetivo
@@ -2631,186 +2669,188 @@ A API do Portal da Transparência possui endpoints para:
 - Rate limiter com alertas
 - Sistema de cache opcional
 - Validação de schema automática
-````
+```
 
 ## File: .taskmaster/reports/task-complexity-report.json
-````json
+
+```json
 {
-	"meta": {
-		"generatedAt": "2025-07-06T19:44:31.541Z",
-		"tasksAnalyzed": 15,
-		"totalTasks": 15,
-		"analysisCount": 20,
-		"thresholdScore": 6,
-		"projectName": "Taskmaster",
-		"usedResearch": true
-	},
-	"complexityAnalysis": [
-		{
-			"taskId": 16,
-			"taskTitle": "Develop Comprehensive Test Suite",
-			"complexityScore": 7,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Divide the test suite development into unit testing, integration testing, performance/stress testing, and test infrastructure setup.",
-			"reasoning": "This task requires implementing comprehensive testing across all library components. The complexity comes from ensuring proper test coverage, creating appropriate mocks, and testing complex interactions between components."
-		},
-		{
-			"taskId": 17,
-			"taskTitle": "Implement NPM Package Configuration",
-			"complexityScore": 5,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Break down the NPM package configuration into build setup, package metadata configuration, and publishing workflow.",
-			"reasoning": "This task involves standard NPM package configuration with dual module format support. The complexity comes from ensuring proper TypeScript configuration and bundling for different module formats."
-		},
-		{
-			"taskId": 18,
-			"taskTitle": "Implement Performance Optimizations",
-			"complexityScore": 7,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Divide the performance optimization task into request optimization, caching implementation, memory usage improvements, and benchmarking components.",
-			"reasoning": "This task requires identifying and implementing various performance optimizations. The complexity comes from ensuring optimizations don't negatively impact functionality while providing measurable performance improvements."
-		},
-		{
-			"taskId": 19,
-			"taskTitle": "Implement Security Features",
-			"complexityScore": 7,
-			"recommendedSubtasks": 4,
-			"expansionPrompt": "Break down the security features implementation into credential management, data sanitization, secure logging, and security policy components.",
-			"reasoning": "This task involves implementing various security features across the library. The complexity comes from ensuring comprehensive security coverage without compromising functionality or performance."
-		},
-		{
-			"taskId": 20,
-			"taskTitle": "Create CI/CD Pipeline",
-			"complexityScore": 6,
-			"recommendedSubtasks": 3,
-			"expansionPrompt": "Divide the CI/CD pipeline creation into testing workflow, publishing automation, and quality assurance components.",
-			"reasoning": "This task requires setting up automated workflows for testing, building, and publishing. The complexity comes from ensuring reliable automation across different environments and integrating various quality checks."
-		},
-		{
-			"taskId": 1,
-			"taskTitle": "Setup Project Repository and Initial Configuration",
-			"complexityScore": 4,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break down the project setup task into specific subtasks covering repository creation, package configuration, TypeScript setup, linting configuration, and CI/CD pipeline implementation.",
-			"reasoning": "This is a standard project setup task with moderate complexity. While it involves multiple configuration files and repository setup, these are well-documented processes with established patterns. The task requires attention to detail but follows conventional practices."
-		},
-		{
-			"taskId": 2,
-			"taskTitle": "Implement Swagger Spec Loader",
-			"complexityScore": 6,
-			"recommendedSubtasks": 6,
-			"expansionPrompt": "Divide the Swagger spec loader implementation into subtasks covering HTTP client setup, schema validation, version detection, caching mechanism, error handling, and retry logic.",
-			"reasoning": "This task involves network requests, error handling, and data validation which increases complexity. The caching mechanism and retry logic with exponential backoff add additional complexity layers. Multiple edge cases need to be handled properly."
-		},
-		{
-			"taskId": 3,
-			"taskTitle": "Develop TypeScript Client Generator",
-			"complexityScore": 8,
-			"recommendedSubtasks": 7,
-			"expansionPrompt": "Break down the TypeScript client generator into subtasks for OpenAPI spec parsing, interface generation, client class creation, type safety implementation, documentation generation, output validation, and integration with the main system.",
-			"reasoning": "This is a highly complex task requiring deep understanding of both OpenAPI specifications and TypeScript type system. Code generation involves complex parsing logic, template rendering, and ensuring type safety across generated components. The task requires careful design to ensure maintainability."
-		},
-		{
-			"taskId": 4,
-			"taskTitle": "Implement Authentication System",
-			"complexityScore": 5,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Divide the authentication system implementation into subtasks for AuthManager class creation, API key handling, environment variable management, security validation, and integration with HTTP requests.",
-			"reasoning": "Authentication involves security considerations and proper environment management. While not extremely complex technically, it requires careful implementation to ensure security best practices are followed. The task has moderate complexity with clear requirements."
-		},
-		{
-			"taskId": 5,
-			"taskTitle": "Build Core MCP Orchestrator Class",
-			"complexityScore": 7,
-			"recommendedSubtasks": 6,
-			"expansionPrompt": "Break down the MCP orchestrator class implementation into subtasks for class structure design, client initialization logic, method chaining implementation, request orchestration, authentication integration, and error handling system.",
-			"reasoning": "This is a core architectural component requiring careful design. It coordinates multiple subsystems and needs to provide a clean, chainable API while handling complex orchestration logic. The integration points with other components increase its complexity."
-		},
-		{
-			"taskId": 6,
-			"taskTitle": "Implement Rate Limiting Detection and Alerts",
-			"complexityScore": 7,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Divide the rate limiting system into subtasks for counter implementation with time windows, threshold alert system, rate limit error detection, backoff strategy implementation, and status reporting interface.",
-			"reasoning": "Rate limiting involves complex time-based calculations and state management. The different time windows (90/min during day, 300/min at night) add complexity. Implementing proper backoff strategies and alert systems requires careful design and testing."
-		},
-		{
-			"taskId": 7,
-			"taskTitle": "Develop Structured Logging System",
-			"complexityScore": 5,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break down the logging system implementation into subtasks for Logger class creation, JSON formatting, log level management, sensitive data sanitization, and correlation ID tracking.",
-			"reasoning": "Logging systems have moderate complexity with well-established patterns. The structured JSON output and correlation IDs add some complexity, but the requirements are clear. Ensuring proper sanitization of sensitive data requires careful implementation."
-		},
-		{
-			"taskId": 8,
-			"taskTitle": "Implement Error Handling and Categorization",
-			"complexityScore": 6,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Divide the error handling system into subtasks for custom error class hierarchy, error categorization logic, retry mechanism implementation, user-friendly message formatting, and recovery strategy implementation.",
-			"reasoning": "Error handling requires a well-designed class hierarchy and careful categorization logic. The retry mechanisms and recovery strategies add complexity. The system needs to handle various error scenarios gracefully while providing useful information to users."
-		},
-		{
-			"taskId": 9,
-			"taskTitle": "Create Individual Endpoint Client Classes",
-			"complexityScore": 8,
-			"recommendedSubtasks": 8,
-			"expansionPrompt": "Break down the endpoint client implementation into logical groups of related API endpoints, with subtasks for each major category (e.g., ViagensClient, ServidoresClient), including interface definition, method implementation, error handling, and testing for each group.",
-			"reasoning": "This task involves implementing 15+ client classes with multiple endpoints each. The scale and variety of endpoints make this highly complex. Each client needs proper typing, error handling, and consistent interface patterns. The volume of work and need for consistency across many components increases complexity."
-		},
-		{
-			"taskId": 10,
-			"taskTitle": "Implement HTTP Client with Retry Logic",
-			"complexityScore": 6,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Divide the HTTP client implementation into subtasks for base client setup, timeout configuration, retry logic with exponential backoff, connection pooling, and request/response interceptor implementation.",
-			"reasoning": "HTTP clients with advanced features like retry logic and connection pooling have moderate to high complexity. The exponential backoff algorithm and proper error handling across network conditions require careful implementation. Interceptors add another layer of complexity."
-		},
-		{
-			"taskId": 11,
-			"taskTitle": "Add Optional Caching System",
-			"complexityScore": 7,
-			"recommendedSubtasks": 6,
-			"expansionPrompt": "Break down the caching system implementation into subtasks for cache interface design, in-memory cache implementation, Redis cache adapter, cache key generation, TTL management, and cache metrics collection.",
-			"reasoning": "Caching systems involve complex considerations around key generation, invalidation strategies, and storage backends. Supporting both in-memory and Redis options adds complexity. Proper metrics and integration with rate limiting considerations require careful design."
-		},
-		{
-			"taskId": 12,
-			"taskTitle": "Develop Comprehensive Test Suite",
-			"complexityScore": 8,
-			"recommendedSubtasks": 7,
-			"expansionPrompt": "Divide the test suite development into subtasks for unit test framework setup, integration test implementation, end-to-end test scenarios, performance testing, test utilities and fixtures, mock API responses, and coverage reporting.",
-			"reasoning": "Creating a comprehensive test suite with 90%+ coverage across multiple test types is highly complex. It requires extensive test scenarios, proper mocking, and careful test data management. The performance tests and end-to-end tests with real API calls add significant complexity."
-		},
-		{
-			"taskId": 13,
-			"taskTitle": "Create Documentation and Usage Examples",
-			"complexityScore": 6,
-			"recommendedSubtasks": 6,
-			"expansionPrompt": "Break down the documentation task into subtasks for README creation, API reference documentation, usage examples, best practices guide, diagram creation, and documentation site setup.",
-			"reasoning": "Comprehensive documentation requires covering multiple aspects of the library with clear examples. Creating diagrams, ensuring all public methods are documented, and setting up a documentation site adds complexity. The task requires both technical accuracy and good communication skills."
-		},
-		{
-			"taskId": 14,
-			"taskTitle": "Package NPM Module and Distribution Setup",
-			"complexityScore": 5,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Divide the NPM packaging task into subtasks for package.json configuration, build process setup, dual module format support (CommonJS/ESM), semantic versioning implementation, and CI/CD publishing automation.",
-			"reasoning": "NPM packaging has moderate complexity with established patterns. Supporting both CommonJS and ES modules adds some complexity. Setting up automated publishing via CI/CD requires careful configuration to ensure proper versioning and distribution."
-		},
-		{
-			"taskId": 15,
-			"taskTitle": "Implement Monitoring and Health Checks",
-			"complexityScore": 6,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break down the monitoring implementation into subtasks for health check endpoint creation, metrics collection system, performance monitoring, alerting mechanism, and diagnostic tools development.",
-			"reasoning": "Monitoring systems require careful design to provide useful insights without performance impact. The metrics collection, alerting system, and diagnostic tools add complexity. Integration with the core library while maintaining separation of concerns requires thoughtful architecture."
-		}
-	]
+  "meta": {
+    "generatedAt": "2025-07-06T19:44:31.541Z",
+    "tasksAnalyzed": 15,
+    "totalTasks": 15,
+    "analysisCount": 20,
+    "thresholdScore": 6,
+    "projectName": "Taskmaster",
+    "usedResearch": true
+  },
+  "complexityAnalysis": [
+    {
+      "taskId": 16,
+      "taskTitle": "Develop Comprehensive Test Suite",
+      "complexityScore": 7,
+      "recommendedSubtasks": 4,
+      "expansionPrompt": "Divide the test suite development into unit testing, integration testing, performance/stress testing, and test infrastructure setup.",
+      "reasoning": "This task requires implementing comprehensive testing across all library components. The complexity comes from ensuring proper test coverage, creating appropriate mocks, and testing complex interactions between components."
+    },
+    {
+      "taskId": 17,
+      "taskTitle": "Implement NPM Package Configuration",
+      "complexityScore": 5,
+      "recommendedSubtasks": 3,
+      "expansionPrompt": "Break down the NPM package configuration into build setup, package metadata configuration, and publishing workflow.",
+      "reasoning": "This task involves standard NPM package configuration with dual module format support. The complexity comes from ensuring proper TypeScript configuration and bundling for different module formats."
+    },
+    {
+      "taskId": 18,
+      "taskTitle": "Implement Performance Optimizations",
+      "complexityScore": 7,
+      "recommendedSubtasks": 4,
+      "expansionPrompt": "Divide the performance optimization task into request optimization, caching implementation, memory usage improvements, and benchmarking components.",
+      "reasoning": "This task requires identifying and implementing various performance optimizations. The complexity comes from ensuring optimizations don't negatively impact functionality while providing measurable performance improvements."
+    },
+    {
+      "taskId": 19,
+      "taskTitle": "Implement Security Features",
+      "complexityScore": 7,
+      "recommendedSubtasks": 4,
+      "expansionPrompt": "Break down the security features implementation into credential management, data sanitization, secure logging, and security policy components.",
+      "reasoning": "This task involves implementing various security features across the library. The complexity comes from ensuring comprehensive security coverage without compromising functionality or performance."
+    },
+    {
+      "taskId": 20,
+      "taskTitle": "Create CI/CD Pipeline",
+      "complexityScore": 6,
+      "recommendedSubtasks": 3,
+      "expansionPrompt": "Divide the CI/CD pipeline creation into testing workflow, publishing automation, and quality assurance components.",
+      "reasoning": "This task requires setting up automated workflows for testing, building, and publishing. The complexity comes from ensuring reliable automation across different environments and integrating various quality checks."
+    },
+    {
+      "taskId": 1,
+      "taskTitle": "Setup Project Repository and Initial Configuration",
+      "complexityScore": 4,
+      "recommendedSubtasks": 5,
+      "expansionPrompt": "Break down the project setup task into specific subtasks covering repository creation, package configuration, TypeScript setup, linting configuration, and CI/CD pipeline implementation.",
+      "reasoning": "This is a standard project setup task with moderate complexity. While it involves multiple configuration files and repository setup, these are well-documented processes with established patterns. The task requires attention to detail but follows conventional practices."
+    },
+    {
+      "taskId": 2,
+      "taskTitle": "Implement Swagger Spec Loader",
+      "complexityScore": 6,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Divide the Swagger spec loader implementation into subtasks covering HTTP client setup, schema validation, version detection, caching mechanism, error handling, and retry logic.",
+      "reasoning": "This task involves network requests, error handling, and data validation which increases complexity. The caching mechanism and retry logic with exponential backoff add additional complexity layers. Multiple edge cases need to be handled properly."
+    },
+    {
+      "taskId": 3,
+      "taskTitle": "Develop TypeScript Client Generator",
+      "complexityScore": 8,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Break down the TypeScript client generator into subtasks for OpenAPI spec parsing, interface generation, client class creation, type safety implementation, documentation generation, output validation, and integration with the main system.",
+      "reasoning": "This is a highly complex task requiring deep understanding of both OpenAPI specifications and TypeScript type system. Code generation involves complex parsing logic, template rendering, and ensuring type safety across generated components. The task requires careful design to ensure maintainability."
+    },
+    {
+      "taskId": 4,
+      "taskTitle": "Implement Authentication System",
+      "complexityScore": 5,
+      "recommendedSubtasks": 5,
+      "expansionPrompt": "Divide the authentication system implementation into subtasks for AuthManager class creation, API key handling, environment variable management, security validation, and integration with HTTP requests.",
+      "reasoning": "Authentication involves security considerations and proper environment management. While not extremely complex technically, it requires careful implementation to ensure security best practices are followed. The task has moderate complexity with clear requirements."
+    },
+    {
+      "taskId": 5,
+      "taskTitle": "Build Core MCP Orchestrator Class",
+      "complexityScore": 7,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Break down the MCP orchestrator class implementation into subtasks for class structure design, client initialization logic, method chaining implementation, request orchestration, authentication integration, and error handling system.",
+      "reasoning": "This is a core architectural component requiring careful design. It coordinates multiple subsystems and needs to provide a clean, chainable API while handling complex orchestration logic. The integration points with other components increase its complexity."
+    },
+    {
+      "taskId": 6,
+      "taskTitle": "Implement Rate Limiting Detection and Alerts",
+      "complexityScore": 7,
+      "recommendedSubtasks": 5,
+      "expansionPrompt": "Divide the rate limiting system into subtasks for counter implementation with time windows, threshold alert system, rate limit error detection, backoff strategy implementation, and status reporting interface.",
+      "reasoning": "Rate limiting involves complex time-based calculations and state management. The different time windows (90/min during day, 300/min at night) add complexity. Implementing proper backoff strategies and alert systems requires careful design and testing."
+    },
+    {
+      "taskId": 7,
+      "taskTitle": "Develop Structured Logging System",
+      "complexityScore": 5,
+      "recommendedSubtasks": 5,
+      "expansionPrompt": "Break down the logging system implementation into subtasks for Logger class creation, JSON formatting, log level management, sensitive data sanitization, and correlation ID tracking.",
+      "reasoning": "Logging systems have moderate complexity with well-established patterns. The structured JSON output and correlation IDs add some complexity, but the requirements are clear. Ensuring proper sanitization of sensitive data requires careful implementation."
+    },
+    {
+      "taskId": 8,
+      "taskTitle": "Implement Error Handling and Categorization",
+      "complexityScore": 6,
+      "recommendedSubtasks": 5,
+      "expansionPrompt": "Divide the error handling system into subtasks for custom error class hierarchy, error categorization logic, retry mechanism implementation, user-friendly message formatting, and recovery strategy implementation.",
+      "reasoning": "Error handling requires a well-designed class hierarchy and careful categorization logic. The retry mechanisms and recovery strategies add complexity. The system needs to handle various error scenarios gracefully while providing useful information to users."
+    },
+    {
+      "taskId": 9,
+      "taskTitle": "Create Individual Endpoint Client Classes",
+      "complexityScore": 8,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down the endpoint client implementation into logical groups of related API endpoints, with subtasks for each major category (e.g., ViagensClient, ServidoresClient), including interface definition, method implementation, error handling, and testing for each group.",
+      "reasoning": "This task involves implementing 15+ client classes with multiple endpoints each. The scale and variety of endpoints make this highly complex. Each client needs proper typing, error handling, and consistent interface patterns. The volume of work and need for consistency across many components increases complexity."
+    },
+    {
+      "taskId": 10,
+      "taskTitle": "Implement HTTP Client with Retry Logic",
+      "complexityScore": 6,
+      "recommendedSubtasks": 5,
+      "expansionPrompt": "Divide the HTTP client implementation into subtasks for base client setup, timeout configuration, retry logic with exponential backoff, connection pooling, and request/response interceptor implementation.",
+      "reasoning": "HTTP clients with advanced features like retry logic and connection pooling have moderate to high complexity. The exponential backoff algorithm and proper error handling across network conditions require careful implementation. Interceptors add another layer of complexity."
+    },
+    {
+      "taskId": 11,
+      "taskTitle": "Add Optional Caching System",
+      "complexityScore": 7,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Break down the caching system implementation into subtasks for cache interface design, in-memory cache implementation, Redis cache adapter, cache key generation, TTL management, and cache metrics collection.",
+      "reasoning": "Caching systems involve complex considerations around key generation, invalidation strategies, and storage backends. Supporting both in-memory and Redis options adds complexity. Proper metrics and integration with rate limiting considerations require careful design."
+    },
+    {
+      "taskId": 12,
+      "taskTitle": "Develop Comprehensive Test Suite",
+      "complexityScore": 8,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Divide the test suite development into subtasks for unit test framework setup, integration test implementation, end-to-end test scenarios, performance testing, test utilities and fixtures, mock API responses, and coverage reporting.",
+      "reasoning": "Creating a comprehensive test suite with 90%+ coverage across multiple test types is highly complex. It requires extensive test scenarios, proper mocking, and careful test data management. The performance tests and end-to-end tests with real API calls add significant complexity."
+    },
+    {
+      "taskId": 13,
+      "taskTitle": "Create Documentation and Usage Examples",
+      "complexityScore": 6,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Break down the documentation task into subtasks for README creation, API reference documentation, usage examples, best practices guide, diagram creation, and documentation site setup.",
+      "reasoning": "Comprehensive documentation requires covering multiple aspects of the library with clear examples. Creating diagrams, ensuring all public methods are documented, and setting up a documentation site adds complexity. The task requires both technical accuracy and good communication skills."
+    },
+    {
+      "taskId": 14,
+      "taskTitle": "Package NPM Module and Distribution Setup",
+      "complexityScore": 5,
+      "recommendedSubtasks": 5,
+      "expansionPrompt": "Divide the NPM packaging task into subtasks for package.json configuration, build process setup, dual module format support (CommonJS/ESM), semantic versioning implementation, and CI/CD publishing automation.",
+      "reasoning": "NPM packaging has moderate complexity with established patterns. Supporting both CommonJS and ES modules adds some complexity. Setting up automated publishing via CI/CD requires careful configuration to ensure proper versioning and distribution."
+    },
+    {
+      "taskId": 15,
+      "taskTitle": "Implement Monitoring and Health Checks",
+      "complexityScore": 6,
+      "recommendedSubtasks": 5,
+      "expansionPrompt": "Break down the monitoring implementation into subtasks for health check endpoint creation, metrics collection system, performance monitoring, alerting mechanism, and diagnostic tools development.",
+      "reasoning": "Monitoring systems require careful design to provide useful insights without performance impact. The metrics collection, alerting system, and diagnostic tools add complexity. Integration with the core library while maintaining separation of concerns requires thoughtful architecture."
+    }
+  ]
 }
-````
+```
 
 ## File: .taskmaster/tasks/task_001.txt
+
 ````
 # Task ID: 1
 # Title: Setup Project Repository and Structure
@@ -2851,7 +2891,7 @@ A API do Portal da Transparência possui endpoints para:
    ```
    src/
      ├── clients/       # Generated API clients
-     ├── core/          # Core MCP functionality  
+     ├── core/          # Core MCP functionality
      ├── utils/         # Utility functions
      ├── types/         # TypeScript interfaces
      ├── config/        # Configuration
@@ -2886,7 +2926,7 @@ A API do Portal da Transparência possui endpoints para:
 
 **Generated Build Artifacts:**
 - dist/index.js (CommonJS build)
-- dist/index.esm.js (ESM build) 
+- dist/index.esm.js (ESM build)
 - dist/index.esm.min.js (Minified ESM)
 - dist/index.d.ts (TypeScript declarations)
 - Source maps for all builds
@@ -2905,6 +2945,7 @@ The project foundation is now complete and ready for implementing the MCP functi
 ````
 
 ## File: .taskmaster/tasks/task_002.txt
+
 ````
 # Task ID: 2
 # Title: Implement Swagger Spec Loader
@@ -2937,7 +2978,7 @@ export class SwaggerLoader {
       this.logger.info('Loading Swagger specification', { url: this.specUrl });
       const response = await axios.get(this.specUrl);
       const rawSpec = response.data;
-      
+
       // Validate the spec
       const validatedSpec = await SwaggerParser.validate(rawSpec) as OpenAPI.Document;
       this.cachedSpec = validatedSpec;
@@ -2959,7 +3000,7 @@ export class SwaggerLoader {
   async detectSpecChanges(newSpecUrl?: string): Promise<boolean> {
     const currentSpec = await this.getSpec();
     const newSpec = await new SwaggerLoader(newSpecUrl || this.specUrl, this.logger).loadSpec();
-    
+
     // Compare versions or other relevant properties
     return currentSpec.info.version !== newSpec.info.version;
   }
@@ -2982,6 +3023,7 @@ export class SwaggerLoader {
 ````
 
 ## File: .taskmaster/tasks/task_003.txt
+
 ````
 # Task ID: 3
 # Title: Implement Logging System
@@ -3065,14 +3107,14 @@ export class Logger {
 
   private sanitizePayload(payload: any): any {
     if (!payload) return payload;
-    
+
     // Deep clone to avoid modifying the original
     const sanitized = JSON.parse(JSON.stringify(payload));
-    
+
     // Redact sensitive fields
     if (sanitized.apiKey) sanitized.apiKey = '[REDACTED]';
     if (sanitized['chave-api-portal']) sanitized['chave-api-portal'] = '[REDACTED]';
-    
+
     return sanitized;
   }
 }
@@ -3094,6 +3136,7 @@ export class Logger {
 ````
 
 ## File: .taskmaster/tasks/task_004.txt
+
 ````
 # Task ID: 4
 # Title: Implement Authentication System
@@ -3129,12 +3172,12 @@ export class Authentication {
 
   getAuthHeaders(overrideApiKey?: string): Record<string, string> {
     const key = overrideApiKey || this.apiKey;
-    
+
     if (!key) {
       this.logger.warn('No API key provided for authentication');
       return {};
     }
-    
+
     return { [this.headerName]: key };
   }
 
@@ -3170,6 +3213,7 @@ this.apiKey = config.apiKey || process.env.PORTAL_TRANSPARENCIA_API_KEY || null;
 ````
 
 ## File: .taskmaster/tasks/task_005.txt
+
 ````
 # Task ID: 5
 # Title: Implement Error Handling System
@@ -3207,7 +3251,7 @@ export class ApiError extends Error {
 export class RateLimitError extends ApiError {
   retryAfter?: number;
   currentLimit: number;
-  
+
   constructor(message: string, endpoint: string, currentLimit: number, retryAfter?: number) {
     super(message, 429, endpoint);
     this.name = 'RateLimitError';
@@ -3245,37 +3289,37 @@ export class ErrorHandler {
   handleApiError(error: any, endpoint: string, requestPayload?: any): Error {
     if (error.response) {
       const { status, data } = error.response;
-      
+
       // Handle rate limiting errors
       if (status === 429) {
         const retryAfter = parseInt(error.response.headers['retry-after'] || '60', 10);
         const message = 'Rate limit exceeded for Portal da Transparência API';
         const rateLimitError = new RateLimitError(message, endpoint, 90, retryAfter);
-        
+
         this.logger.warn(message, {
           endpoint,
           status,
           retryAfter,
           responseData: data
         });
-        
+
         return rateLimitError;
       }
-      
+
       // Handle authentication errors
       if (status === 401) {
         const message = 'Authentication failed for Portal da Transparência API';
         this.logger.error(message, { endpoint, status });
         return new AuthenticationError(message, endpoint);
       }
-      
+
       // Handle not found errors
       if (status === 404) {
         const message = 'Resource not found in Portal da Transparência API';
         this.logger.error(message, { endpoint, status });
         return new NotFoundError(message, endpoint);
       }
-      
+
       // Generic API error
       const message = `API error: ${data?.message || 'Unknown error'}`;
       this.logger.error(message, {
@@ -3284,10 +3328,10 @@ export class ErrorHandler {
         requestPayload,
         responseData: data
       });
-      
+
       return new ApiError(message, status, endpoint, requestPayload, data);
     }
-    
+
     // Network or other errors
     const message = `Request failed: ${error.message}`;
     this.logger.error(message, { endpoint, error: error.message });
@@ -3316,6 +3360,7 @@ export class ErrorHandler {
 ````
 
 ## File: .taskmaster/tasks/task_006.txt
+
 ````
 # Task ID: 6
 # Title: Implement Rate Limiting Monitor
@@ -3346,7 +3391,7 @@ export class RateLimiter {
     this.nightTimeLimit = config.nightTimeLimit || 300;
     this.alertThreshold = config.alertThreshold || 0.8; // 80%
     this.logger = logger;
-    
+
     // Reset counters every minute
     setInterval(() => this.resetCounters(), 60000);
   }
@@ -3370,10 +3415,10 @@ export class RateLimiter {
     const key = this.getMinuteKey();
     const currentCount = this.requestCounts.get(key) || 0;
     this.requestCounts.set(key, currentCount + 1);
-    
+
     const currentLimit = this.getCurrentLimit();
     const usagePercentage = (currentCount + 1) / currentLimit;
-    
+
     if (usagePercentage >= this.alertThreshold) {
       this.logger.warn('Approaching rate limit', {
         currentCount: currentCount + 1,
@@ -3388,7 +3433,7 @@ export class RateLimiter {
     const key = this.getMinuteKey();
     const currentCount = this.requestCounts.get(key) || 0;
     const currentLimit = this.getCurrentLimit();
-    
+
     return {
       count: currentCount,
       limit: currentLimit,
@@ -3420,6 +3465,7 @@ export class RateLimiter {
 ````
 
 ## File: .taskmaster/tasks/task_007.txt
+
 ````
 # Task ID: 7
 # Title: Implement API Client Generator
@@ -3451,43 +3497,43 @@ export class ClientGenerator {
 
   async generateClients(): Promise<string[]> {
     const generatedFiles: string[] = [];
-    
+
     try {
       // Ensure output directory exists
       if (!fs.existsSync(this.outputDir)) {
         fs.mkdirSync(this.outputDir, { recursive: true });
       }
-      
+
       // Load template
       const templatePath = path.resolve(__dirname, '../templates/client.hbs');
       const templateSource = fs.readFileSync(templatePath, 'utf8');
       const template = Handlebars.compile(templateSource);
-      
+
       // Group endpoints by tag
       const endpointsByTag = this.groupEndpointsByTag();
-      
+
       // Generate client for each tag
       for (const [tag, endpoints] of Object.entries(endpointsByTag)) {
         const clientName = this.formatClientName(tag);
         const fileName = `${this.kebabCase(tag)}.ts`;
         const filePath = path.join(this.outputDir, fileName);
-        
+
         const clientCode = template({
           clientName,
           endpoints,
           imports: this.generateImports(endpoints),
           interfaces: this.generateInterfaces(endpoints)
         });
-        
+
         fs.writeFileSync(filePath, clientCode);
         generatedFiles.push(filePath);
-        
+
         this.logger.info(`Generated client for ${tag}`, { filePath });
       }
-      
+
       // Generate index file
       this.generateIndexFile(Object.keys(endpointsByTag));
-      
+
       return generatedFiles;
     } catch (error) {
       this.logger.error('Failed to generate clients', { error });
@@ -3497,18 +3543,18 @@ export class ClientGenerator {
 
   private groupEndpointsByTag(): Record<string, any[]> {
     const endpointsByTag: Record<string, any[]> = {};
-    
+
     // Process paths and operations
     for (const [path, pathItem] of Object.entries(this.spec.paths)) {
       for (const [method, operation] of Object.entries(pathItem)) {
         if (!operation) continue;
-        
+
         const tag = operation.tags?.[0] || 'Default';
-        
+
         if (!endpointsByTag[tag]) {
           endpointsByTag[tag] = [];
         }
-        
+
         endpointsByTag[tag].push({
           path,
           method: method.toUpperCase(),
@@ -3521,7 +3567,7 @@ export class ClientGenerator {
         });
       }
     }
-    
+
     return endpointsByTag;
   }
 
@@ -3558,7 +3604,7 @@ export class ClientGenerator {
       const clientName = this.formatClientName(tag);
       return `export { ${clientName} } from './${fileName}';`;
     }).join('\n');
-    
+
     fs.writeFileSync(indexPath, exports);
     this.logger.info('Generated index file', { path: indexPath });
   }
@@ -3582,6 +3628,7 @@ export class ClientGenerator {
 ````
 
 ## File: .taskmaster/tasks/task_008.txt
+
 ````
 # Task ID: 8
 # Title: Implement HTTP Client with Interceptors
@@ -3625,12 +3672,12 @@ export class HttpClient {
     this.errorHandler = errorHandler;
     this.logger = logger;
     this.rateLimiter = rateLimiter;
-    
+
     this.client = axios.create({
       baseURL: config.baseURL || 'https://api.portaldatransparencia.gov.br',
       timeout: config.timeout || 30000,
     });
-    
+
     // Configure retries
     axiosRetry(this.client, {
       retries: config.retries || 3,
@@ -3641,7 +3688,7 @@ export class HttpClient {
           (error.response?.status >= 500 && error.response?.status < 600);
       }
     });
-    
+
     this.setupInterceptors();
   }
 
@@ -3651,14 +3698,14 @@ export class HttpClient {
       (config) => {
         const startTime = Date.now();
         config.metadata = { startTime };
-        
+
         // Add authentication headers
         const authHeaders = this.auth.getAuthHeaders();
         config.headers = { ...config.headers, ...authHeaders };
-        
+
         // Track request for rate limiting
         this.rateLimiter.trackRequest();
-        
+
         return config;
       },
       (error) => {
@@ -3666,13 +3713,13 @@ export class HttpClient {
         return Promise.reject(error);
       }
     );
-    
+
     // Response interceptor
     this.client.interceptors.response.use(
       (response) => {
         const config = response.config as AxiosRequestConfig & { metadata?: any };
         const duration = Date.now() - (config.metadata?.startTime || 0);
-        
+
         this.logger.logApiCall({
           endpoint: `${config.method?.toUpperCase()} ${config.url}`,
           method: config.method?.toUpperCase() || 'UNKNOWN',
@@ -3680,13 +3727,13 @@ export class HttpClient {
           responseStatus: response.status,
           responseTime: duration
         });
-        
+
         return response;
       },
       (error) => {
         const config = error.config as AxiosRequestConfig & { metadata?: any };
         const duration = Date.now() - (config.metadata?.startTime || 0);
-        
+
         this.logger.logApiCall({
           endpoint: `${config.method?.toUpperCase()} ${config.url}`,
           method: config.method?.toUpperCase() || 'UNKNOWN',
@@ -3695,14 +3742,14 @@ export class HttpClient {
           responseTime: duration,
           error
         });
-        
+
         // Transform error
         const transformedError = this.errorHandler.handleApiError(
           error,
           `${config.method?.toUpperCase()} ${config.url}`,
           config.data
         );
-        
+
         return Promise.reject(transformedError);
       }
     );
@@ -3753,6 +3800,7 @@ export class HttpClient {
 ````
 
 ## File: .taskmaster/tasks/task_009.txt
+
 ````
 # Task ID: 9
 # Title: Implement Multi-step Call Planner Core
@@ -3805,13 +3853,13 @@ export class MCP {
       timeout: config.timeout ?? 300000, // 5 minutes
       concurrency: config.concurrency ?? 1, // Sequential by default
     };
-    
+
     this.context = {
       results: {},
       errors: {},
       metadata: {},
     };
-    
+
     this.logger = logger;
   }
 
@@ -3834,37 +3882,37 @@ export class MCP {
     // Check for duplicate IDs
     const ids = this.steps.map(step => step.id);
     const uniqueIds = new Set(ids);
-    
+
     if (ids.length !== uniqueIds.size) {
       throw new Error('Duplicate step IDs found');
     }
-    
+
     // Check for circular dependencies
     for (const step of this.steps) {
       if (!step.dependsOn) continue;
-      
+
       const visited = new Set<string>();
       const checkCircular = (stepId: string, path: string[] = []): boolean => {
         if (path.includes(stepId)) {
           this.logger.error('Circular dependency detected', { path: [...path, stepId] });
           return true;
         }
-        
+
         if (visited.has(stepId)) return false;
         visited.add(stepId);
-        
+
         const step = this.steps.find(s => s.id === stepId);
         if (!step || !step.dependsOn) return false;
-        
+
         for (const depId of step.dependsOn) {
           if (checkCircular(depId, [...path, stepId])) {
             return true;
           }
         }
-        
+
         return false;
       };
-      
+
       for (const depId of step.dependsOn) {
         if (checkCircular(depId)) {
           throw new Error(`Circular dependency detected: ${depId}`);
@@ -3877,29 +3925,29 @@ export class MCP {
     if (!step.dependsOn || step.dependsOn.length === 0) {
       return true;
     }
-    
+
     // Check if all dependencies have completed successfully
     return step.dependsOn.every(depId => {
       const hasResult = depId in this.context.results;
       const hasError = depId in this.context.errors;
-      
+
       return hasResult && (!hasError || this.config.continueOnError);
     });
   }
 
   async execute(): Promise<MCPContext> {
     this.validateSteps();
-    
+
     // Sort steps based on dependencies
     const executionOrder = this.topologicalSort();
-    
+
     this.logger.info('Starting MCP execution', {
       stepCount: this.steps.length,
       executionOrder: executionOrder.map(step => step.id)
     });
-    
+
     const startTime = Date.now();
-    
+
     try {
       if (this.config.concurrency === 1) {
         // Sequential execution
@@ -3909,21 +3957,21 @@ export class MCP {
       } else {
         // Parallel execution with dependency respect
         let remainingSteps = [...executionOrder];
-        
+
         while (remainingSteps.length > 0) {
           const executableSteps = remainingSteps.filter(step => this.canExecuteStep(step));
-          
+
           if (executableSteps.length === 0) {
             // Deadlock or all remaining steps have failed dependencies
             break;
           }
-          
+
           // Execute steps in parallel up to concurrency limit
           const batch = executableSteps.slice(0, this.config.concurrency);
           await Promise.all(batch.map(step => this.executeStep(step)));
-          
+
           // Remove executed steps
-          remainingSteps = remainingSteps.filter(step => 
+          remainingSteps = remainingSteps.filter(step =>
             !batch.some(s => s.id === step.id)
           );
         }
@@ -3934,14 +3982,14 @@ export class MCP {
     } finally {
       const duration = Date.now() - startTime;
       this.context.metadata.executionTime = duration;
-      
+
       this.logger.info('MCP execution completed', {
         duration,
         successCount: Object.keys(this.context.results).length,
         errorCount: Object.keys(this.context.errors).length
       });
     }
-    
+
     return this.context;
   }
 
@@ -3950,30 +3998,30 @@ export class MCP {
       this.logger.warn(`Skipping step ${step.id} due to failed dependencies`);
       return;
     }
-    
+
     this.logger.info(`Executing step: ${step.id} - ${step.name}`);
     const startTime = Date.now();
-    
+
     try {
       const result = await step.execute(this.context);
       this.context.results[step.id] = result;
-      
+
       if (step.onSuccess) {
         step.onSuccess(result, this.context);
       }
-      
+
       const duration = Date.now() - startTime;
       this.logger.info(`Step ${step.id} completed successfully`, { duration });
     } catch (error) {
       this.context.errors[step.id] = error;
-      
+
       if (step.onError) {
         step.onError(error, this.context);
       }
-      
+
       const duration = Date.now() - startTime;
       this.logger.error(`Step ${step.id} failed`, { error, duration });
-      
+
       if (!this.config.continueOnError) {
         throw error;
       }
@@ -3984,36 +4032,36 @@ export class MCP {
     const result: MCPStep[] = [];
     const visited = new Set<string>();
     const temp = new Set<string>();
-    
+
     const visit = (stepId: string): void => {
       if (temp.has(stepId)) {
         throw new Error(`Circular dependency detected: ${stepId}`);
       }
-      
+
       if (visited.has(stepId)) return;
-      
+
       const step = this.steps.find(s => s.id === stepId);
       if (!step) return;
-      
+
       temp.add(stepId);
-      
+
       if (step.dependsOn) {
         for (const depId of step.dependsOn) {
           visit(depId);
         }
       }
-      
+
       temp.delete(stepId);
       visited.add(stepId);
       result.push(step);
     };
-    
+
     for (const step of this.steps) {
       if (!visited.has(step.id)) {
         visit(step.id);
       }
     }
-    
+
     return result;
   }
 
@@ -4047,6 +4095,7 @@ export class MCP {
 ````
 
 ## File: .taskmaster/tasks/task_010.txt
+
 ````
 # Task ID: 10
 # Title: Implement API Client Integration with MCP
@@ -4075,21 +4124,21 @@ export class ClientFactory {
 
   createClient<T extends keyof typeof clients>(clientName: T): InstanceType<typeof clients[T]> {
     const ClientClass = clients[clientName];
-    
+
     if (!ClientClass) {
       throw new Error(`Client not found: ${clientName}`);
     }
-    
+
     return new ClientClass(this.httpClient) as InstanceType<typeof clients[T]>;
   }
 
   createAllClients(): Record<keyof typeof clients, any> {
     const allClients: Record<string, any> = {};
-    
+
     for (const clientName of Object.keys(clients)) {
       allClients[clientName] = this.createClient(clientName as keyof typeof clients);
     }
-    
+
     return allClients as Record<keyof typeof clients, any>;
   }
 }
@@ -4134,14 +4183,14 @@ export class MCPBuilder {
       dependsOn: options.dependsOn || [],
       execute: async (context) => {
         const client = this.clientFactory.createClient(clientName);
-        
+
         if (!client[methodName]) {
           throw new Error(`Method ${methodName} not found on client ${clientName}`);
         }
-        
+
         // Resolve parameter values from context if needed
         const resolvedParams = this.resolveParamsFromContext(params, context);
-        
+
         const result = await client[methodName](resolvedParams);
         return options.transform ? options.transform(result, context) : result;
       },
@@ -4150,37 +4199,37 @@ export class MCPBuilder {
         retryDelay: 1000,
       } : undefined,
     };
-    
+
     this.mcp.addStep(step);
     return this;
   }
 
   private resolveParamsFromContext(params: any, context: any): any {
     if (!params) return {};
-    
+
     const resolved = { ...params };
-    
+
     // Look for special syntax like "$result.stepId.property"
     for (const [key, value] of Object.entries(resolved)) {
       if (typeof value === 'string' && value.startsWith('$result.')) {
         const path = value.substring(8).split('.');
         const stepId = path[0];
-        
+
         if (context.results[stepId]) {
           let currentValue = context.results[stepId];
-          
+
           for (let i = 1; i < path.length; i++) {
             currentValue = currentValue[path[i]];
             if (currentValue === undefined) break;
           }
-          
+
           resolved[key] = currentValue;
         }
       } else if (typeof value === 'object') {
         resolved[key] = this.resolveParamsFromContext(value, context);
       }
     }
-    
+
     return resolved;
   }
 
@@ -4212,6 +4261,7 @@ export class MCPBuilder {
 ````
 
 ## File: .taskmaster/tasks/task_011.txt
+
 ````
 # Task ID: 11
 # Title: Implement Caching System
@@ -4246,14 +4296,14 @@ export class CacheManager {
       maxKeys: config.maxKeys || 1000,
       useClones: config.useClones !== undefined ? config.useClones : true,
     });
-    
+
     this.logger = logger;
-    
+
     // Setup event listeners
     this.cache.on('expired', (key, value) => {
       this.logger.debug('Cache key expired', { key });
     });
-    
+
     this.cache.on('flush', () => {
       this.logger.debug('Cache flushed');
     });
@@ -4261,7 +4311,7 @@ export class CacheManager {
 
   set<T>(key: string, value: T, ttl?: number): boolean {
     if (!this.enabled) return false;
-    
+
     try {
       const result = this.cache.set(key, value, ttl);
       this.logger.debug('Cache set', { key, ttl });
@@ -4274,7 +4324,7 @@ export class CacheManager {
 
   get<T>(key: string): T | undefined {
     if (!this.enabled) return undefined;
-    
+
     try {
       const value = this.cache.get<T>(key);
       this.logger.debug('Cache get', { key, hit: value !== undefined });
@@ -4345,17 +4395,17 @@ async get<T>(url: string, config?: AxiosRequestConfig & { skipCache?: boolean })
   if (!config?.skipCache) {
     const cacheKey = `GET:${url}:${JSON.stringify(config?.params || {})}`;
     const cachedData = this.cacheManager.get<T>(cacheKey);
-    
+
     if (cachedData) {
       this.logger.debug('Using cached response', { url });
       return cachedData;
     }
-    
+
     const response = await this.request<T>({ ...config, method: 'GET', url });
     this.cacheManager.set(cacheKey, response);
     return response;
   }
-  
+
   return this.request<T>({ ...config, method: 'GET', url });
 }
 ```
@@ -4377,6 +4427,7 @@ async get<T>(url: string, config?: AxiosRequestConfig & { skipCache?: boolean })
 ````
 
 ## File: .taskmaster/tasks/task_012.txt
+
 ````
 # Task ID: 12
 # Title: Implement Main MCP Class and Public API
@@ -4438,7 +4489,7 @@ export class PortalTransparenciaMCP {
     );
     this.clientFactory = new ClientFactory(this.httpClient, this.logger);
     this.swaggerLoader = new SwaggerLoader(options.swaggerUrl, this.logger);
-    
+
     this.logger.info('Portal da Transparência MCP initialized');
   }
 
@@ -4511,6 +4562,7 @@ export function createMCP(options: MCPOptions = {}): PortalTransparenciaMCP {
 ````
 
 ## File: .taskmaster/tasks/task_013.txt
+
 ````
 # Task ID: 13
 # Title: Implement Unit Tests
@@ -4561,6 +4613,7 @@ module.exports = {
 ````
 
 ## File: .taskmaster/tasks/task_014.txt
+
 ````
 # Task ID: 14
 # Title: Implement Integration Tests
@@ -4625,6 +4678,7 @@ export const config = {
 ````
 
 ## File: .taskmaster/tasks/task_015.txt
+
 ````
 # Task ID: 15
 # Title: Generate API Documentation
@@ -4735,6 +4789,7 @@ export const config = {
 ````
 
 ## File: .taskmaster/tasks/task_016.txt
+
 ````
 # Task ID: 16
 # Title: Create Usage Examples
@@ -4860,6 +4915,7 @@ main();
 ````
 
 ## File: .taskmaster/tasks/task_017.txt
+
 ````
 # Task ID: 17
 # Title: Create NPM Package Configuration
@@ -4981,6 +5037,7 @@ jobs:
 ````
 
 ## File: .taskmaster/tasks/task_018.txt
+
 ````
 # Task ID: 18
 # Title: Create CI/CD Pipeline
@@ -5041,6 +5098,7 @@ jobs:
 ````
 
 ## File: .taskmaster/tasks/task_019.txt
+
 ````
 # Task ID: 19
 # Title: Implement MCP Server Bridge for Portal da Transparência API
@@ -5114,7 +5172,7 @@ export class MCPPortalServer {
       // Build URL with path parameters
       let url = `https://api.portaldatransparencia.gov.br/api-de-dados${path}`;
       const pathParams = operation.parameters?.filter((p: any) => p.in === 'path') || [];
-      
+
       for (const param of pathParams) {
         if (args[param.name]) {
           url = url.replace(`{${param.name}}`, encodeURIComponent(args[param.name]));
@@ -5124,7 +5182,7 @@ export class MCPPortalServer {
       // Build query parameters
       const queryParams = operation.parameters?.filter((p: any) => p.in === 'query') || [];
       const searchParams = new URLSearchParams();
-      
+
       for (const param of queryParams) {
         if (args[param.name] !== undefined) {
           searchParams.append(param.name, args[param.name]);
@@ -5334,6 +5392,7 @@ main().catch(console.error);
 ````
 
 ## File: .taskmaster/tasks/tasks.json
+
 ````json
 {
   "master": {
@@ -5807,32 +5866,33 @@ main().catch(console.error);
 ````
 
 ## File: .taskmaster/templates/example_prd.txt
-````
+
+```
 <context>
-# Overview  
+# Overview
 [Provide a high-level overview of your product here. Explain what problem it solves, who it's for, and why it's valuable.]
 
-# Core Features  
+# Core Features
 [List and describe the main features of your product. For each feature, include:
 - What it does
 - Why it's important
 - How it works at a high level]
 
-# User Experience  
+# User Experience
 [Describe the user journey and experience. Include:
 - User personas
 - Key user flows
 - UI/UX considerations]
 </context>
 <PRD>
-# Technical Architecture  
+# Technical Architecture
 [Outline the technical implementation details:
 - System components
 - Data models
 - APIs and integrations
 - Infrastructure requirements]
 
-# Development Roadmap  
+# Development Roadmap
 [Break down the development process into phases:
 - MVP requirements
 - Future enhancements
@@ -5844,21 +5904,22 @@ main().catch(console.error);
 - Getting as quickly as possible to something usable/visible front end that works
 - Properly pacing and scoping each feature so it is atomic but can also be built upon and improved as development approaches]
 
-# Risks and Mitigations  
+# Risks and Mitigations
 [Identify potential risks and how they'll be addressed:
 - Technical challenges
 - Figuring out the MVP that we can build upon
 - Resource constraints]
 
-# Appendix  
+# Appendix
 [Include any additional information:
 - Research findings
 - Technical specifications]
 </PRD>
-````
+```
 
 ## File: .taskmaster/config.json
-````json
+
+```json
 {
   "models": {
     "main": {
@@ -5896,20 +5957,22 @@ main().catch(console.error);
   },
   "claudeCode": {}
 }
-````
+```
 
 ## File: .taskmaster/state.json
-````json
+
+```json
 {
   "currentTag": "master",
   "lastSwitched": "2025-07-06T19:03:03.026Z",
   "branchTagMapping": {},
   "migrationNoticeShown": true
 }
-````
+```
 
 ## File: bin/mcp-portal-transparencia.js
-````javascript
+
+```javascript
 #!/usr/bin/env node
 
 import path from 'path';
@@ -5966,9 +6029,10 @@ async function main() {
 }
 
 main().catch(console.error);
-````
+```
 
 ## File: docs/api.md
+
 ````markdown
 # Portal da Transparência API — Documentação Gerada
 
@@ -5978,6 +6042,7 @@ Servidores: https://api.portaldatransparencia.gov.br
 Autenticação: header `chave-api-dados` com sua chave de API. Ex.: `chave-api-dados: CHAVE_API_AQUI`
 
 Observação importante
+
 - Este arquivo foi gerado automaticamente a partir da especificação pública OpenAPI em https://api.portaldatransparencia.gov.br/v3/api-docs.
 - Os exemplos usam `CHAVE_API_AQUI` como placeholder — substitua pela sua chave real.
 - Devido ao volume de endpoints, esta documentação contém a estrutura de referência e exemplos práticos. Para a lista exata e completa de endpoints, consulte a especificação online ou integre este processo de geração no seu pipeline.
@@ -6000,6 +6065,7 @@ Abaixo está um modelo de referência, seguido de exemplos práticos para endpoi
 ## Modelo de Endpoint (Padrão)
 
 ### GET /recurso/exemplo
+
 - Método: `GET`
 - Caminho: `/recurso/exemplo`
 - Resumo: Resumo sucinto do que o endpoint retorna
@@ -6007,20 +6073,26 @@ Abaixo está um modelo de referência, seguido de exemplos práticos para endpoi
 
 Parâmetros:
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| pagina | query | Não | integer | Página de resultados (paginação) |
-| tamanhoPagina | query | Não | integer | Itens por página |
-| ordenacao | query | Não | string | Campo(s) de ordenação |
-| filtroXYZ | query | Não | string | Filtro específico do recurso |
+| Nome          | Local | Obrigatório | Tipo    | Descrição                        |
+| ------------- | ----- | :---------: | ------- | -------------------------------- |
+| pagina        | query |     Não     | integer | Página de resultados (paginação) |
+| tamanhoPagina | query |     Não     | integer | Itens por página                 |
+| ordenacao     | query |     Não     | string  | Campo(s) de ordenação            |
+| filtroXYZ     | query |     Não     | string  | Filtro específico do recurso     |
 
 Respostas:
+
 - 200: Sucesso
   - Content-Type: `application/json`
   ```json
   {
     "conteudo": [],
-    "paginacao": { "pagina": 1, "tamanhoPagina": 20, "quantidadePaginas": 100, "totalRegistros": 2000 }
+    "paginacao": {
+      "pagina": 1,
+      "tamanhoPagina": 20,
+      "quantidadePaginas": 100,
+      "totalRegistros": 2000
+    }
   }
   ```
 - 400: Requisição inválida
@@ -6029,12 +6101,14 @@ Respostas:
 - 5xx: Erros do servidor
 
 Exemplo de uso (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/recurso/exemplo?pagina=1&tamanhoPagina=20' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
 ```
 
 Exemplo de uso (JavaScript - fetch):
+
 ```js
 const url = 'https://api.portaldatransparencia.gov.br/recurso/exemplo?pagina=1&tamanhoPagina=20';
 const res = await fetch(url, {
@@ -6053,6 +6127,7 @@ Atenção: Os caminhos abaixo ilustram padrões comuns do Portal da Transparênc
 ### 1) Servidores e Vínculos
 
 #### GET /servidores
+
 - Método: `GET`
 - Caminho: `/servidores`
 - Resumo: Consulta de servidores públicos
@@ -6060,14 +6135,15 @@ Atenção: Os caminhos abaixo ilustram padrões comuns do Portal da Transparênc
 
 Parâmetros (exemplos):
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| cpf | query | Não | string | CPF (formato aceito pelo Portal; geralmente mascarado) |
-| idOrgao | query | Não | integer | Identificador do órgão |
-| pagina | query | Não | integer | Página de resultados |
-| tamanhoPagina | query | Não | integer | Itens por página |
+| Nome          | Local | Obrigatório | Tipo    | Descrição                                              |
+| ------------- | ----- | :---------: | ------- | ------------------------------------------------------ |
+| cpf           | query |     Não     | string  | CPF (formato aceito pelo Portal; geralmente mascarado) |
+| idOrgao       | query |     Não     | integer | Identificador do órgão                                 |
+| pagina        | query |     Não     | integer | Página de resultados                                   |
+| tamanhoPagina | query |     Não     | integer | Itens por página                                       |
 
 Respostas:
+
 - 200: Lista de servidores
   ```json
   [
@@ -6081,6 +6157,7 @@ Respostas:
   ```
 
 Exemplo (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/servidores?pagina=1&tamanhoPagina=50' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
@@ -6089,6 +6166,7 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/servidores?pagina=1&tamanh
 ### 2) Empenhos / Despesas / Orçamento
 
 #### GET /despesas
+
 - Método: `GET`
 - Caminho: `/despesas`
 - Resumo: Consulta despesas
@@ -6096,14 +6174,15 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/servidores?pagina=1&tamanh
 
 Parâmetros (exemplos):
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| codigoFuncao | query | Não | string | Código da função orçamentária |
-| ano | query | Não | integer | Ano de referência |
-| pagina | query | Não | integer | Página |
-| tamanhoPagina | query | Não | integer | Itens/página |
+| Nome          | Local | Obrigatório | Tipo    | Descrição                     |
+| ------------- | ----- | :---------: | ------- | ----------------------------- |
+| codigoFuncao  | query |     Não     | string  | Código da função orçamentária |
+| ano           | query |     Não     | integer | Ano de referência             |
+| pagina        | query |     Não     | integer | Página                        |
+| tamanhoPagina | query |     Não     | integer | Itens/página                  |
 
 Respostas:
+
 - 200: Lista de despesas
   ```json
   [
@@ -6117,6 +6196,7 @@ Respostas:
   ```
 
 Exemplo (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/despesas?ano=2024&pagina=1&tamanhoPagina=20' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
@@ -6125,6 +6205,7 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/despesas?ano=2024&pagina=1
 ### 3) Contratos
 
 #### GET /contratos
+
 - Método: `GET`
 - Caminho: `/contratos`
 - Resumo: Consulta contratos
@@ -6132,15 +6213,16 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/despesas?ano=2024&pagina=1
 
 Parâmetros (exemplos):
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| ano | query | Não | integer | Ano |
-| cpfCnpj | query | Não | string | Fornecedor (CPF/CNPJ) |
-| idOrgao | query | Não | integer | Órgão |
-| pagina | query | Não | integer | Página |
-| tamanhoPagina | query | Não | integer | Itens por página |
+| Nome          | Local | Obrigatório | Tipo    | Descrição             |
+| ------------- | ----- | :---------: | ------- | --------------------- |
+| ano           | query |     Não     | integer | Ano                   |
+| cpfCnpj       | query |     Não     | string  | Fornecedor (CPF/CNPJ) |
+| idOrgao       | query |     Não     | integer | Órgão                 |
+| pagina        | query |     Não     | integer | Página                |
+| tamanhoPagina | query |     Não     | integer | Itens por página      |
 
 Respostas:
+
 - 200:
   ```json
   [
@@ -6155,6 +6237,7 @@ Respostas:
   ```
 
 Exemplo (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/contratos?ano=2024&pagina=1&tamanhoPagina=20' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
@@ -6163,6 +6246,7 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/contratos?ano=2024&pagina=
 ### 4) Transferências e Convênios
 
 #### GET /convenios
+
 - Método: `GET`
 - Caminho: `/convenios`
 - Resumo: Consulta convênios
@@ -6170,14 +6254,15 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/contratos?ano=2024&pagina=
 
 Parâmetros (exemplos):
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| ano | query | Não | integer | Ano |
-| situacao | query | Não | string | Situação |
-| pagina | query | Não | integer | Página |
-| tamanhoPagina | query | Não | integer | Itens por página |
+| Nome          | Local | Obrigatório | Tipo    | Descrição        |
+| ------------- | ----- | :---------: | ------- | ---------------- |
+| ano           | query |     Não     | integer | Ano              |
+| situacao      | query |     Não     | string  | Situação         |
+| pagina        | query |     Não     | integer | Página           |
+| tamanhoPagina | query |     Não     | integer | Itens por página |
 
 Respostas:
+
 - 200:
   ```json
   [
@@ -6191,6 +6276,7 @@ Respostas:
   ```
 
 Exemplo (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/convenios?ano=2024&pagina=1&tamanhoPagina=50' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
@@ -6199,6 +6285,7 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/convenios?ano=2024&pagina=
 ### 5) Empresas e Fornecedores
 
 #### GET /empresas
+
 - Método: `GET`
 - Caminho: `/empresas`
 - Resumo: Consulta empresas/fornecedores
@@ -6206,22 +6293,22 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/convenios?ano=2024&pagina=
 
 Parâmetros (exemplos):
 
-| Nome | Local | Obrigatório | Tipo | Descrição |
-|---|---|:---:|---|---|
-| cnpj | query | Não | string | CNPJ |
-| razaoSocial | query | Não | string | Razão social |
-| pagina | query | Não | integer | Página |
-| tamanhoPagina | query | Não | integer | Itens por página |
+| Nome          | Local | Obrigatório | Tipo    | Descrição        |
+| ------------- | ----- | :---------: | ------- | ---------------- |
+| cnpj          | query |     Não     | string  | CNPJ             |
+| razaoSocial   | query |     Não     | string  | Razão social     |
+| pagina        | query |     Não     | integer | Página           |
+| tamanhoPagina | query |     Não     | integer | Itens por página |
 
 Respostas:
+
 - 200:
   ```json
-  [
-    { "cnpj": "00.000.000/0001-00", "razaoSocial": "EMPRESA SA", "uf": "SP" }
-  ]
+  [{ "cnpj": "00.000.000/0001-00", "razaoSocial": "EMPRESA SA", "uf": "SP" }]
   ```
 
 Exemplo (cURL):
+
 ```bash
 curl -X GET 'https://api.portaldatransparencia.gov.br/empresas?cnpj=00000000000100' \
   -H 'chave-api-dados: CHAVE_API_AQUI'
@@ -6255,17 +6342,19 @@ curl -X GET 'https://api.portaldatransparencia.gov.br/empresas?cnpj=000000000001
 
 - Este repositório já possui utilitários para carregar a especificação via `SwaggerLoader` (src/core/SwaggerLoader.ts).
 - Opcionalmente, crie um script Node/TS que:
-  1) Busca a especificação em `https://api.portaldatransparencia.gov.br/v3/api-docs`;
-  2) Itera `paths` e `components/schemas`;
-  3) Emite Markdown com parâmetros, body e respostas de cada operação;
-  4) Salva em `docs/api.md`.
+  1. Busca a especificação em `https://api.portaldatransparencia.gov.br/v3/api-docs`;
+  2. Itera `paths` e `components/schemas`;
+  3. Emite Markdown com parâmetros, body e respostas de cada operação;
+  4. Salva em `docs/api.md`.
 
 Exemplo de cabeçalho de autenticação (cURL):
+
 ```bash
 -H 'chave-api-dados: CHAVE_API_AQUI'
 ```
 
 Exemplo genérico de requisição POST (cURL):
+
 ```bash
 curl -X POST 'https://api.portaldatransparencia.gov.br/recurso/alvo' \
   -H 'chave-api-dados: CHAVE_API_AQUI' \
@@ -6279,6 +6368,7 @@ Para detalhes completos e atualizados, sempre consulte a especificação públic
 ````
 
 ## File: docs/CHECKLIST.md
+
 ````markdown
 # 📋 Development Checklist – RN-COSM-VENUE-APP
 
@@ -6404,7 +6494,8 @@ For each task, **update the file `docs/progress.md`** at the repository root wit
 ````
 
 ## File: docs/progress.md
-````markdown
+
+```markdown
 # 📋 Development Progress
 
 ## Task Progress Log
@@ -6598,10 +6689,11 @@ Successfully implemented a comprehensive API Client Generator that automatically
 - Test integration with MCP clients (Claude Desktop, Cursor)
 - Update documentation with usage examples
 - Mark subtask 19.1 as complete in TaskMaster
-````
+```
 
 ## File: scripts/PRD.txt
-````
+
+```
 Product Requirements Document (PRD): MCP para Portal da Transparência API
 
 1. Objetivo
@@ -6668,10 +6760,11 @@ Documento gerado para orientar o desenvolvimento do MCP das chamadas da API do P
 
 conteudo do swagger:
 {"openapi":"3.0.1","info":{"title":"API REST do Portal da Transparência do Governo Federal","contact":{"name":"Diretoria de Tecnologia da Informação - DTI","url":"https://www.cgu.gov.br","email":"listaapitransparencia@cgu.gov.br"},"license":{"name":"Decreto nº 8.777, de 11 de maio de 2016","url":"https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2016/decreto/d8777.htm"},"version":"1.0"},"externalDocs":{"description":"Changelog","url":"/changelog"},"servers":[{"url":"https://api.portaldatransparencia.gov.br","description":"Generated server url"}],"security":[{"Authorization":[]}],"paths":{"/api-de-dados/viagens":{"get":{"tags":["Viagens a serviço"],"summary":"Consulta viagens por período","description":"Filtros mínimos:  Página (padrão = 1);  Período de no máximo 1 mês; Código do Órgão (SIAFI)","operationId":"viagensPorPeriodoEOrgao","parameters":[{"name":"dataIdaDe","in":"query","description":"Data de ida a partir de (DD/MM/AAAA)","required":true,"schema":{"type":"string"}},{"name":"dataIdaAte","in":"query","description":"Data de ida até (DD/MM/AAAA)","required":true,"schema":{"type":"string"}},{"name":"dataRetornoDe","in":"query","description":"Data de retorno a partir de (DD/MM/AAAA)","required":true,"schema":{"type":"string"}},{"name":"dataRetornoAte","in":"query","description":"Data de retorno até (DD/MM/AAAA)","required":true,"schema":{"type":"string"}},{"name":"codigoOrgao","in":"query","description":"<a href='/swagger-ui/index.html#/Órgãos/orgaosSiafi' target=\"_blank\">Código do Órgão (SIAFI)</a>","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ViagemDTO"}}}}}}}},"/api-de-dados/viagens/{id}":{"get":{"tags":["Viagens a serviço"],"summary":"Consulta uma viagem pelo ID","description":"Filtros mínimos: ID do registro","operationId":"viagem","parameters":[{"name":"id","in":"path","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/ViagemDTO"}}}}}}},"/api-de-dados/viagens-por-cpf":{"get":{"tags":["Viagens a serviço"],"summary":"Consulta viagens por CPF","description":"Filtros mínimos:  Página (padrão = 1);  CPF; ","operationId":"viagensPorCpf","parameters":[{"name":"cpf","in":"query","description":"CPF","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ViagemDTO"}}}}}}}},"/api-de-dados/situacao-imovel":{"get":{"tags":["Imóveis Funcionais"],"summary":"Consulta situações dos imóveis funcionais","operationId":"situacaoImovel","responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"type":"string"}}}}}}}},"/api-de-dados/servidores":{"get":{"tags":["Servidores do Poder Executivo Federal"],"summary":"Consulta todos servidores do Poder Executivo Federal","description":"Filtros mínimos:  Página (padrão = 1); <a href='/swagger-ui.html#!/211rg227os/orgaosSiapeUsingGET' >Código Órgão Lotação (SIAPE)</a> OU <a href='/swagger-ui.html#!/211rg227os/orgaosSiapeUsingGET' >Código Órgão Exercício (SIAPE)</a> OU CPF;","operationId":"dadosServidores","parameters":[{"name":"tipoServidor","in":"query","description":"Tipo do Servidor (Civil=1 ou Militar=2)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"situacaoServidor","in":"query","description":"Situação do Servidor (Ativo=1, Inativo=2 ou Pensionista=3)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"cpf","in":"query","description":"CPF do Servidor","required":false,"schema":{"type":"string"}},{"name":"nome","in":"query","description":"Nome do Servidor","required":false,"schema":{"type":"string"}},{"name":"codigoFuncaoCargo","in":"query","description":"<a href='/swagger-ui.html#!/Servidores32do32Poder32Executivo32Federal/listarFuncoesECargosUsingGET' >Código da Função ou Cargo de Confiança</a>","required":false,"schema":{"type":"string"}},{"name":"orgaoServidorExercicio","in":"query","description":"<a href='/swagger-ui.html#!/211rg227os/orgaosSiapeUsingGET' >Código Órgão Exercício (SIAPE)</a>","required":false,"schema":{"type":"string"}},{"name":"orgaoServidorLotacao","in":"query","description":"<a href='/swagger-ui.html#!/211rg227os/orgaosSiapeUsingGET' >Código Órgão Lotação (SIAPE)</a>","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CadastroServidorDTO"}}}}}}}},"/api-de-dados/servidores/{id}":{"get":{"tags":["Servidores do Poder Executivo Federal"],"summary":"Consulta um servidor do Poder Executivo Federal pelo idServidorAposentadoPensionista","description":"Filtros mínimos: ID do registro","operationId":"servidor","parameters":[{"name":"id","in":"path","description":"idServidorAposentadoPensionista","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/CadastroServidorDTO"}}}}}}},"/api-de-dados/servidores/remuneracao":{"get":{"tags":["Servidores do Poder Executivo Federal"],"summary":"Consulta remunerações de um servidor do Poder Executivo Federal pelo CPF ou idServidorAposentadoPensionista e mês/ano","description":"Filtros mínimos:  Página (padrão = 1);  CPF;  Ano/Mês (YYYYMM); ou Página (padrão = 1);  Id Servidor; Ano/Mês (YYYYMM);","operationId":"remuneracoesServidores","parameters":[{"name":"id","in":"query","description":"idServidorAposentadoPensionista","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"cpf","in":"query","description":"CPF do Servidor","required":false,"schema":{"type":"string"}},{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ServidorRemuneracaoDTO"}}}}}}}},"/api-de-dados/servidores/por-orgao":{"get":{"tags":["Servidores do Poder Executivo Federal"],"summary":"Consulta de servidores agregados por órgão","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"servidorAgregadoPorOrgao","parameters":[{"name":"orgaoLotacao","in":"query","description":"<a href='/swagger-ui.html#!/211rg227os/orgaosSiapeUsingGET' >Código Órgão Lotação (SIAPE)</a>","required":false,"schema":{"type":"string"}},{"name":"orgaoExercicio","in":"query","description":"<a href='/swagger-ui.html#!/211rg227os/orgaosSiapeUsingGET' >Código Órgão Exercício (SIAPE)</a>","required":false,"schema":{"type":"string"}},{"name":"tipoServidor","in":"query","description":"Tipo servidor (Civil: 1; Militar: 2)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"tipoVinculo","in":"query","description":"Tipo vínculo (Função: 1; Cargo: 2; Outros: 3; Militares: 4","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"licenca","in":"query","description":"Licença (Sim: 1; Não: 0)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ServidorPorOrgaoDTO"}}}}}}}},"/api-de-dados/servidores/funcoes-e-cargos":{"get":{"tags":["Servidores do Poder Executivo Federal"],"summary":"Código da Função ou Cargo de Confiança","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"listarFuncoesECargos","parameters":[{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FuncaoServidorDTO"}}}}}}}},"/api-de-dados/seguro-defeso-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros Seguro Defeso","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"seguroDefesos","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BeneficioPorMunicipioDTO"}}}}}}}},"/api-de-dados/seguro-defeso-codigo":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros Seguro Defeso por CPF/NIS","description":"Filtros mínimos:  Página (padrão = 1);  CPF / NIS; ","operationId":"seguroDefesosPorCodigo","parameters":[{"name":"codigo","in":"query","description":"CPF/NIS","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SeguroDefesoDTO"}}}}}}}},"/api-de-dados/seguro-defeso-beneficiario-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros Seguro Defeso dos Beneficiários por Município e Mes/Ano","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"seguroDefesosDosBeneficiariosPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SeguroDefesoDTO"}}}}}}}},"/api-de-dados/safra-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros Garantia-Safra","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"safra","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BeneficioPorMunicipioDTO"}}}}}}}},"/api-de-dados/safra-codigo-por-cpf-ou-nis":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros Garantia-Safra por CPF/NIS","description":"Filtros mínimos:  Página (padrão = 1);  CPF / NIS; ","operationId":"safraPorNisOuCPF","parameters":[{"name":"codigo","in":"query","description":"CPF/NIS","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SafraDTO"}}}}}}}},"/api-de-dados/safra-beneficiario-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros Garantia-Safra dos beneficiários por município e mes/ano","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"safraDosBeneficiariosPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SafraDTO"}}}}}}}},"/api-de-dados/renuncias-valor":{"get":{"tags":["Renúncias Fiscais"],"summary":"Consulta de Valores Renunciados","operationId":"consultaValoresRenuncia","parameters":[{"name":"nomeSiglaUF","in":"query","description":"Nome ou Sigla UF","required":false,"schema":{"type":"string"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":false,"schema":{"type":"string"}},{"name":"cnpj","in":"query","description":"CNPJ","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/RenunciaDTO"}}}}}}}},"/api-de-dados/renuncias-fiscais-empresas-imunes-isentas":{"get":{"tags":["Renúncias Fiscais"],"summary":"Consulta Pessoas Jurídicas Imunes e Isentas","operationId":"consultaPessoaJuridicasImunesIsentas","parameters":[{"name":"nomeSiglaUF","in":"query","description":"Nome ou Sigla UF","required":false,"schema":{"type":"string"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":false,"schema":{"type":"string"}},{"name":"cnpj","in":"query","description":"CNPJ","required":false,"schema":{"type":"string"}},{"name":"beneficiarioNomeFantasia","in":"query","description":"Beneficiário/Nome Fantasia","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmpresaImuneIsentaDTO"}}}}}}}},"/api-de-dados/renuncias-fiscais-empresas-habilitadas-beneficios-fiscais":{"get":{"tags":["Renúncias Fiscais"],"summary":"Consulta Pessoas Jurídicas Habilitadas a Benefício Fiscal","operationId":"consultaPessoasJuridicasHabilitadasBeneficioFiscal","parameters":[{"name":"nomeSiglaUF","in":"query","description":"Nome ou Sigla UF","required":false,"schema":{"type":"string"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":false,"schema":{"type":"string"}},{"name":"cnpj","in":"query","description":"CNPJ","required":false,"schema":{"type":"string"}},{"name":"beneficiarioNomeFantasia","in":"query","description":"Beneficiário/Nome Fantasia","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmpresaHabilitadaBeneficioFiscalDTO"}}}}}}}},"/api-de-dados/peti-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros Programa de Erradicação do Trabalho Infantil","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"peti","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BeneficioPorMunicipioDTO"}}}}}}}},"/api-de-dados/peti-por-cpf-ou-nis":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros Programa de Erradicação do Trabalho Infantil por CPF/NIS","description":"Filtros mínimos:  Página (padrão = 1);  CPF / NIS; ","operationId":"peti_1","parameters":[{"name":"codigo","in":"query","description":"CPF/NIS","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PetiDTO"}}}}}}}},"/api-de-dados/peti-beneficiario-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros PETI dos beneficiários por município e mês/ano","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"petiBeneficiarioPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PetiDTO"}}}}}}}},"/api-de-dados/pessoa-juridica":{"get":{"tags":["Pessoas físicas e jurídicas"],"summary":"Consulta os registros de Pessoas Jurídicas","operationId":"pj","parameters":[{"name":"cnpj","in":"query","description":"CNPJ","required":true,"schema":{"type":"string"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/PessoaJuridicaDTO"}}}}}}},"/api-de-dados/pessoa-fisica":{"get":{"tags":["Pessoas físicas e jurídicas"],"summary":"Consulta os registros de Pessoas Físicas","description":"Filtros mínimos: CPF ou NIS","operationId":"pf","parameters":[{"name":"cpf","in":"query","description":"CPF","required":false,"schema":{"type":"string"}},{"name":"nis","in":"query","description":"NIS","required":false,"schema":{"type":"string"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/PessoaFisicaDTO"}}}}}}},"/api-de-dados/permissionarios":{"get":{"tags":["Imóveis Funcionais"],"summary":"Consulta relação de ocupantes","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"relacaoOcupantes","parameters":[{"name":"codigoOrgaoResponsavelGestaoSiafi","in":"query","description":"<a href='/swagger-ui/index.html#/Órgãos/orgaosSiafi' target=\"_blank\">Código do Órgão Responsável pela Gestão(SIAFI)</a>","required":false,"schema":{"type":"string"}},{"name":"descricaoOrgaoOcupante","in":"query","description":"Descrição do Órgão do Ocupante","required":false,"schema":{"type":"string"}},{"name":"cpfOcupante","in":"query","description":"CPF Ocupante","required":false,"schema":{"type":"string"}},{"name":"dataInicioOcupacao","in":"query","description":"Data início ocupação(DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataFimOcupacao","in":"query","description":"Data fim ocupação (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PermissionarioDTO"}}}}}}}},"/api-de-dados/peps":{"get":{"tags":["Servidores do Poder Executivo Federal"],"summary":"Consulta PEPs","operationId":"dadosPEPs","parameters":[{"name":"cpf","in":"query","description":"CPF do Servidor","required":false,"schema":{"type":"string"}},{"name":"nome","in":"query","description":"Nome do Servidor","required":false,"schema":{"type":"string"}},{"name":"descricaoFuncao","in":"query","description":"Descrição da Função","required":false,"schema":{"type":"string"}},{"name":"orgaoServidorLotacao","in":"query","description":"<a href='/swagger-ui.html#!/211rg227os/orgaosSiapeUsingGET' >Código Órgão Lotação (SIAPE)</a>","required":false,"schema":{"type":"string"}},{"name":"dataInicioExercicioDe","in":"query","description":"Data início do exercício, período inicial (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"datInicioExercicioAte","in":"query","description":"Data início do exercício, período final (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataFimExercicioDe","in":"query","description":"Data fim do exercício, período inicial (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"datFimExercicioAte","in":"query","description":"Data fim do exercício, período final (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PEPDTO"}}}}}}}},"/api-de-dados/orgaos-siape":{"get":{"tags":["Órgãos"],"summary":"Consulta de órgãos cadastrados no Sistema Integrado de Administração de Pessoal (SIAPE)","description":"Filtros mínimos:  Página (padrão = 1);  Período de no máximo 1 mês; ","operationId":"orgaosSiape","parameters":[{"name":"codigo","in":"query","description":"Código do Órgão (SIAPE)","required":false,"schema":{"type":"string"}},{"name":"descricao","in":"query","description":"Descrição do Órgão (SIAPE)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CodigoDescricaoDTO"}}}}}}}},"/api-de-dados/orgaos-siafi":{"get":{"tags":["Órgãos"],"summary":"Consulta de órgãos cadastrados no Sistema Integrado de Administração Financeira do Governo Federal (SIAFI)","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"orgaosSiafi","parameters":[{"name":"codigo","in":"query","description":"Código do Órgão (SIAFI)","required":false,"schema":{"type":"string"}},{"name":"descricao","in":"query","description":"Descrição do Órgão (SIAFI)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CodigoDescricaoDTO"}}}}}}}},"/api-de-dados/novo-bolsa-familia-sacado-por-nis":{"get":{"tags":["Benefícios"],"operationId":"novoBolsaFamiliaSacadoPorNis","parameters":[{"name":"nis","in":"query","required":true,"schema":{"type":"string"}},{"name":"anoMesReferencia","in":"query","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"anoMesCompetencia","in":"query","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","required":false,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/NovoBolsaFamiliaPagoDTO"}}}}}}}},"/api-de-dados/novo-bolsa-familia-sacado-beneficiario-por-municipio":{"get":{"tags":["Benefícios"],"operationId":"novoBolsaFamiliaSacadoDosBeneficiariosPorMunicipio","parameters":[{"name":"mesAno","in":"query","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","required":false,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/NovoBolsaFamiliaPagoDTO"}}}}}}}},"/api-de-dados/novo-bolsa-familia-por-municipio":{"get":{"tags":["Benefícios"],"operationId":"novoBolsaFamiliaPorMunicipio","parameters":[{"name":"mesAno","in":"query","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","required":false,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BeneficioPorMunicipioDTO"}}}}}}}},"/api-de-dados/notas-fiscais":{"get":{"tags":["Notas Fiscais"],"summary":"Consulta todas as notas fiscais eletrônicas (NFe´s) do Poder Executivo Federal","description":"Filtros mínimos:  Página (padrão = 1);  CNPJ Emitente / Órgão / Produto; ","operationId":"notasFiscais","parameters":[{"name":"cnpjEmitente","in":"query","description":"CNPJ do emitente","required":false,"schema":{"type":"string"}},{"name":"codigoOrgao","in":"query","description":"Código do Órgão (SIAFI)","required":false,"schema":{"type":"string"}},{"name":"nomeProduto","in":"query","description":"Nome do produto","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/NotaFiscalDTO"}}}}}}}},"/api-de-dados/notas-fiscais-por-chave":{"get":{"tags":["Notas Fiscais"],"summary":"Consulta uma nota fiscal eletrônica (NFe) do Poder Executivo Federal pela chave única","description":"Filtros mínimos: Código do registro","operationId":"notaFiscal","parameters":[{"name":"chaveUnicaNotaFiscal","in":"query","description":"Chave única da nota fiscal","required":true,"schema":{"type":"string"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/DetalheNotaFiscalDTO"}}}}}}},"/api-de-dados/licitacoes":{"get":{"tags":["Licitações do Poder Executivo Federal"],"summary":"Consulta todas as licitações do Poder Executivo Federal","description":"Filtros mínimos:  Página (padrão = 1);  Período de no máximo 1 mês; Código do Órgão (SIAFI)","operationId":"licitacoes","parameters":[{"name":"dataInicial","in":"query","description":"Data de abertura inicial (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataFinal","in":"query","description":"Data de abertura final (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"codigoOrgao","in":"query","description":"<a href='/swagger-ui/index.html#/Órgãos/orgaosSiafi' target=\"_blank\">Código do Órgão (SIAFI)</a>","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/LicitacaoDTO"}}}}}}}},"/api-de-dados/licitacoes/{id}":{"get":{"tags":["Licitações do Poder Executivo Federal"],"summary":"Consulta uma licitação do Poder Executivo Federal pelo id","description":"Filtros mínimos: ID do registro","operationId":"licitacao","parameters":[{"name":"id","in":"path","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/LicitacaoDTO"}}}}}}},"/api-de-dados/licitacoes/ugs":{"get":{"tags":["Licitações do Poder Executivo Federal"],"summary":"Consulta as Unidades Gestoras que realizaram licitações","operationId":"ugs","parameters":[{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/UnidadeGestoraDTO"}}}}}}}},"/api-de-dados/licitacoes/por-ug-modalidade-numero":{"get":{"tags":["Licitações do Poder Executivo Federal"],"summary":"Consulta uma licitação pelo código da Unidade Gestora, número e modalidade","description":"O número da licitação deve conter somente números, por exemplo, para a licitação 2/2020 o parâmetro deve ter o valor 22020","operationId":"licitacoesPorUgModalidadeENumero","parameters":[{"name":"codigoUG","in":"query","description":"<a href='/swagger-ui.html#!/Licita231245es32do32Poder32Executivo32Federal/ugsUsingGET' >Código da Unidade Gestora</a>","required":true,"schema":{"type":"string"}},{"name":"numero","in":"query","description":"Número da Licitação (NNNNNAAAA)","required":true,"schema":{"type":"string"}},{"name":"codigoModalidade","in":"query","description":"<a href='/swagger-ui.html#!/Licita231245es32do32Poder32Executivo32Federal/modalidadesUsingGET' >Código da Modalidade da Licitação</a>","required":true,"schema":{"type":"string"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/LicitacaoDTO"}}}}}}}},"/api-de-dados/licitacoes/por-processo":{"get":{"tags":["Licitações do Poder Executivo Federal"],"summary":"Consulta uma licitação pelo número do processo","description":"O número do processo deve conter somente números","operationId":"licitacoesPorProcesso","parameters":[{"name":"processo","in":"query","description":"Número do Processo","required":true,"schema":{"type":"string"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/LicitacaoDTO"}}}}}}}},"/api-de-dados/licitacoes/participantes":{"get":{"tags":["Licitações do Poder Executivo Federal"],"summary":"Consulta os participantes de uma licitação","description":"O número da licitação deve conter somente números, por exemplo, para a licitação 2/2020 o parâmetro deve ter o valor 22020","operationId":"participantes","parameters":[{"name":"codigoUG","in":"query","description":"<a href='/swagger-ui.html#!/Licita231245es32do32Poder32Executivo32Federal/ugsUsingGET' >Código da Unidade Gestora</a>","required":true,"schema":{"type":"string"}},{"name":"numero","in":"query","description":"Número da Licitação (NNNNNAAAA)","required":true,"schema":{"type":"string"}},{"name":"codigoModalidade","in":"query","description":"<a href='/swagger-ui.html#!/Licita231245es32do32Poder32Executivo32Federal/modalidadesUsingGET' >Código da Modalidade da Licitação</a>","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ParticipanteLicitacaoDTO"}}}}}}}},"/api-de-dados/licitacoes/modalidades":{"get":{"tags":["Licitações do Poder Executivo Federal"],"summary":"Consulta as modalidades de licitação","operationId":"modalidades","responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CodigoDescricaoDTO"}}}}}}}},"/api-de-dados/licitacoes/itens-licitados":{"get":{"tags":["Licitações do Poder Executivo Federal"],"summary":"Consulta os itens licitados pelo id licitação","description":"Filtros mínimos: ID do registro","operationId":"itensLicitados","parameters":[{"name":"id","in":"query","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ItemLicitacaoDTO"}}}}}}}},"/api-de-dados/licitacoes/empenhos":{"get":{"tags":["Licitações do Poder Executivo Federal"],"summary":"Consulta os empenhos de uma licitação","description":"O número da licitação deve conter somente números, por exemplo, para a licitação 2/2020 o parâmetro deve ter o valor 22020","operationId":"empenhos","parameters":[{"name":"codigoUG","in":"query","description":"<a href='/swagger-ui.html#!/Licita231245es32do32Poder32Executivo32Federal/ugsUsingGET' >Código da Unidade Gestora</a>","required":true,"schema":{"type":"string"}},{"name":"numero","in":"query","description":"Número da Licitação (NNNNNAAAA)","required":true,"schema":{"type":"string"}},{"name":"codigoModalidade","in":"query","description":"<a href='/swagger-ui.html#!/Licita231245es32do32Poder32Executivo32Federal/modalidadesUsingGET' >Código da Modalidade da Licitação</a>","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmpenhoComprasDTO"}}}}}}}},"/api-de-dados/licitacoes/contratos-relacionados-licitacao":{"get":{"tags":["Licitações do Poder Executivo Federal"],"summary":"Consulta os contratos relacionados a licitação","description":"Filtros mínimos: ID do registro","operationId":"contratosRelacionados","parameters":[{"name":"codigoUG","in":"query","description":"<a href='/swagger-ui.html#!/Licita231245es32do32Poder32Executivo32Federal/ugsUsingGET' >Código da Unidade Gestora</a>","required":true,"schema":{"type":"string"}},{"name":"numero","in":"query","description":"Número da Licitação (NNNNNAAAA)","required":true,"schema":{"type":"string"}},{"name":"codigoModalidade","in":"query","description":"<a href='/swagger-ui.html#!/Licita231245es32do32Poder32Executivo32Federal/modalidadesUsingGET' >Código da Modalidade da Licitação</a>","required":true,"schema":{"type":"string"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ContratoDTO"}}}}}}}},"/api-de-dados/imoveis":{"get":{"tags":["Imóveis Funcionais"],"summary":"Consulta relação de imóveis","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"relacaoImoveis","parameters":[{"name":"codigoOrgaoSiafiResponsavelGestao","in":"query","description":"<a href='/swagger-ui/index.html#/Órgãos/orgaosSiafi' target=\"_blank\">Código do Órgão (SIAFI)</a>","required":false,"schema":{"type":"string"}},{"name":"situacao","in":"query","description":"<a href='/swagger-ui.html#!/Im243veis32Funcionais/situacaoImovelUsingGET' >Situação Imóvel</a>","required":false,"schema":{"type":"string"}},{"name":"regiao","in":"query","description":"Região","required":false,"schema":{"type":"string"}},{"name":"cep","in":"query","description":"CEP","required":false,"schema":{"type":"string"}},{"name":"endereco","in":"query","description":"Endereço","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ImovelFuncionalDTO"}}}}}}}},"/api-de-dados/emendas":{"get":{"tags":["Emendas parlamentares"],"summary":"Consulta as emendas parlamentares","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"emendas","parameters":[{"name":"codigoEmenda","in":"query","description":"Código da Emenda","required":false,"schema":{"type":"string"}},{"name":"numeroEmenda","in":"query","description":"Número da emenda","required":false,"schema":{"type":"string"}},{"name":"nomeAutor","in":"query","description":"Nome do Autor","required":false,"schema":{"type":"string"}},{"name":"tipoEmenda","in":"query","description":"Tipo de emenda","required":false,"schema":{"type":"string"}},{"name":"ano","in":"query","description":"Ano","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"codigoFuncao","in":"query","description":"Código da função","required":false,"schema":{"type":"string"}},{"name":"codigoSubfuncao","in":"query","description":"Código da subfunção","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ConsultaEmendasDTO"}}}}}}}},"/api-de-dados/emendas/documentos/{codigo}":{"get":{"tags":["Emendas parlamentares"],"summary":"Consulta os documentos relacionados à emenda parlamentar pelo código da emenda","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"documentosRelacionadosAEmenda","parameters":[{"name":"codigo","in":"path","description":"Código da emenda","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DocumentoRelacionadoEmendaDTO"}}}}}}}},"/api-de-dados/despesas/tipo-transferencia":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta os tipos de transferências usados nas despesas","operationId":"listaTipoTransferencia","responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/IdDescricaoDTO"}}}}}}}},"/api-de-dados/despesas/recursos-recebidos":{"get":{"tags":["Despesas Públicas"],"summary":"Recebimento de recursos por favorecido","operationId":"recursosRecebidos","parameters":[{"name":"mesAnoInicio","in":"query","description":"Mês ano início (MM/AAAA)","required":true,"schema":{"type":"string"}},{"name":"mesAnoFim","in":"query","description":"Mês ano fim (MM/AAAA)","required":true,"schema":{"type":"string"}},{"name":"nomeFavorecido","in":"query","description":"Nome Favorecido","required":false,"schema":{"type":"string"}},{"name":"codigoFavorecido","in":"query","description":"CNPJ / CPF / Código do favorecido","required":false,"schema":{"type":"string"}},{"name":"tipoFavorecido","in":"query","description":"Tipo de favorecido","required":false,"schema":{"type":"string"}},{"name":"uf","in":"query","description":"Sigla UF","required":false,"schema":{"type":"string"}},{"name":"codigoIBGE","in":"query","description":"Município","required":false,"schema":{"type":"string"}},{"name":"orgaoSuperior","in":"query","description":"Órgão superior (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"orgao","in":"query","description":"Órgão/Entidade vinculada (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"unidadeGestora","in":"query","description":"Unidade gestora (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PessoaRecursosRecebidosUGMesDesnormalizadaDTO"}}}}}}}},"/api-de-dados/despesas/por-orgao":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta as despesas dos órgão do Poder Executivo Federal","description":"Filtros mínimos:  Página (padrão = 1);  Ano do registro;  Ao menos um dos demais filtros; ","operationId":"despesasPorOrgao","parameters":[{"name":"ano","in":"query","description":"Ano da despesa (AAAA)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"orgaoSuperior","in":"query","description":"Órgão superior (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"orgao","in":"query","description":"Órgão/Entidade vinculada (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DespesaAnualPorOrgaoDTO"}}}}}}}},"/api-de-dados/despesas/por-funcional-programatica":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta as despesas do Poder Executivo Federal pela classificação funcional programática","description":"Filtros mínimos:  Página (padrão = 1);  Ano do registro;  Ao menos um dos demais filtros; ","operationId":"despesasPorFuncao","parameters":[{"name":"ano","in":"query","description":"Ano da despesa (AAAA)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"funcao","in":"query","description":"Função (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"subfuncao","in":"query","description":"Subfunção (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"programa","in":"query","description":"Programa (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"acao","in":"query","description":"Ação (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DespesaAnualPorFuncaoESubfuncaoDTO"}}}}}}}},"/api-de-dados/despesas/por-funcional-programatica/movimentacao-liquida":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta de movimentação líquida anual das despesas do Poder Executivo Federal pela classificação funcional programática","description":"Filtros mínimos:  Página (padrão = 1);  Ano do registro;  Ao menos um dos demais filtros; ","operationId":"despesasPorFuncaoMovimentacaoLiquida","parameters":[{"name":"ano","in":"query","description":"Ano da despesa (AAAA)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"funcao","in":"query","description":"Função (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"subfuncao","in":"query","description":"Subfunção (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"programa","in":"query","description":"Programa (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"acao","in":"query","description":"Ação (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"grupoDespesa","in":"query","description":"Grupo Despesa (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"elementoDespesa","in":"query","description":"Elemento Despesa (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"modalidadeAplicacao","in":"query","description":"Modalidade de Aplicação (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"idPlanoOrcamentario","in":"query","description":"Id Plano orçamentário","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DespesaLiquidaAnualPorFuncaoESubfuncaoDTO"}}}}}}}},"/api-de-dados/despesas/plano-orcamentario":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta Plano orçamentário","operationId":"despesasPorPlanoOrcamentario","parameters":[{"name":"codPlanoOrcamentario","in":"query","description":"Código Plano Orçamentária","required":false,"schema":{"type":"string"}},{"name":"descPlanoOrcamentario","in":"query","description":"Descrição Plano Orçamentário","required":false,"schema":{"type":"string"}},{"name":"codPOIdentfAcompanhamento","in":"query","description":"Identificado de acompanhamento","required":false,"schema":{"type":"string"}},{"name":"ano","in":"query","description":"Ano","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DespesasPorPlanoOrcamentarioDTO"}}}}}}}},"/api-de-dados/despesas/itens-de-empenho":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta os itens de um Empenho","operationId":"itensDeEmpenho","parameters":[{"name":"codigoDocumento","in":"query","description":"Código do empenho (Unidade Gestora + Gestão + Número do documento)","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DetalhamentoDoGastoDTO"}}}}}}}},"/api-de-dados/despesas/itens-de-empenho/historico":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta o histórico de um item de empenho","operationId":"consultaHistorico","parameters":[{"name":"codigoDocumento","in":"query","description":"Código do empenho (Unidade Gestora + Gestão + Número do documento)","required":true,"schema":{"type":"string"}},{"name":"sequencial","in":"query","description":"Número sequencial do item de empenho","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/HistoricoSubItemEmpenhoDTO"}}}}}}}},"/api-de-dados/despesas/funcional-programatica/subfuncoes":{"get":{"tags":["api-funcional-programatica-controller"],"operationId":"subfuncoes","parameters":[{"name":"anoInicio","in":"query","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigo","in":"query","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DimFuncionalProgramaticaDTO"}}}}}}}},"/api-de-dados/despesas/funcional-programatica/programas":{"get":{"tags":["api-funcional-programatica-controller"],"operationId":"programas","parameters":[{"name":"anoInicio","in":"query","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigo","in":"query","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DimFuncionalProgramaticaDTO"}}}}}}}},"/api-de-dados/despesas/funcional-programatica/listar":{"get":{"tags":["api-funcional-programatica-controller"],"operationId":"funcionalProgramatica","parameters":[{"name":"ano","in":"query","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FuncionalProgramaticaDTO"}}}}}}}},"/api-de-dados/despesas/funcional-programatica/funcoes":{"get":{"tags":["api-funcional-programatica-controller"],"operationId":"funcoes","parameters":[{"name":"anoInicio","in":"query","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigo","in":"query","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DimFuncionalProgramaticaDTO"}}}}}}}},"/api-de-dados/despesas/funcional-programatica/acoes":{"get":{"tags":["api-funcional-programatica-controller"],"operationId":"acoes","parameters":[{"name":"anoInicio","in":"query","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigo","in":"query","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DimFuncionalProgramaticaDTO"}}}}}}}},"/api-de-dados/despesas/favorecidos-finais-por-documento":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta favorecidos finais por documento","description":"Filtros mínimos: Código do registro","operationId":"favorecidosFinaisPorDocumento","parameters":[{"name":"codigoDocumento","in":"query","description":"Código do documento (Unidade Gestora + Gestão + Número do documento)","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ConsultaFavorecidosFinaisPorDocumentoDTO"}}}}}}}},"/api-de-dados/despesas/empenhos-impactados":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta empenhos impactados por documento/fase","description":"Filtros mínimos: Código do registro e fase da despesa (liquidação ou pagamento somente)","operationId":"empenhosImpactados","parameters":[{"name":"codigoDocumento","in":"query","description":"Código do documento (Unidade Gestora + Gestão + Número do documento)","required":true,"schema":{"type":"string"}},{"name":"fase","in":"query","description":"Fase da despesa (2 - Liquidação, 3 - Pagamento)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmpenhoImpactadoBasicoDTO"}}}}}}}},"/api-de-dados/despesas/documentos":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta todos os documentos de despesas","description":"Filtros mínimos:  Página (padrão = 1);  Período de no máximo 1 dia;  Fase da despesa;  Ao menos um dos demais filtros; ","operationId":"documentos","parameters":[{"name":"unidadeGestora","in":"query","description":"Unidade gestora emitente (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"gestao","in":"query","description":"Gestão (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"dataEmissao","in":"query","description":"Data de emissão (DD/MM/AAAA)","required":true,"schema":{"type":"string"}},{"name":"fase","in":"query","description":"Fase da despesa (1 - Empenho, 2 - Liquidação, 3 - Pagamento)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DespesasPorDocumentoDTO"}}}}}}}},"/api-de-dados/despesas/documentos/{codigo}":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta um documento pelo código (Unidade Gestora + Gestão + Número do documento)","description":"Filtros mínimos: Código do registro","operationId":"documentoPorCodigo","parameters":[{"name":"codigo","in":"path","description":"Código do registro","required":true,"schema":{"type":"string"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/DespesasPorDocumentoDTO"}}}}}}},"/api-de-dados/despesas/documentos-relacionados":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta os documentos relacionados a um Empenho, Liquidação ou Pagamento","operationId":"documentosRelacionados","parameters":[{"name":"codigoDocumento","in":"query","description":"Código do documento (Unidade Gestora + Gestão + Número do documento)","required":true,"schema":{"type":"string"}},{"name":"fase","in":"query","description":"Fase da despesa (1 - Empenho, 2 - Liquidação, 3 - Pagamento)","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DocumentoRelacionadoDTO"}}}}}}}},"/api-de-dados/despesas/documentos-por-favorecido":{"get":{"tags":["Despesas Públicas"],"summary":"Consulta Empenhos, Liquidações e Pagamentos emitidos para um favorecido","description":"A informação favorecidoIntermediario indica se o documento foi emitido para o favorecido ou se ele é apenas um intermediário que recebe o recurso e repassa-o para os favorecidos finais","operationId":"documentosPorFavorecido","parameters":[{"name":"codigoPessoa","in":"query","description":"Código do Favorecido (CPF, CNPJ ou código do SIAFI)","required":true,"schema":{"type":"string"}},{"name":"fase","in":"query","description":"Fase da despesa (1 - Empenho, 2 - Liquidação, 3 - Pagamento)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"ano","in":"query","description":"Ano de emissão do documento","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"ug","in":"query","description":"Código da unidade gestora emissora do documento","required":false,"schema":{"type":"string"}},{"name":"gestao","in":"query","description":"Código da gestão do documento","required":false,"schema":{"type":"string"}},{"name":"ordenacaoResultado","in":"query","description":"Ordenação de Resultado (1 - Valor Ascendente, 2 - Valor Descendente, 3 - Data Ascendente, 4 - Data Descendente)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DespesasPorDocumentoDTO"}}}}}}}},"/api-de-dados/coronavirus/transferencias":{"get":{"tags":["Coronavírus"],"summary":"Consulta de transferências mensal das despesas do Poder Executivo Federal pela classificação funcional programática","description":"Filtros mínimos:  Página (padrão = 1);  Ano do registro;  Ao menos um dos demais filtros; ","operationId":"buscarTransferencias","parameters":[{"name":"mesAno","in":"query","description":"Mês e Ano (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoOrgao","in":"query","description":"Órgão (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"tipoTransferencia","in":"query","description":"<a href='/swagger-ui.html#!/Despesas32P250blicas/listaTipoTransferenciaUsingGET' >ID do Tipo de Transferência</a>","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"uf","in":"query","description":"Sigla UF","required":false,"schema":{"type":"string"}},{"name":"codigoIbge","in":"query","description":"Município","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TransferenciaCoronavirusDTO"}}}}}}}},"/api-de-dados/coronavirus/movimento-liquido-despesa":{"get":{"tags":["Coronavírus"],"summary":"Consulta de movimentação líquida mensal das despesas do Poder Executivo Federal pela classificação funcional programática","description":"Filtros mínimos:  Página (padrão = 1);  Ano do registro;  Ao menos um dos demais filtros; ","operationId":"despesasPorFuncaoMovimentacaoLiquida_1","parameters":[{"name":"mesAnoLancamento","in":"query","description":"Mês e Ano de lançamento (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"funcao","in":"query","description":"Função (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"subfuncao","in":"query","description":"Subfunção (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"programa","in":"query","description":"Programa (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"acao","in":"query","description":"Ação (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"grupoDespesa","in":"query","description":"Grupo Despesa (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"elementoDespesa","in":"query","description":"Elemento Despesa (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"modalidadeAplicacao","in":"query","description":"Modalidade de Aplicação (código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"idPlanoOrcamentario","in":"query","description":"Id Plano orçamentário","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/MovimentacaoLiquidaCovidDTO"}}}}}}}},"/api-de-dados/convenios":{"get":{"tags":["Convênios do Poder Executivo Federal"],"summary":"Consulta todos convênios do Poder Executivo Federal","description":"Filtros mínimos:  Página (padrão = 1);  Período de no máximo 1 dia; ","operationId":"convenios","parameters":[{"name":"dataInicial","in":"query","description":"Data referência início (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataFinal","in":"query","description":"Data referência fim (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataUltimaLiberacaoInicial","in":"query","description":"Data da última liberação de recurso início (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataUltimaLiberacaoFinal","in":"query","description":"Data da última liberação de recurso fim (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataVigenciaInicial","in":"query","description":"Data de vigência início (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataVigenciaFinal","in":"query","description":"Data de vigência fim (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"convenente","in":"query","description":"Convenente","required":false,"schema":{"type":"string"}},{"name":"tipoConvenente","in":"query","description":"Tipo de Convenente","required":false,"schema":{"type":"string"}},{"name":"numero","in":"query","description":"Número do convênio","required":false,"schema":{"type":"string"}},{"name":"numeroOriginal","in":"query","description":"Número original do convênio","required":false,"schema":{"type":"string"}},{"name":"codigoOrgao","in":"query","description":"<a href='/swagger-ui/index.html#/Órgãos/orgaosSiafi' target=\"_blank\">Código do Órgão (SIAFI)</a>","required":false,"schema":{"type":"string"}},{"name":"uf","in":"query","description":"Sigla UF","required":false,"schema":{"type":"string"}},{"name":"codigoIBGE","in":"query","description":"Município (Código IBGE)","required":false,"schema":{"type":"string"}},{"name":"situacao","in":"query","description":"Código Situação","required":false,"schema":{"type":"string"}},{"name":"tipoInstrumento","in":"query","description":"Código Tipo de Instrumento","required":false,"schema":{"type":"string"}},{"name":"funcao","in":"query","description":"Código Função","required":false,"schema":{"type":"string"}},{"name":"subfuncao","in":"query","description":"Código Subfunção","required":false,"schema":{"type":"string"}},{"name":"valorLiberadoDe","in":"query","description":"Valor liberado de (Formato: 1.000,00)","required":false,"schema":{"type":"string"}},{"name":"valorLiberadoAte","in":"query","description":"Valor liberado até (Formato: 1.000,00)","required":false,"schema":{"type":"string"}},{"name":"valorTotalDe","in":"query","description":"Valor total de (Formato: 1.000,00)","required":false,"schema":{"type":"string"}},{"name":"valorTotalAte","in":"query","description":"Valor total até (Formato: 1.000,00)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ConvenioDTO"}}}}}}}},"/api-de-dados/convenios/tipo-instrumento":{"get":{"tags":["Convênios do Poder Executivo Federal"],"summary":"Consulta os tipos de instrumentos usados nos convênios","operationId":"listaTiposDeInstrumento","responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TipoInstrumentoDTO"}}}}}}}},"/api-de-dados/convenios/numero":{"get":{"tags":["Convênios do Poder Executivo Federal"],"summary":"Consulta um convênio do Poder Executivo Federal pelo número do contrato","description":"Filtros mínimos:  Página (padrão = 1);  Número; ","operationId":"conveniosPorNumero","parameters":[{"name":"numero","in":"query","description":"Número do convênio","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ConvenioDTO"}}}}}}}},"/api-de-dados/convenios/numero-processo":{"get":{"tags":["Convênios do Poder Executivo Federal"],"summary":"Consulta um convênio do Poder Executivo Federal pelo número do processo","description":"Filtros mínimos:  Página (padrão = 1);  Número do processo; ","operationId":"conveniosPorNumeroProcesso","parameters":[{"name":"numeroProcesso","in":"query","description":"Número do processo","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ConvenioDTO"}}}}}}}},"/api-de-dados/convenios/numero-original":{"get":{"tags":["Convênios do Poder Executivo Federal"],"summary":"Consulta um convênio do Poder Executivo Federal pelo número original do contrato","description":"Filtros mínimos:  Página (padrão = 1);  Número; ","operationId":"conveniosPorNumeroOriginal","parameters":[{"name":"numeroOriginal","in":"query","description":"Número original do convênio","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ConvenioDTO"}}}}}}}},"/api-de-dados/convenios/id":{"get":{"tags":["Convênios do Poder Executivo Federal"],"summary":"Consulta um convênio do Poder Executivo Federal pelo id","description":"Filtros mínimos: ID do registro","operationId":"convenio","parameters":[{"name":"id","in":"query","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/ConvenioDTO"}}}}}}},"/api-de-dados/contratos":{"get":{"tags":["Contratos do Poder Executivo Federal"],"summary":"Consulta os todos contratos do Poder Executivo Federal","description":"Filtros mínimos:  Página (padrão = 1); Código do Órgão (SIAFI); Data vigência início; Data vigência fim","operationId":"contratos","parameters":[{"name":"dataInicial","in":"query","description":"Data vigência início (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataFinal","in":"query","description":"Data vigência fim (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"codigoOrgao","in":"query","description":"<a href='/swagger-ui/index.html#/Órgãos/orgaosSiafi' target=\"_blank\">Código do Órgão (SIAFI)</a>","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ContratoDTO"}}}}}}}},"/api-de-dados/contratos/termo-aditivo":{"get":{"tags":["Contratos do Poder Executivo Federal"],"summary":"Consulta os termos aditivos do contrato pelo id do contrato","description":"Filtros mínimos: ID do registro","operationId":"termosAditivosDoContrato","parameters":[{"name":"id","in":"query","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TermoAditivoDTO"}}}}}}}},"/api-de-dados/contratos/processo":{"get":{"tags":["Contratos do Poder Executivo Federal"],"summary":"Consulta um contrato do Poder Executivo Federal pelo número do processo","description":"Filtros mínimos:  Página (padrão = 1);  Processo; ","operationId":"contratosPorProcesso","parameters":[{"name":"processo","in":"query","description":"Número do processo","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ContratoDTO"}}}}}}}},"/api-de-dados/contratos/numero":{"get":{"tags":["Contratos do Poder Executivo Federal"],"summary":"Consulta um contrato do Poder Executivo Federal pelo número do contrato","description":"Filtros mínimos:  Página (padrão = 1);  Número; ","operationId":"contratosPorNumero","parameters":[{"name":"numero","in":"query","description":"Número do contrato","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ContratoDTO"}}}}}}}},"/api-de-dados/contratos/itens-contratados":{"get":{"tags":["Contratos do Poder Executivo Federal"],"summary":"Consulta os itens contratados pelo id do contrato","description":"Filtros mínimos: ID do registro","operationId":"itensContratados","parameters":[{"name":"id","in":"query","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ItemContratadoDTO"}}}}}}}},"/api-de-dados/contratos/id":{"get":{"tags":["Contratos do Poder Executivo Federal"],"summary":"Consulta um contrato do Poder Executivo Federal pelo id","description":"Filtros mínimos: ID do registro","operationId":"contrato","parameters":[{"name":"id","in":"query","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/ContratoDTO"}}}}}}},"/api-de-dados/contratos/documentos-relacionados":{"get":{"tags":["Contratos do Poder Executivo Federal"],"summary":"Consulta os documentos relacionados a um contrato pelo id do contrato","description":"Filtros mínimos: ID do registro","operationId":"documentosRelacionadosAoContrato","parameters":[{"name":"id","in":"query","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/EmpenhoComprasDTO"}}}}}}}},"/api-de-dados/contratos/cpf-cnpj":{"get":{"tags":["Contratos do Poder Executivo Federal"],"summary":"Consulta um contrato do Poder Executivo Federal pelo CPF/CNPJ do Fornecedor","description":"Filtros mínimos: CPF/CNPJ do Fornecedor","operationId":"contratoPorCpfCnpj","parameters":[{"name":"cpfCnpj","in":"query","description":"CPF/CNPJ do Fornecedor","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ContratoDTO"}}}}}}}},"/api-de-dados/contratos/apostilamento":{"get":{"tags":["Contratos do Poder Executivo Federal"],"summary":"Consulta os apostilamentos do contrato pelo id do contrato","description":"Filtros mínimos: ID do registro","operationId":"apostilamentosDoContrato","parameters":[{"name":"id","in":"query","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ApostilamentoDTO"}}}}}}}},"/api-de-dados/cnep":{"get":{"tags":["Sanções"],"summary":"Consulta os registros do CNEP por CNPJ ou CPF Sancionado/Órgão Sancionador/Período","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"cnep","parameters":[{"name":"codigoSancionado","in":"query","description":"CNPJ ou CPF do Sancionado","required":false,"schema":{"type":"string"}},{"name":"nomeSancionado","in":"query","description":"Nome, nome fantasia ou razão social do Sancionado","required":false,"schema":{"type":"string"}},{"name":"orgaoSancionador","in":"query","description":"Órgão Sancionador","required":false,"schema":{"type":"string"}},{"name":"dataInicialSancao","in":"query","description":"Data Inicial da Sanção (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataFinalSancao","in":"query","description":"Data Final da Sanção (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CnepDTO"}}}}}}}},"/api-de-dados/cnep/{id}":{"get":{"tags":["Sanções"],"summary":"Consulta um registro do CNEP pelo id","description":"Filtros mínimos: ID do registro","operationId":"cnep_1","parameters":[{"name":"id","in":"path","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/CnepDTO"}}}}}}},"/api-de-dados/cepim":{"get":{"tags":["Sanções"],"summary":"Consulta os registros do CEPIM por CNPJ ou CPF Sancionado/Órgão superior","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"cepim","parameters":[{"name":"cnpjSancionado","in":"query","description":"CNPJ do Sancionado","required":false,"schema":{"type":"string"}},{"name":"nomeSancionado","in":"query","description":"Nome, nome fantasia ou razão social do Sancionado","required":false,"schema":{"type":"string"}},{"name":"ufSancionado","in":"query","description":"UF do Sancionado (sigla)","required":false,"schema":{"type":"string"}},{"name":"orgaoEntidade","in":"query","description":"Órgão/Entidade","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CepimDTO"}}}}}}}},"/api-de-dados/cepim/{id}":{"get":{"tags":["Sanções"],"summary":"Consulta um registro do CEPIM pelo id","description":"Filtros mínimos: ID do registro","operationId":"cepim_1","parameters":[{"name":"id","in":"path","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/CepimDTO"}}}}}}},"/api-de-dados/ceis":{"get":{"tags":["Sanções"],"summary":"Consulta os registros do CEIS por CNPJ ou CPF Sancionado/Órgão Sancionador/Período","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"ceis","parameters":[{"name":"codigoSancionado","in":"query","description":"CNPJ ou CPF Sancionado","required":false,"schema":{"type":"string"}},{"name":"nomeSancionado","in":"query","description":"Nome, nome fantasia ou razão social do Sancionado","required":false,"schema":{"type":"string"}},{"name":"orgaoSancionador","in":"query","description":"Órgão Sancionador","required":false,"schema":{"type":"string"}},{"name":"dataInicialSancao","in":"query","description":"Data Inicial da Sanção (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataFinalSancao","in":"query","description":"Data Final da Sanção (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CeisDTO"}}}}}}}},"/api-de-dados/ceis/{id}":{"get":{"tags":["Sanções"],"summary":"Consulta um registro do CEIS pelo id","description":"Filtros mínimos: ID do registro","operationId":"ceis_1","parameters":[{"name":"id","in":"path","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/CeisDTO"}}}}}}},"/api-de-dados/ceaf":{"get":{"tags":["Sanções"],"summary":"Consulta os registros do CEAF por CPF/Órgão de Lotação/Período","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"ceaf","parameters":[{"name":"cpfSancionado","in":"query","description":"CPF do sancionado","required":false,"schema":{"type":"string"}},{"name":"nomeSancionado","in":"query","description":"Nome do sancionado","required":false,"schema":{"type":"string"}},{"name":"orgaoLotacao","in":"query","description":"Órgão de lotação","required":false,"schema":{"type":"string"}},{"name":"dataPublicacaoInicio","in":"query","description":"Data publicação início (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataPublicacaoFim","in":"query","description":"Data publicação fim (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CeafDTO"}}}}}}}},"/api-de-dados/ceaf/{id}":{"get":{"tags":["Sanções"],"summary":"Consulta um registro do CEAF pelo id","description":"Filtros mínimos: ID do registro","operationId":"ceaf_1","parameters":[{"name":"id","in":"path","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/CeafDTO"}}}}}}},"/api-de-dados/cartoes":{"get":{"tags":["Gastos por meio de cartão de pagamento"],"summary":"Consulta os registros de Cartões de Pagamento","description":"Filtros mínimos:  Página (padrão = 1);  Período de até 12 meses ou um órgão ou um portador ou um favorecido específico;","operationId":"cartao","parameters":[{"name":"mesExtratoInicio","in":"query","description":"Mês extrato início (MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"mesExtratoFim","in":"query","description":"Mês extrato fim (MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataTransacaoInicio","in":"query","description":"Data transação início (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataTransacaoFim","in":"query","description":"Data transação fim (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"tipoCartao","in":"query","description":"Tipo de cartão (CPGF=1 ou CPCC=2 ou CPDC=3)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"codigoOrgao","in":"query","description":"Órgão/Entidade (Código SIAFI)","required":false,"schema":{"type":"string"}},{"name":"cpfPortador","in":"query","description":"Portador (CPF)","required":false,"schema":{"type":"string"}},{"name":"cpfCnpjFavorecido","in":"query","description":"Favorecido (CPF/CNPJ)","required":false,"schema":{"type":"string"}},{"name":"valorDe","in":"query","description":"Valor de (####,##)","required":false,"schema":{"type":"string"}},{"name":"valorAte","in":"query","description":"Valor até (####,##)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/CartoesDTO"}}}}}}}},"/api-de-dados/bpc-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros de Benefício de Prestação Continuada por Município","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"bpc","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BeneficioPorMunicipioDTO"}}}}}}}},"/api-de-dados/bpc-por-cpf-ou-nis":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros de Benefício de Prestação Continuada por CPF/NIS","description":"Filtros mínimos:  Página (padrão = 1);  CPF / NIS; ","operationId":"bpcPorNisOuCPF","parameters":[{"name":"codigo","in":"query","description":"CPF/NIS","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BPCDTO"}}}}}}}},"/api-de-dados/bpc-beneficiario-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros de Benefício de Prestação Continuada dos Beneficiários por Município e Mes/Ano","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"bpcDosBeneficiariosPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BPCDTO"}}}}}}}},"/api-de-dados/bolsa-familia-sacado-por-nis":{"get":{"tags":["Benefícios"],"summary":"Consulta as parcelas sacadas pelo Bolsa Família pelo NIS","description":"Filtros mínimos:  Página (padrão = 1);  NIS; Ano e mês de competência (AAAAMM) ou Ano e mês de referência (AAAAMM); ","operationId":"bolsaFamiliaSacadoPorNis","parameters":[{"name":"nis","in":"query","description":"NIS (sem máscara, somente números)","required":true,"schema":{"type":"string"}},{"name":"anoMesReferencia","in":"query","description":"Ano e mês de referência (AAAAMM)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"anoMesCompetencia","in":"query","description":"Ano e mês de competência (AAAAMM)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BolsaFamiliaPagoDTO"}}}}}}}},"/api-de-dados/bolsa-familia-sacado-beneficiario-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta as parcelas do Bolsa Família Sacado dos Beneficiários por Município e Mes/Ano","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"bolsaFamiliaSacadoDosBeneficiariosPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BolsaFamiliaPagoDTO"}}}}}}}},"/api-de-dados/bolsa-familia-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta as parcelas do Bolsa Família por Município","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"bolsaFamiliaPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BeneficioPorMunicipioDTO"}}}}}}}},"/api-de-dados/bolsa-familia-disponivel-por-cpf-ou-nis":{"get":{"tags":["Benefícios"],"summary":"Consulta as parcelas disponibilizadas pelo Bolsa Família pelo CPF/NIS","description":"Filtros mínimos:  Página (padrão = 1);  CPF / NIS;  Ano e mês de competência (AAAAMM) ou Ano e mês de referência (AAAAMM); ","operationId":"bolsaFamiliaDisponivelPorCpfOuNis","parameters":[{"name":"codigo","in":"query","description":"CPF/NIS (sem máscara, somente números)","required":true,"schema":{"type":"string"}},{"name":"anoMesReferencia","in":"query","description":"Ano e mês de referência (AAAAMM)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"anoMesCompetencia","in":"query","description":"Ano e mês de competência (AAAAMM)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BolsaFamiliaDTO"}}}}}}}},"/api-de-dados/bolsa-familia-disponivel-beneficiario-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta as parcelas do Bolsa Família Disponível dos Beneficiários por Município e Mes/Ano","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"bolsaFamiliaDisponivelDosBeneficiariosPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BolsaFamiliaDTO"}}}}}}}},"/api-de-dados/auxilio-emergencial-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros de auxílio emergencial por Município","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"auxilioEmergencialPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BeneficioPorMunicipioDTO"}}}}}}}},"/api-de-dados/auxilio-emergencial-por-cpf-ou-nis":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros de auxílio emergencial por CPF/NIS","description":"Filtros mínimos:  Página (padrão = 1);  CPF / NIS; ","operationId":"auxilioEmergencialPorNisOuCPF","parameters":[{"name":"codigoBeneficiario","in":"query","description":"CPF/NIS Beneficiário","required":false,"schema":{"type":"string"}},{"name":"codigoResponsavelFamiliar","in":"query","description":"CPF/NIS Responsável Familiar","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/AuxilioEmergencialDTO"}}}}}}}},"/api-de-dados/auxilio-emergencial-beneficiario-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta os registros dos beneficiários por município e mês/ano","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"auxilioEmergencialBeneficiarosPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/AuxilioEmergencialDTO"}}}}}}}},"/api-de-dados/auxilio-brasil-sacado-por-nis":{"get":{"tags":["Benefícios"],"summary":"Consulta as parcelas disponibilizadas pelo Auxílio Brasil pelo NIS","description":"Filtros mínimos:  Página (padrão = 1);  NIS; Ano e mês de competência (AAAAMM) ou Ano e mês de referência (AAAAMM); ","operationId":"auxilioBrasilSacadoPorNis","parameters":[{"name":"nis","in":"query","description":"NIS (sem máscara, somente números)","required":true,"schema":{"type":"string"}},{"name":"anoMesReferencia","in":"query","description":"Ano e mês de referência (AAAAMM)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"anoMesCompetencia","in":"query","description":"Ano e mês de competência (AAAAMM)","required":false,"schema":{"type":"integer","format":"int32"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/AuxilioBrasilPagoDTO"}}}}}}}},"/api-de-dados/auxilio-brasil-sacado-beneficiario-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta as parcelas do Auxílio Brasil Sacado dos Beneficiários por Município e Mes/Ano","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"auxilioBrasilSacadoDosBeneficiariosPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/AuxilioBrasilPagoDTO"}}}}}}}},"/api-de-dados/auxilio-brasil-por-municipio":{"get":{"tags":["Benefícios"],"summary":"Consulta as parcelas do Auxílio Brasil por Município","description":"Filtros mínimos:  Página (padrão = 1);  Ano/Mês (YYYYMM); Código IBGE (https://cidades.ibge.gov.br/brasil); ","operationId":"auxilioBrasilPorMunicipio","parameters":[{"name":"mesAno","in":"query","description":"Ano e mês de referência (AAAAMM)","required":true,"schema":{"type":"integer","format":"int32"}},{"name":"codigoIbge","in":"query","description":"Código IBGE","required":true,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BeneficioPorMunicipioDTO"}}}}}}}},"/api-de-dados/acordos-leniencia":{"get":{"tags":["Sanções"],"summary":"Consulta os registros de Acordos de Leniência por Nome ou CNPJ do Sancionado/Situação/Período","description":"Filtros mínimos:  Página (padrão = 1); ","operationId":"acordosLeniencia","parameters":[{"name":"cnpjSancionado","in":"query","description":"CNPJ sancionado","required":false,"schema":{"type":"string"}},{"name":"nomeSancionado","in":"query","description":"Nome, nome fantasia ou razão social do sancionado","required":false,"schema":{"type":"string"}},{"name":"situacao","in":"query","description":"Situação do acordo","required":false,"schema":{"type":"string"}},{"name":"dataInicialSancao","in":"query","description":"Data inicial da sanção (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"dataFinalSancao","in":"query","description":"Data final da sanção (DD/MM/AAAA)","required":false,"schema":{"type":"string"}},{"name":"pagina","in":"query","description":"Página consultada","required":true,"schema":{"type":"integer","format":"int32","default":1}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/AcordosLenienciaDTO"}}}}}}}},"/api-de-dados/acordos-leniencia/{id}":{"get":{"tags":["Sanções"],"summary":"Consulta um registro de Acordo de Leniência pelo id","description":"Filtros mínimos: ID do registro","operationId":"acordoLeniencia","parameters":[{"name":"id","in":"path","description":"ID do registro","required":true,"schema":{"type":"integer","format":"int32"}}],"responses":{"400":{"description":"Bad Request","content":{"*/*":{"schema":{"type":"object"}}}},"401":{"description":"Unauthorized","content":{"*/*":{"schema":{"type":"object"}}}},"500":{"description":"Internal Server Error","content":{"*/*":{"schema":{"type":"object"}}}},"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/AcordosLenienciaDTO"}}}}}}}},"components":{"schemas":{"BeneficiarioDTO":{"type":"object","properties":{"cpfFormatado":{"type":"string"},"nis":{"type":"string"},"nome":{"type":"string"}}},"CargoBeneficiarioDTO":{"type":"object","properties":{"codigoSIAPE":{"type":"string"},"descricao":{"type":"string"}}},"DimViagemDTO":{"type":"object","properties":{"motivo":{"type":"string"},"pcdp":{"type":"string"},"ano":{"type":"integer","format":"int32"},"numPcdp":{"type":"string"},"justificativaUrgente":{"type":"string"},"urgenciaViagem":{"type":"string"}}},"FuncaoBeneficiarioDTO":{"type":"object","properties":{"codigoSIAPE":{"type":"string"},"descricao":{"type":"string"}}},"OrgaoDTO":{"type":"object","properties":{"nome":{"type":"string"},"codigoSIAFI":{"type":"string"},"cnpj":{"type":"string"},"sigla":{"type":"string"},"descricaoPoder":{"type":"string"},"orgaoMaximo":{"$ref":"#/components/schemas/OrgaoMaximoDTO"}}},"OrgaoMaximoDTO":{"type":"object","properties":{"codigo":{"type":"string"},"sigla":{"type":"string"},"nome":{"type":"string"}}},"OrgaoVinculadoDTO":{"type":"object","properties":{"codigoSIAFI":{"type":"string"},"cnpj":{"type":"string"},"sigla":{"type":"string"},"nome":{"type":"string"}}},"UnidadeGestoraDTO":{"type":"object","properties":{"codigo":{"type":"string"},"nome":{"type":"string"},"descricaoPoder":{"type":"string"},"orgaoVinculado":{"$ref":"#/components/schemas/OrgaoVinculadoDTO"},"orgaoMaximo":{"$ref":"#/components/schemas/OrgaoMaximoDTO"}}},"ViagemDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"viagem":{"$ref":"#/components/schemas/DimViagemDTO"},"situacao":{"type":"string"},"beneficiario":{"$ref":"#/components/schemas/BeneficiarioDTO"},"cargo":{"$ref":"#/components/schemas/CargoBeneficiarioDTO"},"funcao":{"$ref":"#/components/schemas/FuncaoBeneficiarioDTO"},"tipoViagem":{"type":"string"},"orgao":{"$ref":"#/components/schemas/OrgaoDTO"},"orgaoPagamento":{"$ref":"#/components/schemas/OrgaoDTO"},"unidadeGestoraResponsavel":{"$ref":"#/components/schemas/UnidadeGestoraDTO"},"dataInicioAfastamento":{"type":"string","format":"date"},"dataFimAfastamento":{"type":"string","format":"date"},"valorTotalRestituicao":{"type":"number"},"valorTotalTaxaAgenciamento":{"type":"number"},"valorMulta":{"type":"number"},"valorTotalDiarias":{"type":"number"},"valorTotalPassagem":{"type":"number"},"valorTotalViagem":{"type":"number"},"valorTotalDevolucao":{"type":"number"}}},"CadastroServidorDTO":{"type":"object","properties":{"servidor":{"$ref":"#/components/schemas/ServidorAposentadoPensionistaDTO"},"fichasCargoEfetivo":{"type":"array","items":{"$ref":"#/components/schemas/FichaCargoEfetivoDTO"}},"fichasFuncao":{"type":"array","items":{"$ref":"#/components/schemas/FichaFuncaoDTO"}},"fichasMilitar":{"type":"array","items":{"$ref":"#/components/schemas/FichaMilitarDTO"}},"fichasDemaisSituacoes":{"type":"array","items":{"$ref":"#/components/schemas/FichaServidorCivilDTO"}},"fichasAposentadoria":{"type":"array","items":{"$ref":"#/components/schemas/FichaAposentadoriaDTO"}},"fichasReformado":{"type":"array","items":{"$ref":"#/components/schemas/FichaReformadoDTO"}},"fichasPensaoCivil":{"type":"array","items":{"$ref":"#/components/schemas/FichaPensaoCivilDTO"}},"fichasPensaoMilitar":{"type":"array","items":{"$ref":"#/components/schemas/FichaPensaoMilitarDTO"}}}},"FichaAposentadoriaDTO":{"type":"object","properties":{"nome":{"type":"string"},"cpfDescaracterizado":{"type":"string"},"matriculaDescaracterizada":{"type":"string"},"dataPublicacaoDocumentoIngressoServicoPublico":{"type":"string"},"diplomaLegal":{"type":"string"},"jornadaTrabalho":{"type":"string"},"regimeJuridico":{"type":"string"},"situacaoServidor":{"type":"string"},"afastamentos":{"type":"array","items":{"type":"string"}},"orgaoSuperiorLotacao":{"type":"string"},"orgaoLotacao":{"type":"string"},"uorgLotacao":{"type":"string"},"orgaoServidorLotacao":{"type":"string"},"dataIngressoOrgao":{"type":"string"},"dataIngressoServicoPublico":{"type":"string"},"formaIngresso":{"type":"string"},"dataIngressoCargo":{"type":"string"},"cargo":{"type":"string"},"tipoAposentadoria":{"type":"string"},"fundamentacaoAposentadoria":{"type":"string"},"dataAposentadoria":{"type":"string"}}},"FichaCargoEfetivoDTO":{"type":"object","properties":{"nome":{"type":"string"},"cpfDescaracterizado":{"type":"string"},"matriculaDescaracterizada":{"type":"string"},"dataPublicacaoDocumentoIngressoServicoPublico":{"type":"string"},"diplomaLegal":{"type":"string"},"jornadaTrabalho":{"type":"string"},"regimeJuridico":{"type":"string"},"situacaoServidor":{"type":"string"},"afastamentos":{"type":"array","items":{"type":"string"}},"orgaoSuperiorLotacao":{"type":"string"},"orgaoLotacao":{"type":"string"},"uorgLotacao":{"type":"string"},"orgaoServidorLotacao":{"type":"string"},"dataIngressoOrgao":{"type":"string"},"dataIngressoServicoPublico":{"type":"string"},"orgaoSuperiorExercicio":{"type":"string"},"orgaoExercicio":{"type":"string"},"orgaoServidorExercicio":{"type":"string"},"uorgExercicio":{"type":"string"},"cargo":{"type":"string"},"classeCargo":{"type":"string"},"padraoCargo":{"type":"string"},"nivelCargo":{"type":"string"},"dataIngressoCargo":{"type":"string"},"formaIngresso":{"type":"string"},"ufExercicio":{"type":"string"}}},"FichaFuncaoDTO":{"type":"object","properties":{"nome":{"type":"string"},"cpfDescaracterizado":{"type":"string"},"matriculaDescaracterizada":{"type":"string"},"dataPublicacaoDocumentoIngressoServicoPublico":{"type":"string"},"diplomaLegal":{"type":"string"},"jornadaTrabalho":{"type":"string"},"regimeJuridico":{"type":"string"},"situacaoServidor":{"type":"string"},"afastamentos":{"type":"array","items":{"type":"string"}},"orgaoSuperiorLotacao":{"type":"string"},"orgaoLotacao":{"type":"string"},"uorgLotacao":{"type":"string"},"orgaoServidorLotacao":{"type":"string"},"dataIngressoOrgao":{"type":"string"},"dataIngressoServicoPublico":{"type":"string"},"orgaoSuperiorExercicio":{"type":"string"},"orgaoExercicio":{"type":"string"},"uorgExercicio":{"type":"string"},"orgaoServidorExercicio":{"type":"string"},"funcao":{"type":"string"},"atividade":{"type":"string"},"opcaoFuncao":{"type":"string"},"dataIngressoFuncao":{"type":"string"},"ufExercicio":{"type":"string"}}},"FichaMilitarDTO":{"type":"object","properties":{"nome":{"type":"string"},"cpfDescaracterizado":{"type":"string"},"matriculaDescaracterizada":{"type":"string"},"dataPublicacaoDocumentoIngressoServicoPublico":{"type":"string"},"diplomaLegal":{"type":"string"},"jornadaTrabalho":{"type":"string"},"regimeJuridico":{"type":"string"},"situacaoServidor":{"type":"string"},"afastamentos":{"type":"array","items":{"type":"string"}},"orgaoSuperior":{"type":"string"},"orgao":{"type":"string"},"orgaoServidorLotacao":{"type":"string"},"cargo":{"type":"string"},"dataIngressoOrgao":{"type":"string"}}},"FichaPensaoCivilDTO":{"type":"object","properties":{"nome":{"type":"string"},"cpfDescaracterizado":{"type":"string"},"matriculaDescaracterizada":{"type":"string"},"dataPublicacaoDocumentoIngressoServicoPublico":{"type":"string"},"diplomaLegal":{"type":"string"},"jornadaTrabalho":{"type":"string"},"regimeJuridico":{"type":"string"},"situacaoServidor":{"type":"string"},"afastamentos":{"type":"array","items":{"type":"string"}},"orgaoSuperiorLotacao":{"type":"string"},"orgaoLotacao":{"type":"string"},"uorgLotacao":{"type":"string"},"orgaoServidorLotacao":{"type":"string"},"dataIngressoOrgao":{"type":"string"},"dataIngressoServicoPublico":{"type":"string"},"formaIngresso":{"type":"string"},"dataIngressoCargo":{"type":"string"},"cargo":{"type":"string"},"tipoPensao":{"type":"string"},"fundamentacaoPensao":{"type":"string"},"dataInicioPensao":{"type":"string"},"proporcaoPensao":{"type":"string"},"representanteLegal":{"type":"string"},"cpfRepresentanteLegal":{"type":"string"},"nomeInstituidor":{"type":"string"},"cpfInstituidor":{"type":"string"}}},"FichaPensaoMilitarDTO":{"type":"object","properties":{"nome":{"type":"string"},"cpfDescaracterizado":{"type":"string"},"matriculaDescaracterizada":{"type":"string"},"dataPublicacaoDocumentoIngressoServicoPublico":{"type":"string"},"diplomaLegal":{"type":"string"},"jornadaTrabalho":{"type":"string"},"regimeJuridico":{"type":"string"},"situacaoServidor":{"type":"string"},"afastamentos":{"type":"array","items":{"type":"string"}},"orgaoSuperior":{"type":"string"},"orgao":{"type":"string"},"orgaoServidorLotacao":{"type":"string"},"cargo":{"type":"string"},"dataIngressoOrgao":{"type":"string"},"tipoPensao":{"type":"string"},"fundamentacaoPensao":{"type":"string"},"dataInicioPensao":{"type":"string"},"proporcaoPensao":{"type":"string"},"representanteLegal":{"type":"string"},"cpfRepresentanteLegal":{"type":"string"},"nomeInstituidor":{"type":"string"},"cpfInstituidor":{"type":"string"}}},"FichaReformadoDTO":{"type":"object","properties":{"nome":{"type":"string"},"cpfDescaracterizado":{"type":"string"},"matriculaDescaracterizada":{"type":"string"},"dataPublicacaoDocumentoIngressoServicoPublico":{"type":"string"},"diplomaLegal":{"type":"string"},"jornadaTrabalho":{"type":"string"},"regimeJuridico":{"type":"string"},"situacaoServidor":{"type":"string"},"afastamentos":{"type":"array","items":{"type":"string"}},"orgaoSuperior":{"type":"string"},"orgao":{"type":"string"},"orgaoServidorLotacao":{"type":"string"},"cargo":{"type":"string"},"dataIngressoOrgao":{"type":"string"},"tipoAposentadoria":{"type":"string"},"fundamentacaoAposentadoria":{"type":"string"},"dataReforma":{"type":"string"}}},"FichaServidorCivilDTO":{"type":"object","properties":{"nome":{"type":"string"},"cpfDescaracterizado":{"type":"string"},"matriculaDescaracterizada":{"type":"string"},"dataPublicacaoDocumentoIngressoServicoPublico":{"type":"string"},"diplomaLegal":{"type":"string"},"jornadaTrabalho":{"type":"string"},"regimeJuridico":{"type":"string"},"situacaoServidor":{"type":"string"},"afastamentos":{"type":"array","items":{"type":"string"}},"orgaoSuperiorLotacao":{"type":"string"},"orgaoLotacao":{"type":"string"},"uorgLotacao":{"type":"string"},"orgaoServidorLotacao":{"type":"string"},"dataIngressoOrgao":{"type":"string"},"dataIngressoServicoPublico":{"type":"string"}}},"FuncaoServidorDTO":{"type":"object","properties":{"codigoFuncaoCargo":{"type":"string"},"descricaoFuncaoCargo":{"type":"string"}}},"OrgaoServidorDTO":{"type":"object","properties":{"codigo":{"type":"string"},"nome":{"type":"string"},"sigla":{"type":"string"},"codigoOrgaoVinculado":{"type":"string"},"nomeOrgaoVinculado":{"type":"string"}}},"PensionistaRepresentanteDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"cpfFormatado":{"type":"string"},"nome":{"type":"string"}}},"PessoaDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"cpfFormatado":{"type":"string"},"cnpjFormatado":{"type":"string"},"numeroInscricaoSocial":{"type":"string"},"nome":{"type":"string"},"razaoSocialReceita":{"type":"string"},"nomeFantasiaReceita":{"type":"string"},"tipo":{"type":"string"}}},"ServidorAposentadoPensionistaDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"idServidorAposentadoPensionista":{"type":"integer","format":"int32"},"pessoa":{"$ref":"#/components/schemas/PessoaDTO"},"situacao":{"type":"string"},"orgaoServidorLotacao":{"$ref":"#/components/schemas/OrgaoServidorDTO"},"orgaoServidorExercicio":{"$ref":"#/components/schemas/OrgaoServidorDTO"},"estadoExercicio":{"$ref":"#/components/schemas/UFDTO"},"tipoServidor":{"type":"string"},"funcao":{"$ref":"#/components/schemas/FuncaoServidorDTO"},"servidorInativoInstuidorPensao":{"$ref":"#/components/schemas/ServidorInativoDTO"},"pensionistaRepresentante":{"$ref":"#/components/schemas/PensionistaRepresentanteDTO"},"codigoMatriculaFormatado":{"type":"string"},"flagAfastado":{"type":"integer","format":"int32"}}},"ServidorInativoDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"cpfFormatado":{"type":"string"},"nome":{"type":"string"}}},"UFDTO":{"type":"object","properties":{"sigla":{"type":"string"},"nome":{"type":"string"}}},"HonorariosAdvocaticiosDTO":{"type":"object","properties":{"mesReferencia":{"type":"string","format":"date"},"valor":{"type":"number"},"mensagemMesReferencia":{"type":"string"},"valorFormatado":{"type":"string"}}},"JetomDTO":{"type":"object","properties":{"descricao":{"type":"string"},"valor":{"type":"number"},"mesReferencia":{"type":"string","format":"date"}}},"RemuneracaoDTO":{"type":"object","properties":{"skMesReferencia":{"type":"string","format":"date"},"mesAno":{"type":"string"},"valorTotalRemuneracaoAposDeducoes":{"type":"string"},"valorTotalRemuneracaoDolarAposDeducoes":{"type":"string"},"valorTotalJetons":{"type":"string"},"valorTotalHonorariosAdvocaticios":{"type":"string"},"rubricas":{"type":"array","items":{"$ref":"#/components/schemas/RubricaDTO"}},"jetons":{"type":"array","items":{"$ref":"#/components/schemas/JetomDTO"}},"honorariosAdvocaticios":{"type":"array","items":{"$ref":"#/components/schemas/HonorariosAdvocaticiosDTO"}},"observacoes":{"type":"array","items":{"type":"string"}},"remuneracaoBasicaBruta":{"type":"string"},"remuneracaoBasicaBrutaDolar":{"type":"string"},"abateRemuneracaoBasicaBruta":{"type":"string"},"abateRemuneracaoBasicaBrutaDolar":{"type":"string"},"gratificacaoNatalina":{"type":"string"},"gratificacaoNatalinaDolar":{"type":"string"},"abateGratificacaoNatalina":{"type":"string"},"abateGratificacaoNatalinaDolar":{"type":"string"},"ferias":{"type":"string"},"feriasDolar":{"type":"string"},"outrasRemuneracoesEventuais":{"type":"string"},"outrasRemuneracoesEventuaisDolar":{"type":"string"},"impostoRetidoNaFonte":{"type":"string"},"impostoRetidoNaFonteDolar":{"type":"string"},"previdenciaOficial":{"type":"string"},"previdenciaOficialDolar":{"type":"string"},"outrasDeducoesObrigatorias":{"type":"string"},"outrasDeducoesObrigatoriasDolar":{"type":"string"},"pensaoMilitar":{"type":"string"},"pensaoMilitarDolar":{"type":"string"},"fundoSaude":{"type":"string"},"fundoSaudeDolar":{"type":"string"},"taxaOcupacaoImovelFuncional":{"type":"string"},"taxaOcupacaoImovelFuncionalDolar":{"type":"string"},"verbasIndenizatoriasCivil":{"type":"string"},"verbasIndenizatoriasCivilDolar":{"type":"string"},"verbasIndenizatoriasMilitar":{"type":"string"},"verbasIndenizatoriasMilitarDolar":{"type":"string"},"verbasIndenizatoriasReferentesPDV":{"type":"string"},"verbasIndenizatoriasReferentesPDVDolar":{"type":"string"},"remuneracaoEmpresaPublica":{"type":"boolean"},"existeValorMes":{"type":"boolean"},"verbasIndenizatorias":{"type":"string"},"verbasIndenizatoriasDolar":{"type":"string"},"mesAnoPorExtenso":{"type":"string"}}},"RubricaDTO":{"type":"object","properties":{"codigo":{"type":"string"},"descricao":{"type":"string"},"valor":{"type":"number"},"skMesReferencia":{"type":"string","format":"date"},"valorDolar":{"type":"number"}}},"ServidorRemuneracaoDTO":{"type":"object","properties":{"servidor":{"$ref":"#/components/schemas/ServidorAposentadoPensionistaDTO"},"remuneracoesDTO":{"type":"array","items":{"$ref":"#/components/schemas/RemuneracaoDTO"}}}},"ServidorPorOrgaoDTO":{"type":"object","properties":{"qntPessoas":{"type":"integer","format":"int32"},"qntVinculos":{"type":"integer","format":"int32"},"skSituacao":{"type":"integer","format":"int32"},"descSituacao":{"type":"string"},"skTipoVinculo":{"type":"integer","format":"int32"},"descTipoVinculo":{"type":"string"},"skTipoServidor":{"type":"integer","format":"int32"},"descTipoServidor":{"type":"string"},"licenca":{"type":"integer","format":"int32"},"codOrgaoExercicioSiape":{"type":"string"},"nomOrgaoExercicioSiape":{"type":"string"},"codOrgaoSuperiorExercicioSiape":{"type":"string"},"nomOrgaoSuperiorExercicioSiape":{"type":"string"}}},"BeneficioPorMunicipioDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"dataReferencia":{"type":"string","format":"date"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"tipo":{"$ref":"#/components/schemas/TipoBeneficioDTO"},"valor":{"type":"number"},"quantidadeBeneficiados":{"type":"integer","format":"int32"}}},"MunicipioDTO":{"type":"object","properties":{"codigoIBGE":{"type":"string"},"nomeIBGE":{"type":"string"},"codigoRegiao":{"type":"string"},"nomeRegiao":{"type":"string"},"pais":{"type":"string"},"uf":{"$ref":"#/components/schemas/UFDTO"}}},"TipoBeneficioDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"descricao":{"type":"string"},"descricaoDetalhada":{"type":"string"}}},"SeguroDefesoDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"pessoaSeguroDefeso":{"$ref":"#/components/schemas/BeneficiarioDTO"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"portaria":{"type":"string"},"dataMesReferencia":{"type":"string","format":"date"},"dataSaque":{"type":"string","format":"date"},"dataEmissaoParcela":{"type":"string","format":"date"},"situacao":{"type":"string"},"rgp":{"type":"string"},"parcela":{"type":"string"},"valor":{"type":"number"}}},"SafraDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"beneficiarioSafra":{"$ref":"#/components/schemas/BeneficiarioDTO"},"dataMesReferencia":{"type":"string","format":"date"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"valor":{"type":"number"}}},"RenunciaDTO":{"type":"object","properties":{"ano":{"type":"integer","format":"int32"},"valorRenunciado":{"type":"number"},"tipoRenuncia":{"type":"string"},"descricaoBeneficioFiscal":{"type":"string"},"descricaoFundamentoLegal":{"type":"string"},"tributo":{"type":"string"},"formaTributacao":{"type":"string"},"cnpj":{"type":"string"},"razaoSocial":{"type":"string"},"nomeFantasia":{"type":"string"},"cnaeCodigoGrupo":{"type":"string"},"cnaeCodigoClasse":{"type":"string"},"cnaeCodigoSubClasse":{"type":"string"},"cnaeNomeClasse":{"type":"string"},"cnaeDivisao":{"type":"string"},"uf":{"type":"string"},"municipio":{"type":"string"},"codigoIBGE":{"type":"string"}}},"EmpresaImuneIsentaDTO":{"type":"object","properties":{"cnpj":{"type":"string"},"beneficiario":{"type":"string"},"nomeFantasia":{"type":"string"},"uf":{"type":"string"},"codigoIBGEMunicipio":{"type":"string"},"municipio":{"type":"string"},"cnaeCodigoGrupo":{"type":"string"},"cnaeCodigoClasse":{"type":"string"},"cnaeCodigoSubClasse":{"type":"string"},"cnaeNomeClasse":{"type":"string"},"cnaeDivisao":{"type":"string"},"tipoEntidade":{"type":"string"},"beneficioFiscal":{"type":"string"}}},"EmpresaHabilitadaBeneficioFiscalDTO":{"type":"object","properties":{"fruicaoVigente":{"type":"string"},"dataInicioFruicao":{"type":"string"},"dataFimFruicao":{"type":"string"},"cnpj":{"type":"string"},"beneficiario":{"type":"string"},"nomeFantasia":{"type":"string"},"uf":{"type":"string"},"codigoIBGEMunicipio":{"type":"string"},"municipio":{"type":"string"},"cnaeCodigoGrupo":{"type":"string"},"cnaeCodigoClasse":{"type":"string"},"cnaeCodigoSubClasse":{"type":"string"},"cnaeNomeClasse":{"type":"string"},"cnaeDivisao":{"type":"string"},"beneficioFiscal":{"type":"string"},"descricao":{"type":"string"},"fundamentoLegal":{"type":"string"}}},"PetiDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"beneficiarioPeti":{"$ref":"#/components/schemas/BeneficiarioDTO"},"dataDisponibilizacaoRecurso":{"type":"string","format":"date"},"dataMesReferencia":{"type":"string","format":"date"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"situacao":{"type":"string"},"valor":{"type":"number"}}},"PessoaJuridicaDTO":{"type":"object","properties":{"cnpj":{"type":"string"},"razaoSocial":{"type":"string"},"nomeFantasia":{"type":"string"},"favorecidoDespesas":{"type":"boolean"},"possuiContratacao":{"type":"boolean"},"convenios":{"type":"boolean"},"favorecidoTransferencias":{"type":"boolean"},"sancionadoCEPIM":{"type":"boolean"},"sancionadoCEIS":{"type":"boolean"},"sancionadoCNEP":{"type":"boolean"},"sancionadoCEAF":{"type":"boolean"},"participanteLicitacao":{"type":"boolean"},"emitiuNFe":{"type":"boolean"},"beneficiadoRenunciaFiscal":{"type":"boolean"},"isentoImuneRenunciaFiscal":{"type":"boolean"},"habilitadoRenunciaFiscal":{"type":"boolean"}}},"PessoaFisicaDTO":{"type":"object","properties":{"cpf":{"type":"string"},"nome":{"type":"string"},"nis":{"type":"string"},"favorecidoDespesas":{"type":"boolean"},"servidor":{"type":"boolean"},"beneficiarioDiarias":{"type":"boolean"},"permissionario":{"type":"boolean"},"contratado":{"type":"boolean"},"sancionadoCEIS":{"type":"boolean"},"sancionadoCNEP":{"type":"boolean"},"sancionadoCEAF":{"type":"boolean"},"portadorCPDC":{"type":"boolean"},"portadorCPGF":{"type":"boolean"},"favorecidoBolsaFamilia":{"type":"boolean"},"favorecidoPeti":{"type":"boolean"},"favorecidoSafra":{"type":"boolean"},"favorecidoSeguroDefeso":{"type":"boolean"},"favorecidoBpc":{"type":"boolean"},"favorecidoTransferencias":{"type":"boolean"},"favorecidoCPCC":{"type":"boolean"},"favorecidoCPDC":{"type":"boolean"},"favorecidoCPGF":{"type":"boolean"},"participanteLicitacao":{"type":"boolean"},"servidorInativo":{"type":"boolean"},"pensionistaOuRepresentanteLegal":{"type":"boolean"},"instituidorPensao":{"type":"boolean"},"auxilioEmergencial":{"type":"boolean"},"favorecidoAuxilioBrasil":{"type":"boolean"},"favorecidoNovoBolsaFamilia":{"type":"boolean"},"favorecidoAuxilioReconstrucao":{"type":"boolean"}}},"OrgaoResponsavelDTO":{"type":"object","properties":{"nome":{"type":"string"},"codigoSIAFI":{"type":"string"}}},"PermissionarioDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"dataReferencia":{"type":"string","format":"date"},"orgaoResponsavel":{"$ref":"#/components/schemas/OrgaoResponsavelDTO"},"dataInicioOcupacao":{"type":"string","format":"date"},"pessoaPermissionario":{"$ref":"#/components/schemas/PessoaDTO"},"permissionario":{"$ref":"#/components/schemas/BeneficiarioDTO"},"orgaoPermissionario":{"type":"string"},"cargo":{"type":"string"},"valorPagoMes":{"type":"number"}}},"PEPDTO":{"type":"object","properties":{"cpf":{"type":"string"},"nome":{"type":"string"},"sigla_funcao":{"type":"string"},"descricao_funcao":{"type":"string"},"nivel_funcao":{"type":"string"},"cod_orgao":{"type":"string"},"nome_orgao":{"type":"string"},"dt_inicio_exercicio":{"type":"string"},"dt_fim_exercicio":{"type":"string"},"dt_fim_carencia":{"type":"string"}}},"CodigoDescricaoDTO":{"type":"object","properties":{"codigo":{"type":"string"},"descricao":{"type":"string"}}},"NovoBolsaFamiliaPagoDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"dataMesCompetencia":{"type":"string","format":"date"},"dataMesReferencia":{"type":"string","format":"date"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"beneficiarioNovoBolsaFamilia":{"$ref":"#/components/schemas/BeneficiarioDTO"},"valorSaque":{"type":"number"}}},"NotaFiscalDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"codigoOrgaoSuperiorDestinatario":{"type":"string"},"orgaoSuperiorDestinatario":{"type":"string"},"codigoOrgaoDestinatario":{"type":"string"},"orgaoDestinatario":{"type":"string"},"nomeFornecedor":{"type":"string"},"cnpjFornecedor":{"type":"string"},"municipioFornecedor":{"type":"string"},"chaveNotaFiscal":{"type":"string"},"valorNotaFiscal":{"type":"string"},"tipoEventoMaisRecente":{"type":"string"},"dataTipoEventoMaisRecente":{"type":"string"},"dataEmissao":{"type":"string"},"numero":{"type":"integer","format":"int32"},"serie":{"type":"integer","format":"int32"}}},"DetalheNotaFiscalDTO":{"type":"object","properties":{"notaFiscalDTO":{"$ref":"#/components/schemas/NotaFiscalDTO"},"itensNotaFiscal":{"type":"array","items":{"$ref":"#/components/schemas/ItemNotaFiscalDTO"}},"eventosNotaFiscal":{"type":"array","items":{"$ref":"#/components/schemas/EventoNotaFiscalDTO"}}}},"EventoNotaFiscalDTO":{"type":"object","properties":{"dataEvento":{"type":"string"},"tipoEvento":{"type":"string"},"evento":{"type":"string"},"motivo":{"type":"string"}}},"ItemNotaFiscalDTO":{"type":"object","properties":{"numeroProduto":{"type":"string"},"descricaoProdutoServico":{"type":"string"},"codigoNcmSh":{"type":"string"},"ncmSh":{"type":"string"},"cfop":{"type":"string"},"quantidade":{"type":"string"},"unidade":{"type":"string"},"valorUnitario":{"type":"string"},"valor":{"type":"string"}}},"CompraDTO":{"type":"object","properties":{"numero":{"type":"string"},"objeto":{"type":"string"},"numeroProcesso":{"type":"string"},"contatoResponsavel":{"type":"string"}}},"LicitacaoDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"licitacao":{"$ref":"#/components/schemas/CompraDTO"},"dataResultadoCompra":{"type":"string","format":"date"},"dataAbertura":{"type":"string","format":"date"},"dataReferencia":{"type":"string","format":"date"},"dataPublicacao":{"type":"string","format":"date"},"situacaoCompra":{"type":"string"},"modalidadeLicitacao":{"type":"string"},"instrumentoLegal":{"type":"string"},"valor":{"type":"number"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"unidadeGestora":{"$ref":"#/components/schemas/UnidadeGestoraDTO"}}},"ParticipanteLicitacaoDTO":{"type":"object","properties":{"tipoParticipante":{"type":"string"},"idParticipante":{"type":"string"},"cpfCnpj":{"type":"string"},"nome":{"type":"string"}}},"ItemLicitacaoDTO":{"type":"object","properties":{"codigoItemCompra":{"type":"string"},"numero":{"type":"string"},"descricao":{"type":"string"},"quantidade":{"type":"integer","format":"int64"},"valor":{"type":"string"},"cpfCnpjVencedor":{"type":"string"},"tipoPessoa":{"type":"string"},"idVencedor":{"type":"string"},"nome":{"type":"string"},"descComplementarItemCompra":{"type":"string"},"descUnidadeFornecimento":{"type":"string"}}},"EmpenhoComprasDTO":{"type":"object","properties":{"empenho":{"type":"string"},"empenhoResumido":{"type":"string"},"dataEmissao":{"type":"string"},"observacao":{"type":"string"},"valor":{"type":"string"}}},"ContratoDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"numero":{"type":"string"},"objeto":{"type":"string"},"numeroProcesso":{"type":"string"},"fundamentoLegal":{"type":"string"},"compra":{"$ref":"#/components/schemas/CompraDTO"},"situacaoContrato":{"type":"string"},"modalidadeCompra":{"type":"string"},"unidadeGestora":{"$ref":"#/components/schemas/UnidadeGestoraDTO"},"unidadeGestoraCompras":{"$ref":"#/components/schemas/UnidadeGestoraDTO"},"dataAssinatura":{"type":"string","format":"date"},"dataPublicacaoDOU":{"type":"string","format":"date"},"dataInicioVigencia":{"type":"string","format":"date"},"dataFimVigencia":{"type":"string","format":"date"},"fornecedor":{"$ref":"#/components/schemas/PessoaDTO"},"valorInicialCompra":{"type":"number"},"valorFinalCompra":{"type":"number"}}},"IdDescricaoDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"descricao":{"type":"string"}}},"ImovelFuncionalDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"dataReferencia":{"type":"string","format":"date"},"orgaoResponsavel":{"$ref":"#/components/schemas/OrgaoResponsavelDTO"},"situacao":{"$ref":"#/components/schemas/IdDescricaoDTO"},"regiao":{"$ref":"#/components/schemas/IdDescricaoDTO"},"endereco":{"type":"string"},"cep":{"type":"string"}}},"ConsultaEmendasDTO":{"type":"object","properties":{"codigoEmenda":{"type":"string"},"ano":{"type":"integer","format":"int32"},"tipoEmenda":{"type":"string"},"autor":{"type":"string"},"nomeAutor":{"type":"string"},"numeroEmenda":{"type":"string"},"localidadeDoGasto":{"type":"string"},"funcao":{"type":"string"},"subfuncao":{"type":"string"},"valorEmpenhado":{"type":"string"},"valorLiquidado":{"type":"string"},"valorPago":{"type":"string"},"valorRestoInscrito":{"type":"string"},"valorRestoCancelado":{"type":"string"},"valorRestoPago":{"type":"string"}}},"DocumentoRelacionadoEmendaDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"data":{"type":"string"},"fase":{"type":"string"},"codigoDocumento":{"type":"string"},"codigoDocumentoResumido":{"type":"string"},"especieTipo":{"type":"string"},"tipoEmenda":{"type":"string"}}},"PessoaRecursosRecebidosUGMesDesnormalizadaDTO":{"type":"object","properties":{"anoMes":{"type":"integer","format":"int32"},"codigoPessoa":{"type":"string"},"nomePessoa":{"type":"string"},"tipoPessoa":{"type":"string"},"municipioPessoa":{"type":"string"},"siglaUFPessoa":{"type":"string"},"codigoUG":{"type":"string"},"nomeUG":{"type":"string"},"codigoOrgao":{"type":"string"},"nomeOrgao":{"type":"string"},"codigoOrgaoSuperior":{"type":"string"},"nomeOrgaoSuperior":{"type":"string"},"valor":{"type":"number"}}},"DespesaAnualPorOrgaoDTO":{"type":"object","properties":{"ano":{"type":"integer","format":"int32"},"orgao":{"type":"string"},"codigoOrgao":{"type":"string"},"orgaoSuperior":{"type":"string"},"codigoOrgaoSuperior":{"type":"string"},"empenhado":{"type":"string"},"liquidado":{"type":"string"},"pago":{"type":"string"}}},"DespesaAnualPorFuncaoESubfuncaoDTO":{"type":"object","properties":{"ano":{"type":"integer","format":"int32"},"funcao":{"type":"string"},"codigoFuncao":{"type":"string"},"subfuncao":{"type":"string"},"codigoSubfuncao":{"type":"string"},"programa":{"type":"string"},"codigoPrograma":{"type":"string"},"acao":{"type":"string"},"codigoAcao":{"type":"string"},"empenhado":{"type":"string"},"liquidado":{"type":"string"},"pago":{"type":"string"}}},"DespesaLiquidaAnualPorFuncaoESubfuncaoDTO":{"type":"object","properties":{"ano":{"type":"integer","format":"int32"},"funcao":{"type":"string"},"codigoFuncao":{"type":"string"},"subfuncao":{"type":"string"},"codigoSubfuncao":{"type":"string"},"programa":{"type":"string"},"codigoPrograma":{"type":"string"},"acao":{"type":"string"},"codigoAcao":{"type":"string"},"planoOrcamentario":{"type":"string"},"idPlanoOrcamentario":{"type":"integer","format":"int32"},"codigoPlanoOrcamentario":{"type":"string"},"grupoDespesa":{"type":"string"},"codigoGrupoDespesa":{"type":"string"},"elementoDespesa":{"type":"string"},"codigoElementoDespesa":{"type":"string"},"modalidadeDespesa":{"type":"string"},"codigoModalidadeDespesa":{"type":"string"},"empenhado":{"type":"string"},"liquidado":{"type":"string"},"pago":{"type":"string"}}},"DespesasPorPlanoOrcamentarioDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"codigo":{"type":"string"},"descricao":{"type":"string"},"codUnidadeOrcamentaria":{"type":"string"},"codigoFuncao":{"type":"string"},"codigoSubFuncao":{"type":"string"},"codigoPrograma":{"type":"string"},"codigoAcao":{"type":"string"},"codPOIdAcompanhamento":{"type":"string"},"descPOIdAcompanhamento":{"type":"string"},"numAno":{"type":"integer","format":"int32"}}},"DetalhamentoDoGastoDTO":{"type":"object","properties":{"codigoItemEmpenho":{"type":"string"},"descricao":{"type":"string"},"codigoSubelemento":{"type":"string"},"descricaoSubelemento":{"type":"string"},"valorAtual":{"type":"string"},"sequencial":{"type":"integer","format":"int32"}}},"HistoricoSubItemEmpenhoDTO":{"type":"object","properties":{"data":{"type":"string"},"operacao":{"type":"string"},"quantidade":{"type":"string"},"valorUnitario":{"type":"string"},"valorTotal":{"type":"string"}}},"DimFuncionalProgramaticaDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"codigo":{"type":"string"},"descricao":{"type":"string"},"ano":{"type":"integer","format":"int32"}}},"FuncionalProgramaticaDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"codigoFuncao":{"type":"string"},"codigoSubfuncao":{"type":"string"},"codigoPrograma":{"type":"string"},"codigoAcao":{"type":"string"},"ano":{"type":"integer","format":"int32"}}},"ConsultaFavorecidosFinaisPorDocumentoDTO":{"type":"object","properties":{"skFatDW":{"type":"integer","format":"int32"},"codigoPagamento":{"type":"string"},"codigoListaCredor":{"type":"string"},"valorFinal":{"type":"string"},"tipoOB":{"type":"string"},"tipoDocumento":{"type":"string"},"dataCarga":{"type":"string"},"skPessoaFinal":{"type":"integer","format":"int32"},"codigoFavorecidoFinal":{"type":"string"},"nomeFavorecidoFinal":{"type":"string"},"tipoFavorecidoFinal":{"type":"string"},"ufFavorecidoFinal":{"type":"string"},"municipioFavorecidoFinal":{"type":"string"},"skPessoaDespesa":{"type":"integer","format":"int32"},"codigoFavorecidoDespesa":{"type":"string"},"nomeFavorecidoDespesa":{"type":"string"},"tipoFavorecidoDespesa":{"type":"string"},"codigoOrgaoSuperior":{"type":"string"},"orgaoSuperior":{"type":"string"},"codigoOrgaoVinculado":{"type":"string"},"orgaoVinculado":{"type":"string"},"codigoUnidadeGestora":{"type":"string"},"unidadeGestora":{"type":"string"}}},"EmpenhoImpactadoBasicoDTO":{"type":"object","properties":{"empenho":{"type":"string"},"subitem":{"type":"string"},"empenhoResumido":{"type":"string"},"valorLiquidado":{"type":"string"},"valorPago":{"type":"string"},"valorRestoInscrito":{"type":"string"},"valorRestoCancelado":{"type":"string"},"valorRestoPago":{"type":"string"}}},"DespesasPorDocumentoDTO":{"type":"object","properties":{"data":{"type":"string"},"documento":{"type":"string"},"documentoResumido":{"type":"string"},"observacao":{"type":"string"},"funcao":{"type":"string"},"subfuncao":{"type":"string"},"programa":{"type":"string"},"acao":{"type":"string"},"subTitulo":{"type":"string"},"localizadorGasto":{"type":"string"},"fase":{"type":"string"},"especie":{"type":"string"},"favorecido":{"type":"string"},"codigoFavorecido":{"type":"string"},"nomeFavorecido":{"type":"string"},"ufFavorecido":{"type":"string"},"valor":{"type":"string"},"codigoUg":{"type":"string"},"ug":{"type":"string"},"codigoUo":{"type":"string"},"uo":{"type":"string"},"codigoOrgao":{"type":"string"},"orgao":{"type":"string"},"codigoOrgaoSuperior":{"type":"string"},"orgaoSuperior":{"type":"string"},"categoria":{"type":"string"},"grupo":{"type":"string"},"elemento":{"type":"string"},"modalidade":{"type":"string"},"numeroProcesso":{"type":"string"},"planoOrcamentario":{"type":"string"},"autor":{"type":"string"},"favorecidoIntermediario":{"type":"boolean"},"favorecidoListaFaturas":{"type":"boolean"}}},"DocumentoRelacionadoDTO":{"type":"object","properties":{"data":{"type":"string"},"fase":{"type":"string"},"documento":{"type":"string"},"documentoResumido":{"type":"string"},"especie":{"type":"string"},"orgaoSuperior":{"type":"string"},"orgaoVinculado":{"type":"string"},"unidadeGestora":{"type":"string"},"elementoDespesa":{"type":"string"},"favorecido":{"type":"string"},"valor":{"type":"string"}}},"TransferenciaCoronavirusDTO":{"type":"object","properties":{"mesAno":{"type":"integer","format":"int32"},"tipoTransferencia":{"type":"string"},"codigoOrgao":{"type":"string"},"orgao":{"type":"string"},"tipoFavorecido":{"type":"string"},"codigoFavorecido":{"type":"string"},"favorecido":{"type":"string"},"codigoFuncao":{"type":"string"},"funcao":{"type":"string"},"codigoPrograma":{"type":"string"},"programa":{"type":"string"},"codigoAcao":{"type":"string"},"acao":{"type":"string"},"codigoGrupoDespesa":{"type":"string"},"grupoDespesa":{"type":"string"},"codigoModalidadeAplicacaoDespesa":{"type":"string"},"modalidadeAplicacaoDespesa":{"type":"string"},"codigoElementoDespesa":{"type":"string"},"elementoDespesa":{"type":"string"},"valor":{"type":"string"}}},"MovimentacaoLiquidaCovidDTO":{"type":"object","properties":{"mesAno":{"type":"integer","format":"int32"},"codigoFuncao":{"type":"string"},"funcao":{"type":"string"},"codigoSubfuncao":{"type":"string"},"subfuncao":{"type":"string"},"codigoPrograma":{"type":"string"},"programa":{"type":"string"},"codigoAcao":{"type":"string"},"acao":{"type":"string"},"idPlanoOrcamentario":{"type":"integer","format":"int32"},"codigoPlanoOrcamentario":{"type":"string"},"planoOrcamentario":{"type":"string"},"codigoGrupoDespesa":{"type":"string"},"grupoDespesa":{"type":"string"},"codigoElementoDespesa":{"type":"string"},"elementoDespesa":{"type":"string"},"codigoModalidadeDespesa":{"type":"string"},"modalidadeDespesa":{"type":"string"},"empenhado":{"type":"string"},"pago":{"type":"string"},"liquidado":{"type":"string"}}},"ConvenioDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"dataReferencia":{"type":"string","format":"date"},"dataInicioVigencia":{"type":"string","format":"date"},"dataFinalVigencia":{"type":"string","format":"date"},"dataPublicacao":{"type":"string","format":"date"},"dataUltimaLiberacao":{"type":"string","format":"date"},"dataConclusao":{"type":"string","format":"date"},"dimConvenio":{"$ref":"#/components/schemas/DimConvenioDTO"},"situacao":{"type":"string"},"convenente":{"$ref":"#/components/schemas/PessoaDTO"},"localidadePessoa":{"$ref":"#/components/schemas/IdDescricaoDTO"},"municipioConvenente":{"$ref":"#/components/schemas/MunicipioDTO"},"orgao":{"$ref":"#/components/schemas/OrgaoDTO"},"unidadeGestora":{"$ref":"#/components/schemas/UnidadeGestoraDTO"},"subfuncao":{"$ref":"#/components/schemas/SubfuncaoDTO"},"tipoInstrumento":{"$ref":"#/components/schemas/TipoInstrumentoDTO"},"valor":{"type":"number"},"valorLiberado":{"type":"number"},"valorContrapartida":{"type":"number"},"valorDaUltimaLiberacao":{"type":"number"},"numeroProcesso":{"type":"string"}}},"DimConvenioDTO":{"type":"object","properties":{"codigo":{"type":"string"},"objeto":{"type":"string"},"numero":{"type":"string"}}},"FuncaoDTO":{"type":"object","properties":{"codigoFuncao":{"type":"string"},"descricaoFuncao":{"type":"string"}}},"SubfuncaoDTO":{"type":"object","properties":{"codigoSubfuncao":{"type":"string"},"descricaoSubfuncap":{"type":"string"},"funcao":{"$ref":"#/components/schemas/FuncaoDTO"}}},"TipoInstrumentoDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"codigo":{"type":"string"},"descricao":{"type":"string"}}},"TermoAditivoDTO":{"type":"object","properties":{"numero":{"type":"string"},"dataPublicacao":{"type":"string"},"objetoAditivo":{"type":"string"}}},"ItemContratadoDTO":{"type":"object","properties":{"numero":{"type":"string"},"descricao":{"type":"string"},"quantidade":{"type":"integer","format":"int32"},"valor":{"type":"string"},"descComplementarItemCompra":{"type":"string"}}},"ApostilamentoDTO":{"type":"object","properties":{"numero":{"type":"string"},"descricao":{"type":"string"},"dataInclusao":{"type":"string"},"situacao":{"type":"string"},"valor":{"type":"string"}}},"CnepDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"dataReferencia":{"type":"string"},"dataInicioSancao":{"type":"string"},"dataFimSancao":{"type":"string"},"dataPublicacaoSancao":{"type":"string"},"dataTransitadoJulgado":{"type":"string"},"dataOrigemInformacao":{"type":"string"},"tipoSancao":{"$ref":"#/components/schemas/TipoSancaoDTO"},"fonteSancao":{"$ref":"#/components/schemas/FonteSancaoDTO"},"fundamentacao":{"type":"array","items":{"$ref":"#/components/schemas/CodigoDescricaoDTO"}},"orgaoSancionador":{"$ref":"#/components/schemas/OrgaoSancionadorDTO"},"sancionado":{"$ref":"#/components/schemas/SancionadoDTO"},"valorMulta":{"type":"string"},"pessoa":{"$ref":"#/components/schemas/PessoaDTO"},"textoPublicacao":{"type":"string"},"linkPublicacao":{"type":"string"},"detalhamentoPublicacao":{"type":"string"},"numeroProcesso":{"type":"string"},"abrangenciaDefinidaDecisaoJudicial":{"type":"string"},"informacoesAdicionaisDoOrgaoSancionador":{"type":"string"}}},"FonteSancaoDTO":{"type":"object","properties":{"nomeExibicao":{"type":"string"},"telefoneContato":{"type":"string"},"enderecoContato":{"type":"string"}}},"OrgaoSancionadorDTO":{"type":"object","properties":{"nome":{"type":"string"},"siglaUf":{"type":"string"},"poder":{"type":"string"},"esfera":{"type":"string"}}},"SancionadoDTO":{"type":"object","properties":{"nome":{"type":"string"},"codigoFormatado":{"type":"string"}}},"TipoSancaoDTO":{"type":"object","properties":{"descricaoResumida":{"type":"string"},"descricaoPortal":{"type":"string"}}},"CepimDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"dataReferencia":{"type":"string"},"motivo":{"type":"string"},"orgaoSuperior":{"$ref":"#/components/schemas/OrgaoDTO"},"pessoaJuridica":{"$ref":"#/components/schemas/PessoaDTO"},"convenio":{"$ref":"#/components/schemas/DimConvenioDTO"}}},"CeisDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"dataReferencia":{"type":"string"},"dataInicioSancao":{"type":"string"},"dataFimSancao":{"type":"string"},"dataPublicacaoSancao":{"type":"string"},"dataTransitadoJulgado":{"type":"string"},"dataOrigemInformacao":{"type":"string"},"tipoSancao":{"$ref":"#/components/schemas/TipoSancaoDTO"},"fonteSancao":{"$ref":"#/components/schemas/FonteSancaoDTO"},"fundamentacao":{"type":"array","items":{"$ref":"#/components/schemas/CodigoDescricaoDTO"}},"orgaoSancionador":{"$ref":"#/components/schemas/OrgaoSancionadorDTO"},"sancionado":{"$ref":"#/components/schemas/SancionadoDTO"},"pessoa":{"$ref":"#/components/schemas/PessoaDTO"},"textoPublicacao":{"type":"string"},"linkPublicacao":{"type":"string"},"detalhamentoPublicacao":{"type":"string"},"numeroProcesso":{"type":"string"},"abrangenciaDefinidaDecisaoJudicial":{"type":"string"},"informacoesAdicionaisDoOrgaoSancionador":{"type":"string"}}},"CeafDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"dataPublicacao":{"type":"string"},"dataReferencia":{"type":"string"},"punicao":{"$ref":"#/components/schemas/PunicaoDTO"},"tipoPunicao":{"$ref":"#/components/schemas/TipoPunicaoDTO"},"pessoa":{"$ref":"#/components/schemas/PessoaDTO"},"orgaoLotacao":{"$ref":"#/components/schemas/OrgaoCeafDTO"},"ufLotacaoPessoa":{"$ref":"#/components/schemas/UFLotacaoDTO"},"cargoEfetivo":{"type":"string"},"codigoCargoComissao":{"type":"string"},"cargoComissao":{"type":"string"},"fundamentacao":{"type":"array","items":{"$ref":"#/components/schemas/CodigoDescricaoDTO"}}}},"OrgaoCeafDTO":{"type":"object","properties":{"siglaDaPasta":{"type":"string"},"sigla":{"type":"string"},"nome":{"type":"string"},"nomeSemAcento":{"type":"string"}}},"PunicaoDTO":{"type":"object","properties":{"cpfPunidoFormatado":{"type":"string"},"nomePunido":{"type":"string"},"portaria":{"type":"string"},"processo":{"type":"string"},"paginaDOU":{"type":"string"},"secaoDOU":{"type":"string"}}},"TipoPunicaoDTO":{"type":"object","properties":{"descricao":{"type":"string"}}},"UFLotacaoDTO":{"type":"object","properties":{"codigoIBGE":{"type":"string"},"codigoCNPJEstado":{"type":"string"},"populacao":{"type":"integer","format":"int32"},"uf":{"$ref":"#/components/schemas/UFDTO"}}},"CartoesDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"mesExtrato":{"type":"string"},"dataTransacao":{"type":"string"},"valorTransacao":{"type":"string"},"tipoCartao":{"$ref":"#/components/schemas/IdCodigoDescricaoDTO"},"estabelecimento":{"$ref":"#/components/schemas/PessoaDTO"},"unidadeGestora":{"$ref":"#/components/schemas/UnidadeGestoraDTO"},"portador":{"$ref":"#/components/schemas/BeneficiarioDTO"}}},"IdCodigoDescricaoDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"codigo":{"type":"string"},"descricao":{"type":"string"}}},"BPCDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"dataMesCompetencia":{"type":"string","format":"date"},"dataMesReferencia":{"type":"string","format":"date"},"beneficiario":{"$ref":"#/components/schemas/BeneficiarioBPCDTO"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"valor":{"type":"number"},"concedidoJudicialmente":{"type":"boolean"},"menor16anos":{"type":"boolean"}}},"BeneficiarioBPCDTO":{"type":"object","properties":{"cpfFormatado":{"type":"string"},"nis":{"type":"string"},"nome":{"type":"string"},"cpfRepresentanteLegalFormatado":{"type":"string"},"nisRepresentanteLegal":{"type":"string"},"nomeRepresentanteLegal":{"type":"string"}}},"BolsaFamiliaPagoDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"dataMesCompetencia":{"type":"string","format":"date"},"dataMesReferencia":{"type":"string","format":"date"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"beneficiarioBolsaFamilia":{"$ref":"#/components/schemas/BeneficiarioDTO"},"dataSaque":{"type":"string","format":"date"},"valorSaque":{"type":"number"}}},"BolsaFamiliaDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"dataMesCompetencia":{"type":"string","format":"date"},"dataMesReferencia":{"type":"string","format":"date"},"titularBolsaFamilia":{"$ref":"#/components/schemas/BeneficiarioDTO"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"valor":{"type":"number"},"quantidadeDependentes":{"type":"integer","format":"int32"}}},"AuxilioEmergencialDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"mesDisponibilizacao":{"type":"string"},"beneficiario":{"$ref":"#/components/schemas/BeneficiarioDTO"},"responsavelAuxilioEmergencial":{"$ref":"#/components/schemas/BeneficiarioDTO"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"situacaoAuxilioEmergencial":{"type":"string"},"enquadramentoAuxilioEmergencial":{"type":"string"},"valor":{"type":"number"},"numeroParcela":{"type":"string"}}},"AuxilioBrasilPagoDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"dataMesCompetencia":{"type":"string","format":"date"},"dataMesReferencia":{"type":"string","format":"date"},"municipio":{"$ref":"#/components/schemas/MunicipioDTO"},"beneficiarioAuxilioBrasil":{"$ref":"#/components/schemas/BeneficiarioDTO"},"dataSaque":{"type":"string","format":"date"},"valorSaque":{"type":"number"}}},"AcordosLenienciaDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int32"},"dataInicioAcordo":{"type":"string"},"dataFimAcordo":{"type":"string"},"orgaoResponsavel":{"type":"string"},"situacaoAcordo":{"type":"string"},"sancoes":{"type":"array","items":{"$ref":"#/components/schemas/EmpresaSancionadaDTO"}},"quantidade":{"type":"integer","format":"int32"}}},"EmpresaSancionadaDTO":{"type":"object","properties":{"nomeInformadoOrgaoResponsavel":{"type":"string"},"razaoSocial":{"type":"string"},"nomeFantasia":{"type":"string"},"cnpj":{"type":"string"},"cnpjFormatado":{"type":"string"}}}},"securitySchemes":{"Authorization":{"type":"apiKey","description":"Chave para acessar à API. Para obter a chave acesse http://www.portaldatransparencia.gov.br/api-de-dados/cadastrar-email","name":"chave-api-dados","in":"header"}}}}
-````
+```
 
 ## File: src/core/Authentication.ts
-````typescript
+
+```typescript
 import { Logger } from '@/logging/Logger';
 import axios from 'axios';
 
@@ -6866,10 +6959,11 @@ export class Authentication {
   //   throw new Error('OAuth authentication not yet implemented');
   // }
 }
-````
+```
 
 ## File: src/core/ClientGenerator.ts
-````typescript
+
+```typescript
 import { OpenAPI } from 'openapi-types';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -7357,10 +7451,11 @@ export class {{clientName}} {
 `;
   }
 }
-````
+```
 
 ## File: src/core/SwaggerLoader.ts
-````typescript
+
+```typescript
 import axios from 'axios';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import { OpenAPI } from 'openapi-types';
@@ -7483,10 +7578,11 @@ export class SwaggerLoader {
     this.logger.debug('Swagger specification cache cleared');
   }
 }
-````
+```
 
 ## File: src/logging/Logger.ts
-````typescript
+
+```typescript
 import winston from 'winston';
 
 export interface LogContext {
@@ -7529,10 +7625,11 @@ export class Logger {
     this.logger.debug(message, context);
   }
 }
-````
+```
 
 ## File: src/tests/integration/SwaggerLoader.integration.test.ts
-````typescript
+
+```typescript
 import { SwaggerLoader } from '@/core/SwaggerLoader';
 import { Logger } from '@/logging/Logger';
 
@@ -7661,10 +7758,11 @@ describe('SwaggerLoader Integration Tests', () => {
     }, 10000);
   });
 });
-````
+```
 
 ## File: src/tests/unit/core/Authentication.test.ts
-````typescript
+
+```typescript
 import { Authentication, AuthConfig } from '@/core/Authentication';
 import { Logger } from '@/logging/Logger';
 import axios from 'axios';
@@ -7962,10 +8060,11 @@ describe('Authentication', () => {
     });
   });
 });
-````
+```
 
 ## File: src/tests/unit/core/ClientGenerator.test.ts
-````typescript
+
+```typescript
 import { ClientGenerator } from '@/core/ClientGenerator';
 import { Logger } from '@/logging/Logger';
 
@@ -8115,10 +8214,11 @@ describe('ClientGenerator', () => {
     });
   });
 });
-````
+```
 
 ## File: src/tests/unit/core/SwaggerLoader.test.ts
-````typescript
+
+```typescript
 import { SwaggerLoader } from '@/core/SwaggerLoader';
 import { Logger } from '@/logging/Logger';
 import axios from 'axios';
@@ -8395,10 +8495,11 @@ describe('SwaggerLoader', () => {
     });
   });
 });
-````
+```
 
 ## File: src/tests/unit/index.test.ts
-````typescript
+
+```typescript
 import mcpPortalTransparencia from '../../index';
 
 describe('MCP Portal da Transparência', () => {
@@ -8418,31 +8519,31 @@ describe('MCP Portal da Transparência', () => {
     expect(typeof mcpPortalTransparencia.description).toBe('string');
   });
 });
-````
+```
 
 ## File: src/health.ts
-````typescript
-import http from "http";
+
+```typescript
+import http from 'http';
 
 export function startHealthServer(port = 3000) {
   const server = http.createServer((req, res) => {
-    if (req.url === "/health") {
+    if (req.url === '/health') {
       res.statusCode = 200;
-      res.end("ok");
+      res.end('ok');
       return;
     }
     res.statusCode = 404;
-    res.end("not found");
+    res.end('not found');
   });
-  server.listen(port, () =>
-    console.log(`[health] listening on :${port}`)
-  );
+  server.listen(port, () => console.log(`[health] listening on :${port}`));
   return server;
 }
-````
+```
 
 ## File: src/index.ts
-````typescript
+
+```typescript
 /**
  * MCP Portal da Transparência
  * Multi-step Call Planner for the Brazilian Government Transparency Portal API
@@ -8472,10 +8573,11 @@ export default {
   version: '1.0.0',
   description: 'Multi-step Call Planner for Portal da Transparência API',
 };
-````
+```
 
 ## File: .env.example
-````
+
+```
 # API Keys (Required to enable respective provider)
 ANTHROPIC_API_KEY="your_anthropic_api_key_here"       # Required: Format: sk-ant-api03-...
 PERPLEXITY_API_KEY="your_perplexity_api_key_here"     # Optional: Format: pplx-...
@@ -8486,10 +8588,11 @@ XAI_API_KEY="YOUR_XAI_KEY_HERE"                       # Optional, for xAI AI mod
 AZURE_OPENAI_API_KEY="your_azure_key_here"            # Optional, for Azure OpenAI models (requires endpoint in .taskmaster/config.json).
 OLLAMA_API_KEY="your_ollama_api_key_here"             # Optional: For remote Ollama servers that require authentication.
 GITHUB_API_KEY="your_github_api_key_here"             # Optional: For GitHub import/export features. Format: ghp_... or github_pat_...
-````
+```
 
 ## File: .gitignore
-````
+
+```
 # Logs
 logs
 *.log
@@ -8518,7 +8621,7 @@ node_modules/
 
 # Task files
 # tasks.json
-# tasks/ 
+# tasks/
 
 coverage/
 test-clients/
@@ -8526,10 +8629,11 @@ dist/
 mcp-inspector-config.json
 
 .cursor/mcp.json
-````
+```
 
 ## File: .npmignore
-````
+
+```
 src/
 tests/
 examples/
@@ -8558,10 +8662,11 @@ node_modules/
 *.config.*
 eslint.config.*
 .taskmaster/
-````
+```
 
 ## File: .prettierrc
-````
+
+```
 {
   "semi": true,
   "trailingComma": "es5",
@@ -8575,10 +8680,11 @@ eslint.config.*
   "endOfLine": "lf",
   "quoteProps": "as-needed"
 }
-````
+```
 
 ## File: CHANGELOG.md
-````markdown
+
+```markdown
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -8629,10 +8735,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Unreleased]: https://github.com/dutradotdev/mcp-portal-transparencia/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/dutradotdev/mcp-portal-transparencia/releases/tag/v1.0.0
-````
+```
 
 ## File: demo-ministerio-fazenda.js
-````javascript
+
+```javascript
 #!/usr/bin/env node
 
 console.log('🏛️ MCP Portal da Transparência - Ferramentas para Ministério da Fazenda');
@@ -8722,10 +8829,11 @@ console.log('');
 
 console.log('⚡ EXECUTAR INSPECTOR AGORA:');
 console.log('npm run inspector');
-````
+```
 
 ## File: Dockerfile
-````dockerfile
+
+```dockerfile
 # syntax=docker/dockerfile:1.7
 FROM node:20-slim AS deps
 WORKDIR /app
@@ -8749,10 +8857,11 @@ RUN npm ci --only=production --ignore-scripts
 COPY --from=build /app/dist ./dist
 # Ajuste o caminho se seu entrypoint for diferente
 CMD ["node", "dist/src/mcp-server.js"]
-````
+```
 
 ## File: eslint.config.mjs
-````
+
+```
 import eslint from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
@@ -8860,10 +8969,11 @@ export default [
     ignores: ['node_modules/**', 'dist/**', 'coverage/**', '*.config.js', 'docs/**'],
   },
 ];
-````
+```
 
 ## File: LICENSE
-````
+
+```
 MIT License
 
 Copyright (c) 2024 Lucas Dutra
@@ -8885,9 +8995,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-````
+```
 
 ## File: README.md
+
 ````markdown
 # MCP Portal da Transparência Brasil
 
@@ -9165,11 +9276,11 @@ Pré-requisitos:
 
 Passos no Smithery:
 
-1) Importar o repositório ou pacote npm
-2) O Smithery executará automaticamente:
+1. Importar o repositório ou pacote npm
+2. O Smithery executará automaticamente:
    - npm install
    - npm run build
-3) O servidor MCP será iniciado via stdio com:
+3. O servidor MCP será iniciado via stdio com:
    - command: `node`
    - args: `dist/src/mcp-server.js`
 
@@ -9205,7 +9316,8 @@ Exemplo de configuração em clientes MCP (Cursor):
 ````
 
 ## File: smithery.json
-````json
+
+```json
 {
   "name": "mcp-portal-transparencia-brasil",
   "version": "1.0.5",
@@ -9226,9 +9338,7 @@ Exemplo de configuração em clientes MCP (Cursor):
   "mcp": {
     "type": "stdio",
     "command": "node",
-    "args": [
-      "dist/src/mcp-server.js"
-    ],
+    "args": ["dist/src/mcp-server.js"],
     "env": {
       "PORTAL_API_KEY": {
         "description": "API key for Portal da Transparência (header: X-Api-Key).",
@@ -9260,19 +9370,20 @@ Exemplo de configuração em clientes MCP (Cursor):
     "build": "npm run build"
   }
 }
-````
+```
 
 ## File: smithery.yaml
-````yaml
+
+```yaml
 name: portal-transparencia-brasil
 language: node
 build:
   dockerfile: ./Dockerfile
   context: .
 run:
-  command: ["node", "dist/src/mcp-server.js"]
+  command: ['node', 'dist/src/mcp-server.js']
   env:
-    NODE_ENV: "production"
+    NODE_ENV: 'production'
 health:
   http:
     path: /health
@@ -9280,10 +9391,11 @@ health:
     interval: 10s
     timeout: 5s
     gracePeriod: 20s
-````
+```
 
 ## File: test-mcp-tools.js
-````javascript
+
+```javascript
 #!/usr/bin/env node
 
 import { spawn } from 'child_process';
@@ -9428,10 +9540,11 @@ async function main() {
 if (import.meta.url === `file://${process.argv[1]}`) {
   main();
 }
-````
+```
 
 ## File: tsconfig.test.json
-````json
+
+```json
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
@@ -9442,10 +9555,11 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "coverage"]
 }
-````
+```
 
 ## File: typedoc.json
-````json
+
+```json
 {
   "entryPoints": ["src/index.ts"],
   "out": "docs",
@@ -9461,10 +9575,11 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   "hideGenerator": true,
   "sort": ["source-order"]
 }
-````
+```
 
 ## File: src/mcp-server.ts
-````typescript
+
+```typescript
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import {
@@ -9477,7 +9592,7 @@ import { OpenAPI } from 'openapi-types';
 import { Authentication } from './core/Authentication.js';
 import { SwaggerLoader } from './core/SwaggerLoader.js';
 import { Logger } from './logging/Logger.js';
-import { startHealthServer } from "./health";
+import { startHealthServer } from './health';
 
 export class MCPPortalServer {
   private server: Server;
@@ -9681,7 +9796,7 @@ export class MCPPortalServer {
 
     return {
       name: this.generateToolName(operation.operationId!, method, path),
-      description: `[${category.toUpperCase()}] ${operation.summary || operation.description || 'Operação da API Portal da Transparência'}`, 
+      description: `[${category.toUpperCase()}] ${operation.summary || operation.description || 'Operação da API Portal da Transparência'}`,
       inputSchema: {
         type: 'object',
         properties,
@@ -9838,10 +9953,11 @@ async function main() {
 if (require.main === module) {
   main();
 }
-````
+```
 
 ## File: package.json
-````json
+
+```json
 {
   "name": "mcp-portal-transparencia-brasil",
   "version": "1.0.5",
@@ -9906,12 +10022,7 @@ if (require.main === module) {
   "engines": {
     "node": ">=18.18.0"
   },
-  "files": [
-    "dist",
-    "bin",
-    "LICENSE",
-    "README.md"
-  ],
+  "files": ["dist", "bin", "LICENSE", "README.md"],
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
     "@modelcontextprotocol/sdk": "^0.6.0",
@@ -9950,13 +10061,8 @@ if (require.main === module) {
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "testMatch": [
-      "**/__tests__/**/*.test.ts",
-      "**/tests/**/*.test.ts"
-    ],
+    "roots": ["<rootDir>/src"],
+    "testMatch": ["**/__tests__/**/*.test.ts", "**/tests/**/*.test.ts"],
     "collectCoverageFrom": [
       "src/**/*.ts",
       "!src/**/*.d.ts",
@@ -9964,11 +10070,7 @@ if (require.main === module) {
       "!src/tests/**/*.ts"
     ],
     "coverageDirectory": "coverage",
-    "coverageReporters": [
-      "text",
-      "lcov",
-      "html"
-    ],
+    "coverageReporters": ["text", "lcov", "html"],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1",
       "^@/clients/(.*)$": "<rootDir>/src/clients/$1",
@@ -9989,24 +10091,20 @@ if (require.main === module) {
     }
   },
   "lint-staged": {
-    "*.{ts,js}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md}": [
-      "prettier --write"
-    ]
+    "*.{ts,js}": ["eslint --fix", "prettier --write"],
+    "*.{json,md}": ["prettier --write"]
   }
 }
-````
+```
 
 ## File: tsconfig.json
-````json
+
+```json
 {
   "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
-    
+
     "rootDir": "src",
     "outDir": "dist",
     "moduleResolution": "Node",
@@ -10017,13 +10115,9 @@ if (require.main === module) {
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*.ts"
-  ]
+  "include": ["src/**/*.ts"]
 }
-````
+```

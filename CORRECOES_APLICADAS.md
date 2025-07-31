@@ -86,13 +86,13 @@
 
 ## 📊 Status Atual
 
-| Componente | Status | Observações |
-|------------|--------|-------------|
-| TypeScript | ✅ OK | Compila sem erros |
-| Source Maps | ✅ OK | Habilitados |
-| README.md | ✅ OK | Formatação corrigida |
-| ESLint | ⚠️ Pendente | Terminal com problemas |
-| Testes | ⚠️ Pendente | Terminal com problemas |
+| Componente   | Status      | Observações            |
+| ------------ | ----------- | ---------------------- |
+| TypeScript   | ✅ OK       | Compila sem erros      |
+| Source Maps  | ✅ OK       | Habilitados            |
+| README.md    | ✅ OK       | Formatação corrigida   |
+| ESLint       | ⚠️ Pendente | Terminal com problemas |
+| Testes       | ⚠️ Pendente | Terminal com problemas |
 | MarkdownLint | ⚠️ Pendente | Terminal com problemas |
 
 ## 🔧 Configurações Atualizadas
@@ -102,12 +102,10 @@
 ```json
 {
   "compilerOptions": {
-    "sourceMap": true,
+    "sourceMap": true
     // ... outras configurações
   },
-  "include": [
-    "src/**/*.ts"
-  ]
+  "include": ["src/**/*.ts"]
 }
 ```
 
