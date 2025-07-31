@@ -11,6 +11,13 @@ import { Authentication } from './core/Authentication.js';
 import { SwaggerLoader } from './core/SwaggerLoader.js';
 import { Logger } from './logging/Logger.js';
 import { startHealthServer } from './health';
+import {
+  AuthenticationError,
+  PortalAPIError,
+  RateLimitError,
+  handleError
+} from './utils/error-handling.js';
+import { logger } from './utils/logger.js';
 
 export class MCPPortalServer {
   private server: Server;
@@ -116,13 +123,12 @@ Este servidor oferece acesso a todos os endpoints da API do Portal da Transparê
 Para usar as ferramentas, configure a variável de ambiente PORTAL_API_KEY com sua chave de API.
 
 Ferramentas disponíveis:
-${
-  this.spec
-    ? Array.from(this.tools.values())
-        .map(tool => `- ${tool.name}: ${tool.description || `Consulta ${tool.path}`}`)
-        .join('\n')
-    : 'Carregando ferramentas...'
-}
+${this.spec
+                  ? Array.from(this.tools.values())
+                    .map(tool => `- ${tool.name}: ${tool.description || `Consulta ${tool.path}`}`)
+                    .join('\n')
+                  : 'Carregando ferramentas...'
+                }
 
 Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-dados/cadastrar-email`,
             },
@@ -132,6 +138,11 @@ Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-
 
       if (!this.tools.has(name)) {
         throw new Error(`Ferramenta não encontrada: ${name}`);
+      }
+
+      // Validate API key only when executing tools (lazy loading)
+      if (!this.auth.hasApiKey()) {
+        throw new AuthenticationError();
       }
 
       const tool = this.tools.get(name);
@@ -299,11 +310,13 @@ Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-
     _operation: any,
     args: Record<string, any>
   ) {
+    const startTime = Date.now();
+
     try {
       // Ensure method is uppercase for HTTP requests
       const httpMethod = method.toUpperCase();
 
-      this.logger.info(`Executando chamada API`, {
+      logger.info(`Executando chamada API`, {
         method: httpMethod,
         path,
         args: Object.keys(args),
@@ -338,31 +351,35 @@ Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-
         requestOptions.body = JSON.stringify(args);
       }
 
-      this.logger.debug('Request details', {
+      logger.debug('Request details', {
         url,
         method: httpMethod,
         headers: requestOptions.headers,
       });
 
       const response = await fetch(url, requestOptions);
+      const responseTime = Date.now() - startTime;
 
       if (!response.ok) {
         const errorText = await response.text();
-        this.logger.error('Erro na chamada API', {
-          status: response.status,
-          statusText: response.statusText,
-          error: errorText,
-        });
 
-        throw new Error(`API Error: ${response.status} ${response.statusText} - ${errorText}`);
+        // Handle specific error types
+        if (response.status === 429) {
+          throw new RateLimitError(`Rate limit atingido: ${errorText}`);
+        } else if (response.status === 401 || response.status === 403) {
+          throw new AuthenticationError(`Erro de autenticação: ${errorText}`);
+        } else {
+          throw new PortalAPIError(`API Error: ${response.status} ${response.statusText} - ${errorText}`, response.status);
+        }
       }
 
       const data = await response.json();
 
-      this.logger.info('Chamada API executada com sucesso', {
+      logger.logApiCall({
+        endpoint: path,
         method: httpMethod,
-        path,
-        responseSize: JSON.stringify(data).length,
+        responseStatus: response.status,
+        responseTime,
       });
 
       return {
@@ -374,14 +391,24 @@ Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-
         ],
       };
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      this.logger.error('Falha na execução da chamada API', {
-        method,
-        path,
-        error: errorMessage,
+      const responseTime = Date.now() - startTime;
+
+      logger.logApiCall({
+        endpoint: path,
+        method: method.toUpperCase(),
+        responseStatus: error instanceof PortalAPIError ? error.statusCode : 500,
+        responseTime,
+        error: error instanceof Error ? error : new Error(String(error)),
       });
 
-      throw new Error(`Falha na execução: ${errorMessage}`);
+      // Re-throw structured errors
+      if (error instanceof AuthenticationError ||
+        error instanceof RateLimitError ||
+        error instanceof PortalAPIError) {
+        throw error;
+      }
+
+      throw new Error(`Falha na execução: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 

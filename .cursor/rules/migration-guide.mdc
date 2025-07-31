@@ -1,0 +1,223 @@
+# 🚀 Guia de Migração - TypeScript Deploy
+
+## 📋 Análise Atual vs. Recomendação
+
+### Configuração Atual (Subótima)
+
+```yaml
+# smithery.yaml (ATUAL)
+name: portal-transparencia-brasil
+language: node
+build:
+  dockerfile: ./Dockerfile
+  context: .
+run:
+  command: ['node', 'dist/src/mcp-server.js']
+  env:
+    NODE_ENV: 'production'
+health:
+  http:
+    path: /health
+    port: 3000
+    interval: 10s
+    timeout: 5s
+    gracePeriod: 20s
+```
+
+### Configuração Recomendada (Ótima)
+
+```yaml
+# smithery.yaml (RECOMENDADA)
+runtime: 'typescript'
+name: 'portal-transparencia-brasil'
+description: 'MCP Server for Portal da Transparência API'
+
+env:
+  PORTAL_API_KEY:
+    description: 'API key for Portal da Transparência'
+    required: true
+  LOG_LEVEL:
+    description: 'Log level (error, warn, info, debug)'
+    required: false
+    default: 'info'
+
+health:
+  mcp:
+    timeoutMs: 15000
+```
+
+## 🔄 Processo de Migração
+
+### Fase 1: Preparação
+
+1. **Verificar compatibilidade TypeScript**
+
+   ```bash
+   # Verificar se o build funciona
+   npm run build
+   
+   # Testar o servidor localmente
+   node dist/src/mcp-server.js
+   ```
+
+2. **Validar package.json**
+
+   ```json
+   {
+     "type": "commonjs",
+     "main": "dist/src/mcp-server.js",
+     "scripts": {
+       "build": "tsc",
+       "start": "node dist/src/mcp-server.js"
+     }
+   }
+   ```
+
+### Fase 2: Implementação
+
+1. **Atualizar smithery.yaml**
+
+   ```yaml
+   runtime: 'typescript'
+   name: 'portal-transparencia-brasil'
+   description: 'MCP Server for Portal da Transparência API'
+   
+   env:
+     PORTAL_API_KEY:
+       description: 'API key for Portal da Transparência'
+       required: true
+     LOG_LEVEL:
+       description: 'Log level (error, warn, info, debug)'
+       required: false
+       default: 'info'
+   
+   health:
+     mcp:
+       timeoutMs: 15000
+   ```
+
+2. **Implementar Lazy Loading**
+
+   ```typescript
+   // src/mcp-server.ts
+   server.setRequestHandler('tools/list', async () => {
+     // Sem validação de API key - permite descoberta
+     return {
+       tools: [
+         {
+           name: 'consultar_servidores',
+           description: 'Consultar servidores do Poder Executivo Federal',
+           inputSchema: {
+             type: 'object',
+             properties: {
+               // schema da ferramenta
+             },
+           },
+         },
+       ],
+     };
+   });
+   ```
+
+3. **Remover arquivos desnecessários**
+
+   ```bash
+   # Opcional: remover Dockerfile se não for mais necessário
+   # rm Dockerfile
+   
+   # Opcional: remover smithery.json se duplicado
+   # rm smithery.json
+   ```
+
+### Fase 3: Validação
+
+1. **Teste local**
+
+   ```bash
+   npm run build
+   node dist/src/mcp-server.js
+   ```
+
+2. **Deploy no Smithery**
+
+   ```bash
+   git add .
+   git commit -m "feat: migrate to TypeScript Deploy"
+   git push origin main
+   ```
+
+## 📈 Benefícios da Migração
+
+### Performance
+
+- ⚡ **Build mais rápido**: Automático vs. Docker
+- ⚡ **Deploy mais rápido**: TypeScript runtime otimizado
+- ⚡ **Menos recursos**: Sem container Docker
+
+### Manutenibilidade
+
+- 🔧 **Configuração simplificada**: Apenas `smithery.yaml`
+- 🔧 **Menos arquivos**: Sem Dockerfile necessário
+- 🔧 **Integração nativa**: Melhor suporte Smithery
+
+### Experiência do Usuário
+
+- 🎯 **Descoberta de ferramentas**: Lazy loading implementado
+- 🎯 **Configuração mais clara**: Schema de configuração
+- 🎯 **Health check melhorado**: MCP nativo
+
+## 🚨 Considerações Importantes
+
+### Breaking Changes
+
+- ⚠️ **Dockerfile**: Pode ser removido
+- ⚠️ **smithery.json**: Pode ser removido
+- ⚠️ **Health endpoint**: Mudança de HTTP para MCP
+
+### Rollback Plan
+
+```bash
+# Se necessário, reverter para configuração anterior
+git checkout HEAD~1 smithery.yaml
+git commit -m "revert: back to custom deploy"
+```
+
+## 📋 Checklist de Migração
+
+### Pré-requisitos
+
+- [ ] TypeScript MCP server funcional
+- [ ] `package.json` com entry points corretos
+- [ ] Build local funcionando
+
+### Migração
+
+- [ ] Atualizar `smithery.yaml` para `runtime: "typescript"`
+- [ ] Implementar lazy loading em `mcp-server.ts`
+- [ ] Remover `smithery.json` (opcional)
+- [ ] Testar build e deploy local
+
+### Validação
+
+- [ ] Deploy no Smithery
+- [ ] Verificar health check
+- [ ] Testar descoberta de ferramentas
+- [ ] Validar configuração de ambiente
+
+## 🎯 Próximos Passos
+
+1. **Implementar lazy loading** no código atual
+2. **Migrar para `runtime: "typescript"`**
+3. **Simplificar configuração** removendo duplicações
+4. **Testar e validar** no ambiente Smithery
+
+## 📚 Referências
+
+- [Smithery Deployments Documentation](https://smithery.ai/docs/build/deployments)
+- [TypeScript Runtime Guide](https://smithery.ai/docs/build/getting-started)
+- [MCP Health Check](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http)
+description:
+globs:
+alwaysApply: false
+
+---

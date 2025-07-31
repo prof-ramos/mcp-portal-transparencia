@@ -1,18 +1,16 @@
-runtime: "typescript"
-name: "portal-transparencia-brasil"
-description: "MCP Server for Portal da Transparência API"
+runtime: 'typescript'
+name: 'portal-transparencia-brasil'
+description: 'MCP Server for Portal da Transparência API'
 
-# Configuração de ambiente
 env:
   PORTAL_API_KEY:
-    description: "API key for Portal da Transparência (header: X-Api-Key)"
+    description: 'API key for Portal da Transparência'
     required: true
   LOG_LEVEL:
-    description: "Log level (error, warn, info, debug)"
+    description: 'Log level (error, warn, info, debug)'
     required: false
-    default: "info"
+    default: 'info'
 
-# Health check
 health:
   mcp:
     timeoutMs: 15000
