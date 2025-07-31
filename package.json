@@ -1,17 +1,17 @@
 {
   "name": "mcp-portal-transparencia-brasil",
   "version": "1.0.5",
-  "description": "MCP Server for Portal da Transparência API - Multi-step Call Planner. Provides intelligent query planning, data aggregation, and comprehensive API interaction capabilities for the Brazilian Government Transparency Portal, enabling efficient access to public expenditure data, government contracts, and transparency information via MCP protocol.",
-  "main": "dist/src/index.js",
+  "description": "MCP Server for Portal da Transparencia API - Multi-step Call Planner. Provides intelligent query planning, data aggregation, and comprehensive API interaction capabilities for the Brazilian Government Transparency Portal, enabling efficient access to public expenditure data, government contracts, and transparency information via MCP protocol.",
+  "main": "dist/src/mcp-server.js",
   "bin": {
     "mcp-portal-transparencia-brasil": "bin/mcp-portal-transparencia.js"
   },
   "types": "dist/src/index.d.ts",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
-    "build": "tsc",
-    "dev": "npx ts-node -r tsconfig-paths/register src/index.ts",
-    "start": "node dist/src/index.js",
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/mcp-server.ts",
+    "start": "node dist/src/mcp-server.js",
     "mcp-server": "node dist/src/mcp-server.js",
     "inspector": "npx @modelcontextprotocol/inspector --config mcp-inspector-config.json --server portal-transparencia",
     "inspector:direct": "npm run build && npx @modelcontextprotocol/inspector node dist/src/mcp-server.js",
@@ -20,13 +20,14 @@
     "test:integration": "jest --testMatch='**/tests/integration/**/*.test.ts'",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "eslint src/**/*.ts",
+    "lint": "eslint .",
     "lint:fix": "eslint src/**/*.ts --fix",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,js,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,js,json}\"",
     "clean": "rm -rf dist coverage temp_build",
     "docs": "typedoc",
+    "health": "node scripts/healthcheck.js",
     "prepublishOnly": "npm run build && npm run test:unit && npm run lint",
     "publish:patch": "npm version patch && npm publish",
     "publish:minor": "npm version minor && npm publish",
@@ -59,7 +60,7 @@
   },
   "homepage": "https://github.com/prof-ramos/mcp-portal-transparencia#readme",
   "engines": {
-    "node": ">=18 <23"
+    "node": ">=18.18.0"
   },
   "files": [
     "dist",
@@ -99,7 +100,7 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.2",
-    "typedoc": "^0.25.13",
+    "typedoc": "^0.28.8",
     "typescript": "^5.7.3"
   },
   "jest": {
@@ -153,3 +154,4 @@
     ]
   }
 }
+    

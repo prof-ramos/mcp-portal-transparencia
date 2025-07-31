@@ -10,6 +10,7 @@ import { OpenAPI } from 'openapi-types';
 import { Authentication } from './core/Authentication.js';
 import { SwaggerLoader } from './core/SwaggerLoader.js';
 import { Logger } from './logging/Logger.js';
+import { startHealthServer } from "./health";
 
 export class MCPPortalServer {
   private server: Server;
@@ -213,7 +214,7 @@ export class MCPPortalServer {
 
     return {
       name: this.generateToolName(operation.operationId!, method, path),
-      description: `[${category.toUpperCase()}] ${operation.summary || operation.description || 'Operação da API Portal da Transparência'}`,
+      description: `[${category.toUpperCase()}] ${operation.summary || operation.description || 'Operação da API Portal da Transparência'}`, 
       inputSchema: {
         type: 'object',
         properties,
@@ -358,6 +359,7 @@ async function main() {
   try {
     await server.initialize();
     await server.start();
+    startHealthServer(3000);
   } catch (error) {
     // Use stderr explicitly to avoid interfering with MCP protocol
     process.stderr.write(`Erro ao iniciar servidor MCP: ${error}\n`);
@@ -366,6 +368,6 @@ async function main() {
 }
 
 // Only run main if this file is the entry point
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (require.main === module) {
   main();
 }
