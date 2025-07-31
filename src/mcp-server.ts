@@ -2,14 +2,14 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import {
   CallToolRequestSchema,
-  ListToolsRequestSchema,
   InitializeRequestSchema,
+  ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { SwaggerLoader } from './core/SwaggerLoader.js';
-import { Authentication } from './core/Authentication.js';
-import { Logger } from './logging/Logger.js';
-import { OpenAPI } from 'openapi-types';
 import fetch from 'node-fetch';
+import { OpenAPI } from 'openapi-types';
+import { Authentication } from './core/Authentication.js';
+import { SwaggerLoader } from './core/SwaggerLoader.js';
+import { Logger } from './logging/Logger.js';
 
 export class MCPPortalServer {
   private server: Server;
@@ -342,6 +342,7 @@ export class MCPPortalServer {
     try {
       const transport = new StdioServerTransport();
       await this.server.connect(transport);
+      this.logger.info('MCP server initialized. Waiting for stdio messages...');
       this.logger.info('Servidor MCP Portal da Transparência iniciado com sucesso');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);

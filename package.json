@@ -52,21 +52,21 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dutradotdev/mcp-portal-transparencia.git"
+    "url": "git+https://github.com/prof-ramos/mcp-portal-transparencia.git"
   },
   "bugs": {
-    "url": "https://github.com/dutradotdev/mcp-portal-transparencia/issues"
+    "url": "https://github.com/prof-ramos/mcp-portal-transparencia/issues"
   },
-  "homepage": "https://github.com/dutradotdev/mcp-portal-transparencia#readme",
+  "homepage": "https://github.com/prof-ramos/mcp-portal-transparencia#readme",
+  "engines": {
+    "node": ">=18 <23"
+  },
   "files": [
     "dist",
     "bin",
     "LICENSE",
     "README.md"
   ],
-  "engines": {
-    "node": ">=18.0.0"
-  },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
     "@modelcontextprotocol/sdk": "^0.6.0",
