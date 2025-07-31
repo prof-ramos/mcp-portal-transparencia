@@ -1,0 +1,16 @@
+name: portal-transparencia-brasil
+language: node
+build:
+  dockerfile: ./Dockerfile
+  context: .
+run:
+  command: ["node", "dist/src/mcp-server.js"]
+  env:
+    NODE_ENV: "production"
+health:
+  http:
+    path: /health
+    port: 3000
+    interval: 10s
+    timeout: 5s
+    gracePeriod: 20s
