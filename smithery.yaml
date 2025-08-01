@@ -1,16 +1,16 @@
-name: portal-transparencia-brasil
-language: node
-build:
-  dockerfile: ./Dockerfile
-  context: .
-run:
-  command: ["node", "dist/src/mcp-server.js"]
-  env:
-    NODE_ENV: "production"
+runtime: 'typescript'
+name: 'portal-transparencia-brasil'
+description: 'MCP Server for Portal da Transparência API'
+
+env:
+  PORTAL_API_KEY:
+    description: 'API key for Portal da Transparência'
+    required: true
+  LOG_LEVEL:
+    description: 'Log level (error, warn, info, debug)'
+    required: false
+    default: 'info'
+
 health:
-  http:
-    path: /health
-    port: 3000
-    interval: 10s
-    timeout: 5s
-    gracePeriod: 20s
+  mcp:
+    timeoutMs: 15000

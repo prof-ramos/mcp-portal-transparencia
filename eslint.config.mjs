@@ -4,6 +4,7 @@ import tsparser from '@typescript-eslint/parser';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 import jest from 'eslint-plugin-jest';
+import globals from 'globals';
 
 export default [
   eslint.configs.recommended,
@@ -15,6 +16,9 @@ export default [
         ecmaVersion: 2020,
         sourceType: 'module',
         project: './tsconfig.json',
+      },
+      globals: {
+        ...globals.node,
       },
     },
     plugins: {
@@ -53,7 +57,8 @@ export default [
         project: './tsconfig.test.json',
       },
       globals: {
-        ...jest.environments.globals.globals,
+        ...globals.jest,
+        ...globals.node,
       },
     },
     plugins: {
@@ -99,6 +104,9 @@ export default [
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: 'module',
+      globals: {
+        ...globals.node,
+      },
     },
   },
   {

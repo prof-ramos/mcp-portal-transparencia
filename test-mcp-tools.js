@@ -23,10 +23,7 @@ class MCPTester {
     await setTimeout(3000);
 
     return new Promise((resolve, reject) => {
-      let output = '';
-
       this.mcpProcess.stdout.on('data', data => {
-        output += data.toString();
         console.log('📊 Saída do servidor:', data.toString().trim());
       });
 

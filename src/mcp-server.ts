@@ -10,7 +10,14 @@ import { OpenAPI } from 'openapi-types';
 import { Authentication } from './core/Authentication.js';
 import { SwaggerLoader } from './core/SwaggerLoader.js';
 import { Logger } from './logging/Logger.js';
-import { startHealthServer } from "./health";
+import { startHealthServer } from './health';
+import {
+  AuthenticationError,
+  PortalAPIError,
+  RateLimitError,
+  handleError
+} from './utils/error-handling.js';
+import { logger } from './utils/logger.js';
 
 export class MCPPortalServer {
   private server: Server;
@@ -70,15 +77,72 @@ export class MCPPortalServer {
     });
 
     this.server.setRequestHandler(ListToolsRequestSchema, async () => {
-      const tools = Array.from(this.tools.values());
+      // Lazy loading: Return tool information without requiring authentication
+      // This allows users to discover available tools before configuring API keys
+
+      if (!this.spec) {
+        // If spec is not loaded yet, return basic tool information
+        return {
+          tools: [
+            {
+              name: 'portal_discover_tools',
+              description: 'Descobrir ferramentas disponíveis no Portal da Transparência',
+              inputSchema: {
+                type: 'object',
+                properties: {},
+                required: [],
+              },
+            },
+          ],
+        };
+      }
+
+      // Return all available tools with their descriptions
+      const tools = Array.from(this.tools.values()).map(tool => ({
+        name: tool.name,
+        description: tool.description || `Consulta ${tool.path}`,
+        inputSchema: tool.inputSchema,
+      }));
+
       return { tools };
     });
 
     this.server.setRequestHandler(CallToolRequestSchema, async request => {
       const { name, arguments: args } = request.params;
 
+      // Handle tool discovery without authentication
+      if (name === 'portal_discover_tools') {
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Portal da Transparência MCP Server
+
+Este servidor oferece acesso a todos os endpoints da API do Portal da Transparência do Brasil.
+
+Para usar as ferramentas, configure a variável de ambiente PORTAL_API_KEY com sua chave de API.
+
+Ferramentas disponíveis:
+${this.spec
+                  ? Array.from(this.tools.values())
+                    .map(tool => `- ${tool.name}: ${tool.description || `Consulta ${tool.path}`}`)
+                    .join('\n')
+                  : 'Carregando ferramentas...'
+                }
+
+Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-dados/cadastrar-email`,
+            },
+          ],
+        };
+      }
+
       if (!this.tools.has(name)) {
         throw new Error(`Ferramenta não encontrada: ${name}`);
+      }
+
+      // Validate API key only when executing tools (lazy loading)
+      if (!this.auth.hasApiKey()) {
+        throw new AuthenticationError();
       }
 
       const tool = this.tools.get(name);
@@ -119,9 +183,8 @@ export class MCPPortalServer {
         const operationObj = operation as OpenAPI.Operation;
         if (!operationObj.operationId) continue;
 
-        const toolName = this.generateToolName(operationObj.operationId, method, path);
         const tool = this.createMCPTool(operationObj, method, path);
-        this.tools.set(toolName, tool);
+        this.tools.set(tool.name, tool);
       }
     }
   }
@@ -166,6 +229,8 @@ export class MCPPortalServer {
   }
 
   private createMCPTool(operation: OpenAPI.Operation, method: string, path: string) {
+    const toolName = this.generateToolName(operation.operationId!, method, path);
+
     const properties: Record<string, any> = {};
     const required: string[] = [];
 
@@ -208,22 +273,17 @@ export class MCPPortalServer {
       }
     }
 
-    // Category detection
-    const pathParts = path.split('/').filter(part => part && !part.startsWith('{'));
-    const category = pathParts[pathParts.length - 1] || 'geral';
-
     return {
-      name: this.generateToolName(operation.operationId!, method, path),
-      description: `[${category.toUpperCase()}] ${operation.summary || operation.description || 'Operação da API Portal da Transparência'}`, 
+      name: toolName,
+      description: operation.summary || operation.description || `Consulta ${path}`,
       inputSchema: {
         type: 'object',
         properties,
         required,
       },
-      method: method.toUpperCase(),
+      method,
       path,
       operation,
-      category,
     };
   }
 
@@ -250,58 +310,76 @@ export class MCPPortalServer {
     _operation: any,
     args: Record<string, any>
   ) {
+    const startTime = Date.now();
+
     try {
-      // Make API call with authentication
-      const headers = this.auth.getAuthHeaders();
+      // Ensure method is uppercase for HTTP requests
+      const httpMethod = method.toUpperCase();
 
-      // Build URL with path parameters
-      let finalPath = path;
-      for (const [key, value] of Object.entries(args)) {
-        if (finalPath.includes(`{${key}}`)) {
-          finalPath = finalPath.replace(`{${key}}`, encodeURIComponent(String(value)));
-          delete args[key];
-        }
-      }
+      logger.info(`Executando chamada API`, {
+        method: httpMethod,
+        path,
+        args: Object.keys(args),
+      });
 
-      const baseUrl = 'https://api.portaldatransparencia.gov.br';
-      const fullUrl = `${baseUrl}${finalPath}`;
-
-      // Handle query parameters
+      // Build URL with query parameters
+      let url = `https://api.portaldatransparencia.gov.br${path}`;
       const queryParams = new URLSearchParams();
+
+      // Add arguments as query parameters
       for (const [key, value] of Object.entries(args)) {
-        if (value !== undefined && value !== null) {
+        if (value !== undefined && value !== null && value !== '') {
           queryParams.append(key, String(value));
         }
       }
 
-      const finalUrl = queryParams.toString() ? `${fullUrl}?${queryParams}` : fullUrl;
+      if (queryParams.toString()) {
+        url += `?${queryParams.toString()}`;
+      }
 
-      this.logger.info('Executando chamada da API', {
-        method,
-        url: finalUrl,
-        headers: Object.keys(headers),
-      });
-
-      // Make the actual API call using fetch
-      const response = await fetch(finalUrl, {
-        method,
+      // Prepare request options
+      const requestOptions: any = {
+        method: httpMethod,
         headers: {
-          ...headers,
           'Content-Type': 'application/json',
+          ...this.auth.getAuthHeaders(),
         },
+      };
+
+      // Add body for POST/PUT requests if there are arguments
+      if ((httpMethod === 'POST' || httpMethod === 'PUT') && Object.keys(args).length > 0) {
+        requestOptions.body = JSON.stringify(args);
+      }
+
+      logger.debug('Request details', {
+        url,
+        method: httpMethod,
+        headers: requestOptions.headers,
       });
+
+      const response = await fetch(url, requestOptions);
+      const responseTime = Date.now() - startTime;
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`HTTP ${response.status}: ${errorText}`);
+
+        // Handle specific error types
+        if (response.status === 429) {
+          throw new RateLimitError(`Rate limit atingido: ${errorText}`);
+        } else if (response.status === 401 || response.status === 403) {
+          throw new AuthenticationError(`Erro de autenticação: ${errorText}`);
+        } else {
+          throw new PortalAPIError(`API Error: ${response.status} ${response.statusText} - ${errorText}`, response.status);
+        }
       }
 
       const data = await response.json();
 
-      this.logger.info('Chamada da API executada com sucesso', {
-        method,
-        path,
-        status: response.status,
+      logger.logApiCall({
+        endpoint: path,
+        method: httpMethod,
+        responseStatus: response.status,
+        responseTime,
       });
 
       return {
@@ -313,29 +391,24 @@ export class MCPPortalServer {
         ],
       };
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      this.logger.error('Falha na execução da API', {
-        error: errorMessage,
-        method,
-        path,
-        args,
+      const responseTime = Date.now() - startTime;
+
+      logger.logApiCall({
+        endpoint: path,
+        method: method.toUpperCase(),
+        responseStatus: error instanceof PortalAPIError ? error.statusCode : 500,
+        responseTime,
+        error: error instanceof Error ? error : new Error(String(error)),
       });
 
-      return {
-        content: [
-          {
-            type: 'text',
-            text:
-              `❌ ERRO: ${errorMessage}\n\n` +
-              `🔗 Endpoint: ${method.toUpperCase()} ${path}\n` +
-              `⏰ Timestamp: ${new Date().toISOString()}\n\n` +
-              'Se o problema persistir, verifique:\n' +
-              '• Sua conexão com a internet\n' +
-              '• Se a API key está configurada corretamente\n' +
-              '• Se os parâmetros estão corretos',
-          },
-        ],
-      };
+      // Re-throw structured errors
+      if (error instanceof AuthenticationError ||
+        error instanceof RateLimitError ||
+        error instanceof PortalAPIError) {
+        throw error;
+      }
+
+      throw new Error(`Falha na execução: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 

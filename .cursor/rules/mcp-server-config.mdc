@@ -1,0 +1,241 @@
+# MCP Server Configuration - Portal da Transparência
+
+## 🎯 Estrutura Recomendada
+
+### Entry Point Principal
+
+```typescript
+// src/mcp-server.ts
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+
+// Implementar lazy loading para descoberta de ferramentas
+const server = new Server(
+  {
+    name: 'portal-transparencia-brasil',
+    version: '1.0.0',
+  },
+  {
+    capabilities: {
+      tools: {},
+    },
+  }
+);
+
+// Listar ferramentas sem autenticação
+server.setRequestHandler('tools/list', async () => {
+  return {
+    tools: [
+      {
+        name: 'consultar_servidores',
+        description: 'Consultar servidores do Poder Executivo Federal',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            // schema da ferramenta
+          },
+        },
+      },
+      // ... outras ferramentas
+    ],
+  };
+});
+
+// Implementar ferramentas com validação de API key
+server.setRequestHandler('tools/call', async (request) => {
+  const { name, arguments: args } = request.params;
+  
+  // Validar API key apenas quando ferramenta é chamada
+  const apiKey = process.env.PORTAL_API_KEY;
+  if (!apiKey) {
+    throw new Error('API key não configurada');
+  }
+  
+  // Implementar lógica da ferramenta
+  switch (name) {
+    case 'consultar_servidores':
+      return await consultarServidores(args, apiKey);
+    // ... outras ferramentas
+  }
+});
+```
+
+## 🔧 Configuração de Ambiente
+
+### Variáveis de Ambiente
+
+```typescript
+// src/config/environment.ts
+export interface Environment {
+  PORTAL_API_KEY: string;
+  LOG_LEVEL: 'error' | 'warn' | 'info' | 'debug';
+  NODE_ENV: 'development' | 'production';
+}
+
+export const getEnvironment = (): Environment => {
+  const required = ['PORTAL_API_KEY'];
+  const missing = required.filter(key => !process.env[key]);
+  
+  if (missing.length > 0) {
+    throw new Error(`Variáveis de ambiente obrigatórias: ${missing.join(', ')}`);
+  }
+  
+  return {
+    PORTAL_API_KEY: process.env.PORTAL_API_KEY!,
+    LOG_LEVEL: (process.env.LOG_LEVEL as Environment['LOG_LEVEL']) || 'info',
+    NODE_ENV: (process.env.NODE_ENV as Environment['NODE_ENV']) || 'development',
+  };
+};
+```
+
+## 🚫 Anti-padrões
+
+### ❌ Não validar API key na listagem
+
+```typescript
+// ❌ EVITAR: Validar API key na listagem de ferramentas
+server.setRequestHandler('tools/list', async () => {
+  const apiKey = process.env.PORTAL_API_KEY; // ❌ Não fazer isso
+  if (!apiKey) {
+    throw new Error('API key required'); // ❌ Bloqueia descoberta
+  }
+  // ...
+});
+```
+
+### ❌ Não usar configuração duplicada
+
+```typescript
+// ❌ EVITAR: Configuração em múltiplos lugares
+// smithery.yaml + smithery.json + código
+// Use apenas smithery.yaml para TypeScript Deploy
+```
+
+## ✅ Boas Práticas
+
+### Implementar Lazy Loading
+
+```typescript
+// ✅ CORRETO: Lazy loading para descoberta
+server.setRequestHandler('tools/list', async () => {
+  // Sem validação de API key - permite descoberta
+  return {
+    tools: [
+      {
+        name: 'consultar_servidores',
+        description: 'Consultar servidores do Poder Executivo Federal',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            // schema completo
+          },
+        },
+      },
+    ],
+  };
+});
+
+server.setRequestHandler('tools/call', async (request) => {
+  // Validar API key apenas na execução
+  const apiKey = process.env.PORTAL_API_KEY;
+  if (!apiKey) {
+    throw new Error('API key não configurada');
+  }
+  // ...
+});
+```
+
+### Tratamento de Erros
+
+```typescript
+// src/utils/error-handling.ts
+export class MCPError extends Error {
+  constructor(
+    message: string,
+    public code: string,
+    public statusCode: number = 500
+  ) {
+    super(message);
+    this.name = 'MCPError';
+  }
+}
+
+export const handleError = (error: unknown) => {
+  if (error instanceof MCPError) {
+    return {
+      error: {
+        message: error.message,
+        code: error.code,
+      },
+    };
+  }
+  
+  console.error('Erro não tratado:', error);
+  return {
+    error: {
+      message: 'Erro interno do servidor',
+      code: 'INTERNAL_ERROR',
+    },
+  };
+};
+```
+
+## 📋 Checklist de Implementação
+
+### Configuração Básica
+
+- [ ] Entry point em `src/mcp-server.ts`
+- [ ] Configuração de ambiente em `src/config/environment.ts`
+- [ ] Tratamento de erros em `src/utils/error-handling.ts`
+- [ ] Lazy loading implementado
+
+### Validação
+
+- [ ] Build local funcionando: `npm run build`
+- [ ] Teste de descoberta de ferramentas
+- [ ] Validação de API key apenas na execução
+- [ ] Health check MCP funcionando
+
+### Deploy
+
+- [ ] `smithery.yaml` configurado para TypeScript Deploy
+- [ ] Variáveis de ambiente definidas
+- [ ] Push para GitHub
+- [ ] Deploy no Smithery
+
+## 🔍 Debugging
+
+### Logs Estruturados
+
+```typescript
+// src/utils/logger.ts
+import { getEnvironment } from '../config/environment.js';
+
+export const logger = {
+  info: (message: string, meta?: Record<string, unknown>) => {
+    if (getEnvironment().LOG_LEVEL === 'info' || getEnvironment().LOG_LEVEL === 'debug') {
+      console.log(JSON.stringify({ level: 'info', message, ...meta }));
+    }
+  },
+  error: (message: string, error?: Error, meta?: Record<string, unknown>) => {
+    console.error(JSON.stringify({ 
+      level: 'error', 
+      message, 
+      error: error?.message, 
+      stack: error?.stack,
+      ...meta 
+    }));
+  },
+};
+```
+
+## 📚 Referências
+
+- [MCP SDK Documentation](https://modelcontextprotocol.io/sdk)
+- [Smithery TypeScript Runtime](https://smithery.ai/docs/build/getting-started)
+- [Streamable HTTP Specification](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http)
+description:
+globs:
+alwaysApply: false
+
+---

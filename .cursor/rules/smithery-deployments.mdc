@@ -1,0 +1,152 @@
+# Smithery Deployments - Regras de Configuração
+
+## 🎯 Configuração Recomendada
+
+### TypeScript Deploy (Recomendado)
+
+Para projetos TypeScript, use sempre o runtime TypeScript do Smithery:
+
+```yaml
+# smithery.yaml
+runtime: 'typescript'
+name: 'portal-transparencia-brasil'
+description: 'MCP Server for Portal da Transparência API'
+
+env:
+  PORTAL_API_KEY:
+    description: 'API key for Portal da Transparência'
+    required: true
+  LOG_LEVEL:
+    description: 'Log level (error, warn, info, debug)'
+    required: false
+    default: 'info'
+
+health:
+  mcp:
+    timeoutMs: 15000
+```
+
+### Custom Deploy (Docker)
+
+Use apenas quando necessário para linguagens não-TypeScript:
+
+```yaml
+# smithery.yaml
+runtime: 'container'
+name: 'portal-transparencia-brasil'
+
+build:
+  dockerfile: './Dockerfile'
+  context: '.'
+
+startCommand:
+  type: 'http'
+  configSchema:
+    type: 'object'
+    properties:
+      apiKey:
+        type: 'string'
+        description: 'Your API key'
+    required: ['apiKey']
+  exampleConfig:
+    apiKey: 'sk-example123'
+```
+
+## 🚫 Anti-padrões
+
+### ❌ Não use configuração duplicada
+
+```yaml
+# ❌ EVITAR: smithery.yaml + smithery.json
+# Use apenas smithery.yaml para TypeScript Deploy
+```
+
+### ❌ Não use Dockerfile desnecessariamente
+
+```dockerfile
+# ❌ EVITAR: Dockerfile para TypeScript Deploy
+# Use apenas para Custom Deploy
+```
+
+## 🔧 Implementação de Lazy Loading
+
+### ✅ Implementar descoberta de ferramentas
+
+```typescript
+// src/mcp-server.ts
+export const tools = {
+  listTools: {
+    description: 'List available tools without authentication',
+    inputSchema: {
+      type: 'object',
+      properties: {},
+      required: [],
+    },
+    handler: async () => {
+      return {
+        tools: [
+          {
+            name: 'consultar_servidores',
+            description: 'Consultar servidores do Poder Executivo Federal',
+          },
+          // ... outras ferramentas
+        ],
+      };
+    },
+  },
+};
+```
+
+## 📋 Checklist de Deploy
+
+### Pré-requisitos TypeScript Deploy
+
+- [ ] `package.json` com `"type": "commonjs"`
+- [ ] `tsconfig.json` configurado corretamente
+- [ ] Build local funcionando: `npm run build`
+- [ ] `smithery.yaml` com `runtime: "typescript"`
+
+### Pré-requisitos Custom Deploy
+
+- [ ] `Dockerfile` implementando Streamable HTTP
+- [ ] Servidor escutando na variável `PORT`
+- [ ] Endpoint `/mcp` disponível
+- [ ] `smithery.yaml` com `runtime: "container"`
+
+## 🔍 Validação
+
+### Health Check
+
+```typescript
+// Para TypeScript Deploy
+health:
+  mcp:
+    timeoutMs: 15000
+
+// Para Custom Deploy
+health:
+  http:
+    path: /health
+    port: 3000
+    interval: 10s
+    timeout: 5s
+    gracePeriod: 20s
+```
+
+### Configuração de Ambiente
+
+```yaml
+# Sempre usar dot-notation para configuração
+# GET/POST /mcp?server.host=localhost&server.port=8080&apiKey=secret123
+```
+
+## 📚 Referências
+
+- [Smithery Deployments Documentation](https://smithery.ai/docs/build/deployments)
+- [Streamable HTTP Specification](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http)
+- [Session Configuration](https://smithery.ai/docs/build/session-config)
+description:
+globs:
+alwaysApply: false
+
+---

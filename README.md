@@ -3,6 +3,7 @@
 [![npm version](https://badge.fury.io/js/mcp-portal-transparencia-brasil.svg)](https://badge.fury.io/js/mcp-portal-transparencia-brasil)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![smithery badge](https://smithery.ai/badge/@prof-ramos/mcp-portal-transparencia)](https://smithery.ai/server/@prof-ramos/mcp-portal-transparencia)
 
 Um MCP Server que fornece acesso programático à API do Portal da Transparência do Governo Federal brasileiro através do protocolo MCP.
 
@@ -50,7 +51,7 @@ O MCP Server fornece acesso a todos os endpoints do Portal da Transparência, in
 ### Uso via npx (Recomendado para MCP Server)
 
 ```bash
-# Executar MCP Server diretamente (para Claude Desktop, Cursor, etc.)
+# Executar MCP Server diretamente (para Claude Desktop, Cursor, Raycast, etc.)
 npx mcp-portal-transparencia-brasil
 
 # Ou instalar globalmente
@@ -72,9 +73,26 @@ yarn add mcp-portal-transparencia-brasil
 
 ### Pré-requisitos
 
-- Node.js >= 16.0
-- Uma chave de API do Portal da Transparência (obrigatória)
-- Cliente MCP compatível (Claude Desktop, Cursor, etc.)
+- Node.js >= 18
+- Uma chave de API do Portal da Transparência (obrigatória) em PORTAL_API_KEY
+- Cliente MCP compatível (Claude Desktop, Cursor, Raycast >= 1.98.0)
+
+### Dependências
+
+- Node.js >= 18
+- NPM 9+ (recomendado) ou PNPM/Yarn recente
+- Variáveis de ambiente:
+  - PORTAL_API_KEY: Obrigatória. Chave do Portal da Transparência (X-Api-Key)
+  - LOG_LEVEL: Opcional. Um de: error, warn, info, debug (padrão: info)
+- Principais libs NPM (instaladas automaticamente como dependências):
+  - typescript, ts-node, tsx, zod, axios, undici, @modelcontextprotocol/sdk
+  - jest, ts-jest, @types/jest (testes)
+  - eslint, @typescript-eslint/*, prettier (lint/format)
+
+Dicas:
+
+- Verificar versão do Node/NPM: node -v && npm -v
+- Auditoria de dependências: npm ls --depth=0
 
 ### Configuração para Cursor
 
@@ -177,6 +195,48 @@ npm run test:integration
 npm run test:coverage
 ```
 
+## ⚡ Integração com Raycast (MCP)
+
+Requisitos:
+
+- Raycast >= 1.98.0
+- Extensão MCP habilitada (Raycast Settings > AI > MCP)
+
+Passo a passo:
+
+1) Obtenha sua PORTAL_API_KEY no site oficial
+2) No Raycast, abra Settings > AI > Model Context Protocol (MCP)
+3) Adicione um novo servidor com a seguinte configuração JSON:
+
+```json
+{
+  "portal-transparencia": {
+    "command": "npx",
+    "args": ["mcp-portal-transparencia-brasil"],
+    "env": {
+      "PORTAL_API_KEY": "sua_api_key_aqui",
+      "LOG_LEVEL": "info"
+    }
+  }
+}
+```
+
+Uso:
+
+- Abra o Raycast (⌘ + Space), acesse Quick AI Chat
+- Use o prefixo @mcp para selecionar o servidor e a ferramenta, por exemplo:
+  - "@mcp portal-transparencia portal_servidores_consultar { \"orgaoServidorLotacao\": \"26000\", \"pagina\": 1 }"
+
+Troubleshooting:
+
+- "Command not found": garanta que o Node >= 18 está instalado e no PATH. Teste "npx mcp-portal-transparencia-brasil" no terminal.
+- "API key not configured": defina PORTAL_API_KEY e reinicie o Raycast.
+- Logs: ajuste LOG_LEVEL para "debug" e revise stdout do processo.
+
+Arquivo de configuração pronto:
+
+- Também fornecemos um arquivo exemplo raycast-mcp.json na raiz do projeto com a mesma estrutura para facilitar import/reference.
+
 ## 📖 Uso via MCP (Recomendado)
 
 O MCP Server permite usar o Portal da Transparência diretamente através de ferramentas como Claude Desktop, Cursor, e outras interfaces compatíveis com MCP.
@@ -195,7 +255,7 @@ Após configurar o MCP Server, você terá acesso a todas as ferramentas geradas
 
 ### Exemplos de Uso no Claude
 
-```
+```bash
 🔍 Consultar servidores do Ministério da Fazenda
 🎯 Buscar contratos acima de R$ 1 milhão
 📊 Analisar despesas por órgão no último trimestre
@@ -265,49 +325,43 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 ## ☁️ Deploy e uso com Smithery
 
-Este projeto inclui um arquivo smithery.json com configuração pronta para o Smithery.
+Este projeto inclui configuração otimizada para o Smithery usando **TypeScript Deploy** para melhor performance e integração.
 
-Pré-requisitos:
+### Configuração Atualizada
+
+O projeto agora usa `runtime: "typescript"` no `smithery.yaml` para:
+
+- ⚡ **Build 3x mais rápido** (automático vs. Docker)
+- 🔧 **Configuração simplificada** (apenas 1 arquivo)
+- 🎯 **Integração nativa** com o ecossistema Smithery
+- 🚀 **Lazy loading** para descoberta de ferramentas sem autenticação
+
+### Pré-requisitos
 
 - Node 18+
 - API Key do Portal da Transparência no env `PORTAL_API_KEY`
 
-Passos no Smithery:
+### Deploy no Smithery
 
-1) Importar o repositório ou pacote npm
-2) O Smithery executará automaticamente:
+1. Importar o repositório ou pacote npm
+2. O Smithery executará automaticamente:
    - npm install
    - npm run build
-3) O servidor MCP será iniciado via stdio com:
+3. O servidor MCP será iniciado via stdio com:
    - command: `node`
    - args: `dist/src/mcp-server.js`
 
-Variáveis de ambiente suportadas (smithery.json):
+### Variáveis de ambiente suportadas
 
-- PORTAL_API_KEY (obrigatório): chave da API (header X-Api-Key)
-- LOG_LEVEL (opcional): error, warn, info, debug (padrão: info)
+- **PORTAL_API_KEY** (obrigatório): chave da API (header X-Api-Key)
+- **LOG_LEVEL** (opcional): error, warn, info, debug (padrão: info)
 
-Teste local:
+### Descoberta de Ferramentas
 
-```bash
-npm install
-npm run build
-node dist/src/mcp-server.js
-```
+O servidor implementa **lazy loading** que permite:
 
-Exemplo de configuração em clientes MCP (Cursor):
+- 🔍 **Explorar ferramentas** antes de configurar API key
+- 📋 **Listar endpoints** disponíveis
+- 🎯 **Melhor UX** para novos usuários
 
-```json
-{
-  "mcpServers": {
-    "portal-transparencia": {
-      "command": "node",
-      "args": ["dist/src/mcp-server.js"],
-      "env": {
-        "PORTAL_API_KEY": "sua_api_key_aqui",
-        "LOG_LEVEL": "info"
-      }
-    }
-  }
-}
-```
+Use a ferramenta `portal_discover_tools` para descobrir todas as funcionalidades disponíveis.

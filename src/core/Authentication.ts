@@ -188,6 +188,11 @@ export class Authentication {
   }
 
   // TODO: Implement OAuth 2.0 flow when API supports it
+  // This will require:
+  // 1. OAuth 2.0 client configuration
+  // 2. Authorization code flow implementation
+  // 3. Token refresh mechanism
+  // 4. Integration with existing authentication system
   // private async authenticateOAuth(): Promise<string> {
   //   throw new Error('OAuth authentication not yet implemented');
   // }

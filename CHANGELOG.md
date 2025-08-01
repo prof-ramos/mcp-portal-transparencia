@@ -1,50 +1,22 @@
-# Changelog
+# Histórico de Alterações
 
-All notable changes to this project will be documented in this file.
+## v1.0.7 - 2025-07-31
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+### Correções Críticas
 
-## [Unreleased]
+- **Correção de Ambiente de Shell:** Resolvido um problema crítico que causava a interrupção de todos os comandos do terminal com `Exit Code 130 (SIGINT)`. A causa raiz foi identificada como uma configuração instável do `husky`, que foi reinstalado e reconfigurado.
+- **Limpeza de Dependências:** Realizada uma limpeza completa do cache do `npm` e dos `node_modules` para garantir um ambiente de desenvolvimento consistente e livre de artefatos de compilação antigos.
 
-### Added
+### Melhorias de Qualidade de Código
 
-- Initial project structure and configuration
-- NPM package configuration for publishing
-- GitHub Actions workflow for automated releases
+- **Configuração do ESLint:** Ajustada a configuração do ESLint (`eslint.config.mjs`) para incluir o ambiente `node`, resolvendo dezenas de erros de `no-undef` relacionados a globais como `process` e `console`.
+- **Correção de Código:**
+  - Removida uma variável não utilizada (`output`) no script `test-mcp-tools.js`.
+  - Corrigidos múltiplos erros de formatação (Prettier) em diversos arquivos, incluindo `.md`, `.json`, e `.js`.
+- **Melhora dos Scripts NPM:**
+  - O script `format` no `package.json` foi expandido para abranger todos os arquivos relevantes no projeto, não apenas o diretório `src`.
+  - Adicionado um script `format:check` para validar a formatação sem aplicar alterações.
 
-## [1.0.0] - 2024-01-01
+### Outras Mudanças
 
-### Added
-
-- Initial release of MCP Portal da Transparência server
-- Complete MCP server implementation with dynamic tool generation
-- Integration with Portal da Transparência API
-- Support for all API endpoints through MCP tools
-- Authentication system with API key management
-- Comprehensive error handling with user-friendly messages
-- CLI executable for npx usage
-- TypeScript support with full type definitions
-- Unit and integration test coverage
-- Documentation and setup guides
-- Support for Claude Desktop, Cursor, and other MCP-compatible UIs
-
-### Features
-
-- Dynamic tool generation from Swagger specification
-- Automatic parameter mapping and validation
-- Tool categorization and organization
-- Portuguese error messages and user guidance
-- Environment variable configuration
-- Logging system with configurable levels
-- Performance optimizations and caching
-- Rate limiting and retry mechanisms
-
-### Security
-
-- Secure API key handling
-- Input validation and sanitization
-- Error message sanitization to prevent information disclosure
-
-[Unreleased]: https://github.com/dutradotdev/mcp-portal-transparencia/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/dutradotdev/mcp-portal-transparencia/releases/tag/v1.0.0
+- **Correção de Conflito:** Resolvido um conflito de merge no arquivo `.taskmaster/tasks/tasks.json` que impedia a execução de scripts de formatação.
