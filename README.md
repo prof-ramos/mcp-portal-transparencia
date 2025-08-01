@@ -51,7 +51,7 @@ O MCP Server fornece acesso a todos os endpoints do Portal da Transparência, in
 ### Uso via npx (Recomendado para MCP Server)
 
 ```bash
-# Executar MCP Server diretamente (para Claude Desktop, Cursor, etc.)
+# Executar MCP Server diretamente (para Claude Desktop, Cursor, Raycast, etc.)
 npx mcp-portal-transparencia-brasil
 
 # Ou instalar globalmente
@@ -73,9 +73,26 @@ yarn add mcp-portal-transparencia-brasil
 
 ### Pré-requisitos
 
-- Node.js >= 16.0
-- Uma chave de API do Portal da Transparência (obrigatória)
-- Cliente MCP compatível (Claude Desktop, Cursor, etc.)
+- Node.js >= 18
+- Uma chave de API do Portal da Transparência (obrigatória) em PORTAL_API_KEY
+- Cliente MCP compatível (Claude Desktop, Cursor, Raycast >= 1.98.0)
+
+### Dependências
+
+- Node.js >= 18
+- NPM 9+ (recomendado) ou PNPM/Yarn recente
+- Variáveis de ambiente:
+  - PORTAL_API_KEY: Obrigatória. Chave do Portal da Transparência (X-Api-Key)
+  - LOG_LEVEL: Opcional. Um de: error, warn, info, debug (padrão: info)
+- Principais libs NPM (instaladas automaticamente como dependências):
+  - typescript, ts-node, tsx, zod, axios, undici, @modelcontextprotocol/sdk
+  - jest, ts-jest, @types/jest (testes)
+  - eslint, @typescript-eslint/*, prettier (lint/format)
+
+Dicas:
+
+- Verificar versão do Node/NPM: node -v && npm -v
+- Auditoria de dependências: npm ls --depth=0
 
 ### Configuração para Cursor
 
@@ -177,6 +194,48 @@ npm run test:integration
 # Cobertura de testes
 npm run test:coverage
 ```
+
+## ⚡ Integração com Raycast (MCP)
+
+Requisitos:
+
+- Raycast >= 1.98.0
+- Extensão MCP habilitada (Raycast Settings > AI > MCP)
+
+Passo a passo:
+
+1) Obtenha sua PORTAL_API_KEY no site oficial
+2) No Raycast, abra Settings > AI > Model Context Protocol (MCP)
+3) Adicione um novo servidor com a seguinte configuração JSON:
+
+```json
+{
+  "portal-transparencia": {
+    "command": "npx",
+    "args": ["mcp-portal-transparencia-brasil"],
+    "env": {
+      "PORTAL_API_KEY": "sua_api_key_aqui",
+      "LOG_LEVEL": "info"
+    }
+  }
+}
+```
+
+Uso:
+
+- Abra o Raycast (⌘ + Space), acesse Quick AI Chat
+- Use o prefixo @mcp para selecionar o servidor e a ferramenta, por exemplo:
+  - "@mcp portal-transparencia portal_servidores_consultar { \"orgaoServidorLotacao\": \"26000\", \"pagina\": 1 }"
+
+Troubleshooting:
+
+- "Command not found": garanta que o Node >= 18 está instalado e no PATH. Teste "npx mcp-portal-transparencia-brasil" no terminal.
+- "API key not configured": defina PORTAL_API_KEY e reinicie o Raycast.
+- Logs: ajuste LOG_LEVEL para "debug" e revise stdout do processo.
+
+Arquivo de configuração pronto:
+
+- Também fornecemos um arquivo exemplo raycast-mcp.json na raiz do projeto com a mesma estrutura para facilitar import/reference.
 
 ## 📖 Uso via MCP (Recomendado)
 

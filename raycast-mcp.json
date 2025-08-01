@@ -1,0 +1,10 @@
+{
+  "portal-transparencia": {
+    "command": "npx",
+    "args": ["mcp-portal-transparencia-brasil"],
+    "env": {
+      "PORTAL_API_KEY": "sua_api_key_aqui",
+      "LOG_LEVEL": "info"
+    }
+  }
+}
