@@ -1,4 +1,4 @@
-import { Logger } from '@/logging/Logger';
+import { Logger } from '../logging/Logger.js';
 import axios from 'axios';
 
 export interface AuthConfig {

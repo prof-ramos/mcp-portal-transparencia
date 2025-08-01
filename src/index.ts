@@ -1,29 +1,16 @@
-/**
- * MCP Portal da Transparência
- * Multi-step Call Planner for the Brazilian Government Transparency Portal API
- *
- * @author Lucas Dutra
- * @version 1.0.0
- */
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { z } from 'zod';
+import { MCPPortalServer } from './server';
 
-// Export main components
-export { ClientGenerator } from './core/ClientGenerator';
-export { SwaggerLoader } from './core/SwaggerLoader';
-export { Authentication } from './core/Authentication';
-export { Logger } from './logging/Logger';
+// Optional: Define configuration schema to require configuration at connection time
+// export const configSchema = z.object({
+//   debug: z.boolean().default(false).describe("Enable debug logging")
+// });
 
-// Export core types and interfaces (to be implemented)
-// export * from '@/types';
+export default async function ({ config }: { config: z.infer<z.ZodObject<{ debug: z.ZodDefault<z.ZodBoolean>; }>> }) {
+  const portalServer = new MCPPortalServer();
+  await portalServer.initialize();
 
-// Export utility functions
-// export * from '@/utils';
-
-// Export error classes
-// export * from '@/errors';
-
-// Default export (to be replaced with main client)
-export default {
-  name: 'mcp-portal-transparencia',
-  version: '1.0.0',
-  description: 'Multi-step Call Planner for Portal da Transparência API',
-};
+  // Return the underlying McpServer instance
+  return portalServer.getServer();
+}

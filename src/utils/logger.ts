@@ -77,7 +77,7 @@ export const logger = {
     }
   },
 
-  private sanitizePayload(payload: any): any {
+  sanitizePayload(payload: any): any {
     if (!payload) return payload;
 
     // Deep clone to avoid modifying the original

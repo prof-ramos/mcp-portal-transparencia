@@ -10,7 +10,7 @@ import { OpenAPI } from 'openapi-types';
 import { Authentication } from './core/Authentication.js';
 import { SwaggerLoader } from './core/SwaggerLoader.js';
 import { Logger } from './logging/Logger.js';
-import { startHealthServer } from './health';
+import { startHealthServer } from './health.js';
 import {
   AuthenticationError,
   PortalAPIError,
@@ -412,35 +412,9 @@ Para obter uma API key, visite: https://api.portaldatransparencia.gov.br/api-de-
     }
   }
 
-  async start(): Promise<void> {
-    try {
-      const transport = new StdioServerTransport();
-      await this.server.connect(transport);
-      this.logger.info('MCP server initialized. Waiting for stdio messages...');
-      this.logger.info('Servidor MCP Portal da Transparência iniciado com sucesso');
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      this.logger.error('Falha ao iniciar servidor MCP', { error: errorMessage });
-      throw error;
-    }
+  getServer(): Server {
+    return this.server;
   }
 }
 
-// Initialize and start the server
-async function main() {
-  const server = new MCPPortalServer();
-  try {
-    await server.initialize();
-    await server.start();
-    startHealthServer(3000);
-  } catch (error) {
-    // Use stderr explicitly to avoid interfering with MCP protocol
-    process.stderr.write(`Erro ao iniciar servidor MCP: ${error}\n`);
-    process.exit(1);
-  }
-}
 
-// Only run main if this file is the entry point
-if (require.main === module) {
-  main();
-}

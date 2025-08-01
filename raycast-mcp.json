@@ -3,7 +3,7 @@
     "command": "npx",
     "args": ["mcp-portal-transparencia-brasil"],
     "env": {
-      "PORTAL_API_KEY": "sua_api_key_aqui",
+      "PORTAL_API_KEY": "op://AI/PORTAL_DA_TRANSPARENCIA_API_KEY/Section_n6ihrl2ozsq2jgz3hehsmscpme/PORTAL_DA_TRANSPARENCIA_API_KEY",
       "LOG_LEVEL": "info"
     }
   }

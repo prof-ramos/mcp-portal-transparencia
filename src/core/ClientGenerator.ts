@@ -235,8 +235,8 @@ export class ClientGenerator {
   private generateImports(_endpoints: EndpointInfo[]): string {
     const imports = [
       "import axios, { AxiosInstance, AxiosResponse } from 'axios';",
-      "import { Authentication } from '@/core/Authentication';",
-      "import { Logger } from '@/logging/Logger';",
+      "import { Authentication } from '../core/Authentication.js';",
+      "import { Logger } from '../logging/Logger.js';",
     ];
 
     if (this.options.includeTypes) {

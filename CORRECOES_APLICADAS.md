@@ -122,6 +122,6 @@
 
 ---
 
-**Data:** $(date)
+**Data:** 2025-07-31
 **Responsável:** Análise Automatizada
 **Versão:** 1.0.5

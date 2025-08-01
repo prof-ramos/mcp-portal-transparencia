@@ -58,10 +58,20 @@ fi
 # 6. Verificar Configuração de Inclusão
 echo ""
 echo "6. Verificando Configuração de Inclusão..."
-if grep -q '"src/\*\*/\*.ts"' tsconfig.json; then
-    echo "✅ Inclusão: OK - Todos arquivos .ts incluídos"
+if command -v jq &> /dev/null; then
+    # Usar jq para verificar se o padrão src/**/*.ts está incluído
+    if jq -e '.include[]? | select(. == "src/**/*.ts")' tsconfig.json > /dev/null 2>&1; then
+        echo "✅ Inclusão: OK - Todos arquivos .ts incluídos (verificado com jq)"
+    else
+        echo "❌ Inclusão: ERRO - Configuração incorreta (verificado com jq)"
+    fi
 else
-    echo "❌ Inclusão: ERRO - Configuração incorreta"
+    # Fallback para grep com padrões que lidam com diferentes tipos de aspas
+    if grep -E '"src/\*\*/\*\.ts"|src/\*\*/\*\.ts' tsconfig.json > /dev/null 2>&1; then
+        echo "✅ Inclusão: OK - Todos arquivos .ts incluídos (verificado com grep)"
+    else
+        echo "❌ Inclusão: ERRO - Configuração incorreta (verificado com grep)"
+    fi
 fi
 
 echo ""
